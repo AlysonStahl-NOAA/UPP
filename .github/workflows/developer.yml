@@ -40,6 +40,7 @@ jobs:
         uses: NOAA-EMC/ci-build-nceplibs@develop
         with:
           bacio-version: v2.4.1
+          bufr-version: develop
           w3emc-version: v2.10.0
           g2-version: v3.5.1
           g2tmpl-version: v1.13.0
