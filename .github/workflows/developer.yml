@@ -12,15 +12,13 @@ concurrency:
   group: ${{ github.workflow }}-${{ github.event.pull_request.number || github.ref }}
   cancel-in-progress: true
 
-env:
-  cache_key: developer1  # The number (#) following the cache_key "gcc" is to flush Action cache.
-  CC: gcc
-  FC: gfortran
-  CXX: g++
-
 jobs:
   developer:
     runs-on: ubuntu-latest 
+    env:
+      CC: gcc
+      FC: gfortran
+      CXX: g++
 
     steps:
       - name: install-dependencies
@@ -36,20 +34,35 @@ jobs:
           package-org: NOAA-EMC
           git-ref: v2.3.0
 
+      - name: build-g2tmpl
+        uses: NOAA-EMC/ci-build-cmake-code@develop
+        with:
+          package-name: NCEPLIBS-g2tmpl
+          package-org: NOAA-EMC
+
+      - name: build-sigio
+        uses: NOAA-EMC/ci-build-cmake-code@develop
+        with:
+          package-name: NCEPLIBS-sigio
+          package-org: NOAA-EMC
+
+      - name: build-wrf-io
+        uses: NOAA-EMC/ci-build-cmake-code@develop
+        with:
+          package-name: NCEPLIBS-wrf_io
+          package-org: NOAA-EMC
+
       - name: build-dependencies
         uses: NOAA-EMC/ci-build-nceplibs@develop
         with:
           jasper-version: version-4.0.0
           bacio-version: develop
-          bufr-version: develop
           g2tmpl-version: develop
           w3emc-version: develop
+          w3emc-cmake-args: -DBUILD_WITH_BUFR=OFF
           g2-version: develop
           ip-version: develop
-          sigio-version: develop
           nemsio-version: develop
-          wrf-io-version: develop
-          
 
       - name: checkout
         uses: actions/checkout@v4
