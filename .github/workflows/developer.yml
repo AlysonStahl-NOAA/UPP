@@ -1,0 +1,82 @@
+name: developer
+on:
+  push:
+    branches:
+    - develop
+  pull_request:
+    branches:
+    - develop
+
+# Cancel in-progress workflows when pushing to a branch
+concurrency:
+  group: ${{ github.workflow }}-${{ github.event.pull_request.number || github.ref }}
+  cancel-in-progress: true
+
+jobs:
+  developer:
+    runs-on: ubuntu-latest 
+    env:
+      cache_key: developer1  # The number (#) following the cache_key "gcc" is to flush Action cache.
+      CC: gcc-10
+      FC: gfortran-10
+      CXX: g++-10 
+
+    steps:
+
+    - name: install-dependencies
+      run: |
+        sudo apt-get update
+        sudo apt-get install libnetcdf-dev libnetcdff-dev netcdf-bin pkg-config
+        sudo apt-get install gcovr doxygen
+
+    - name: checkout-crtm
+      uses: actions/checkout@v4
+      with:
+        repository: NOAA-EMC/emc_crtm
+        path: emc_crtm
+        ref: v2.3.0
+
+    - name: build-crtm
+      run: |
+        cd emc_crtm
+        mkdir build && cd build
+        cmake ..
+        make VERBOSE=1
+        make install
+        
+    - name: "Build dependencies"
+      uses: NOAA-EMC/ci-build-nceplibs@develop
+      with:
+        bacio-version: v2.4.1
+        w3emc-version: v2.10.0
+        g2-version: v3.5.1
+        g2tmpl-version: v1.13.0
+        ip-version: v5.1.0
+        sigio-version: v2.3.2
+        nemsio-version: v2.5.4
+        wrf-io-version: v1.2.0
+
+    - name: checkout
+      uses: actions/checkout@v4
+      with:
+        path: UPP
+
+    - name: build
+      run: |
+        set -x
+        export CC=mpicc
+        export FC=mpif90
+        cd UPP
+        mkdir build && cd build
+        cmake .. -DBUILD_WITH_WRFIO-ON -DCMAKE_BUILD_TYPE=Debug 
+        make VERBOSE=1
+        ctest --verbose --output-on-failure --rerun-failed
+        gcovr --root .. -v  --html-details --exclude tests --exclude CMakeFiles --print-summary -o test-coverage.html
+
+    - name: upload-test-coverage
+      uses: actions/upload-artifact@v4
+      with:
+        name: UPP-test-coverage
+        path: |
+          UPP/build/*.html
+          UPP/build/*.css
