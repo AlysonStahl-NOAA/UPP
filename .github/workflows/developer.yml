@@ -57,9 +57,9 @@ jobs:
         with:
           jasper-version: version-4.0.0
           bacio-version: develop
-          g2tmpl-version: develop
           w3emc-version: develop
           w3emc-cmake-args: -DBUILD_WITH_BUFR=OFF
+          g2c-version: develop
           g2-version: develop
           ip-version: develop
           nemsio-version: develop
