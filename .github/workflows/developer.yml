@@ -12,14 +12,15 @@ concurrency:
   group: ${{ github.workflow }}-${{ github.event.pull_request.number || github.ref }}
   cancel-in-progress: true
 
+env:
+  cache_key: developer1  # The number (#) following the cache_key "gcc" is to flush Action cache.
+  CC: gcc-10
+  FC: gfortran-10
+  CXX: g++-10
+
 jobs:
   developer:
     runs-on: ubuntu-latest 
-    env:
-      cache_key: developer1  # The number (#) following the cache_key "gcc" is to flush Action cache.
-      CC: gcc-10
-      FC: gfortran-10
-      CXX: g++-10 
 
     steps:
 
