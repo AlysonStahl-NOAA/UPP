@@ -35,9 +35,8 @@ jobs:
           package-name: EMC_crtm
           package-org: NOAA-EMC
           git-ref: v2.3.0
-        repo-cache: false
 
-      - name: "Build dependencies"
+      - name: build-dependencies
         uses: NOAA-EMC/ci-build-nceplibs@develop
         with:
           bacio-version: v2.4.1
