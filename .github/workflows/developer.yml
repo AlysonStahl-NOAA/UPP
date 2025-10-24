@@ -39,16 +39,17 @@ jobs:
       - name: build-dependencies
         uses: NOAA-EMC/ci-build-nceplibs@develop
         with:
+          jasper-version: version-4.0.0
           bacio-version: v2.4.1
-          bufr-version: develop
+          bufr-version: v11.7.1
+          g2tmpl-version: v1.13.0
           w3emc-version: v2.10.0
           g2-version: v3.5.1
-          g2tmpl-version: v1.13.0
           ip-version: v5.1.0
           sigio-version: v2.3.2
           nemsio-version: v2.5.4
           wrf-io-version: v1.2.0
-          jasper-version: version-4.0.0
+          
 
       - name: checkout
         uses: actions/checkout@v4
