@@ -33,7 +33,7 @@ module load prod_util/2.1.1
 module list
 
 msg="Starting gfs test"
-postmsg "$logfile" "$msg"
+#postmsg "$logfile" "$msg"
 
 export POSTGPEXEC=${svndir}/exec/upp.x
 
@@ -139,9 +139,9 @@ else
  echo $msg 2>&1 | tee -a TEST_ERROR
 fi
 
-postmsg "$logfile" "$msg"
+#postmsg "$logfile" "$msg"
 done
 
 echo "PROGRAM IS COMPLETE!!!!!" 2>&1 | tee SUCCESS
 msg="Ending gfs test"
-postmsg "$logfile" "$msg"
+#postmsg "$logfile" "$msg"
