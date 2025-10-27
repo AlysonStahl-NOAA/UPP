@@ -34,12 +34,6 @@ jobs:
           package-org: NOAA-EMC
           git-ref: v2.3.0
 
-      - name: build-prod_util
-        uses: NOAA-EMC/ci-build-cmake-code@develop
-        with:
-          package-name: NCEPLIBS-prod_util
-          package-org: NOAA-EMC
-
       - name: build-g2tmpl
         uses: NOAA-EMC/ci-build-cmake-code@develop
         with:
@@ -69,6 +63,12 @@ jobs:
           ip-version: develop
           nemsio-version: develop
 
+      - name: build-prod_util
+        uses: NOAA-EMC/ci-build-cmake-code@develop
+        with:
+          package-name: NCEPLIBS-prod_util
+          package-org: NOAA-EMC
+          
       - name: checkout
         uses: actions/checkout@v4
         with:
