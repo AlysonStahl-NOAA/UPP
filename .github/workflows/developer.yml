@@ -68,7 +68,7 @@ jobs:
         with:
           package-name: NCEPLIBS-prod_util
           package-org: NOAA-EMC
-          cmake-args: -DCMAKE_PREFIX_PATH="$GITHUB_WORKSPACE/nceplibs/NCEPLIBS-w3emc"
+          cmake-args: -DCMAKE_PREFIX_PATH="$GITHUB_WORKSPACE/nceplibs/NCEPLIBS-bacio;$GITHUB_WORKSPACE/nceplibs/NCEPLIBS-w3emc" 
 
       - name: checkout
         uses: actions/checkout@v4
