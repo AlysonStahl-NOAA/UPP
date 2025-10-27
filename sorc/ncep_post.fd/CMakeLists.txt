@@ -213,7 +213,7 @@ target_include_directories(${LIBNAME} PUBLIC
   $<INSTALL_INTERFACE:include>)
 
 target_link_libraries(${LIBNAME} PUBLIC
-  bacio::bacio_4
+  bacio::bacio
   crtm::crtm
   g2::g2_4
   g2tmpl::g2tmpl
@@ -261,7 +261,7 @@ if(BUILD_POSTEXEC)
   endif()
   if(BUILD_WITH_NEMSIO)
     set_target_properties(nemsio::nemsio PROPERTIES
-      INTERFACE_LINK_LIBRARIES "w3emc::w3emc_4;bacio::bacio_4")
+      INTERFACE_LINK_LIBRARIES "w3emc::w3emc_4;bacio::bacio")
     target_link_libraries(${EXENAME} PRIVATE
       nemsio::nemsio sigio::sigio)
     target_compile_definitions(${EXENAME} PRIVATE BUILD_WITH_NEMSIO)
