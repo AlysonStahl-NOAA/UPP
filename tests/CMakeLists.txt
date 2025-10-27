@@ -11,7 +11,7 @@ function(regression_test name)
     DESTINATION ${CMAKE_BINARY_DIR}/tests
     FILE_PERMISSIONS OWNER_READ OWNER_WRITE OWNER_EXECUTE GROUP_READ GROUP_EXECUTE WORLD_READ WORLD_EXECUTE)
   # Add the shell script as a test.
-  add_test(NAME ${name}.sh COMMAND bash ${name}.sh)
+  add_test(NAME run_post_${name}_template.sh COMMAND bash run_post_${name}_template.sh)
 endfunction()
 
 
