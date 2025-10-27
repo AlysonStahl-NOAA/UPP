@@ -73,6 +73,9 @@ jobs:
           set -x
           export CC=mpicc
           export FC=mpif90
+          export CFLAGS='-g -fprofile-abs-path -fprofile-arcs -ftest-coverage -O0'
+          export FCFLAGS='-g -fprofile-abs-path -fprofile-arcs -ftest-coverage -O0'
+          export FFLAGS='-g -fprofile-abs-path -fprofile-arcs -ftest-coverage -O0'
           cd UPP
           mkdir build && cd build
           cmake .. -DBUILD_WITH_WRFIO=ON -DCMAKE_BUILD_TYPE=Debug -DCMAKE_PREFIX_PATH="$GITHUB_WORKSPACE/nceplibs/jasper;$GITHUB_WORKSPACE/nceplibs/NCEPLIBS-bacio;$GITHUB_WORKSPACE/nceplibs/NCEPLIBS-w3emc;$GITHUB_WORKSPACE/nceplibs/NCEPLIBS-ip;$GITHUB_WORKSPACE/nceplibs/NCEPLIBS-g2;$GITHUB_WORKSPACE/nceplibs/NCEPLIBS-g2tmpl;$GITHUB_WORKSPACE/nceplibs/NCEPLIBS-sigio;$GITHUB_WORKSPACE/nceplibs/NCEPLIBS-nemsio;$GITHUB_WORKSPACE/nceplibs/NCEPLIBS-wrf_io;$GITHUB_WORKSPACE/nceplibs/EMC_crtm"
