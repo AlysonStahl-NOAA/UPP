@@ -56,10 +56,9 @@ jobs:
         uses: NOAA-EMC/ci-build-nceplibs@develop
         with:
           jasper-version: version-4.0.0
-          bacio-version: v2.4.1
+          bacio-version: develop
           w3emc-version: develop
           w3emc-cmake-args: -DBUILD_WITH_BUFR=OFF
-          #g2c-version: develop
           g2-version: v3.5.1
           ip-version: develop
           nemsio-version: develop
