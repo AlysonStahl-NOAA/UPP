@@ -14,4 +14,4 @@ function(shell_test name)
   add_test(NAME ${name}.sh COMMAND bash ${name}.sh)
 endfunction()
 
-shell_test(run_post_gfs_templates)
+shell_test(run_post_gfs_template)
