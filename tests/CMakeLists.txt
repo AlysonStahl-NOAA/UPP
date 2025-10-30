@@ -1,6 +1,6 @@
 # This is the cmake build file for the tests directory of the UPP project.
 #
-# Alyson Stahl 10/2025
+# Alyson Stahl, 10/2025
 
 message(STATUS "Building test directory...")
 

@@ -1,3 +1,6 @@
+# This is a GitHub Actions workflow for building and testing UPP on the develop branch.
+#
+# Alyson Stahl, 10/2025
 name: developer
 on:
   push:
