@@ -83,7 +83,7 @@ jobs:
           make VERBOSE=1
           make install
           ctest --verbose --output-on-failure --rerun-failed
-          gcovr --root .. -v --html-details --exclude unit_tests --exclude CMakeFiles --print-summary -o test-coverage.html &> /dev/null
+          gcovr --root .. -v --html-details --exclude ../unit_tests --exclude CMakeFiles --print-summary -o test-coverage.html &> /dev/null
 
       - name: upload-test-coverage
         uses: actions/upload-artifact@v4
