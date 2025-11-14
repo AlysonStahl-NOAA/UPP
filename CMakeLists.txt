@@ -133,7 +133,7 @@ add_subdirectory(sorc)
 # Run unit tests.
 include(CTest)
 if(BUILD_TESTING)
-  add_subdirectory(tests)
+  add_subdirectory(unit_tests)
 endif()
 
 # If desired, build the doxygen docs.

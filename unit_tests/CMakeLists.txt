@@ -10,3 +10,5 @@ function(create_test name)
   target_link_libraries(${name} PRIVATE upp::upp)
   add_test(NAME ${name} COMMAND ${name})
 endfunction()
+
+create_test(test_dewpoint)
