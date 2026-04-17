@@ -34,11 +34,11 @@
       use ctlblk_mod, only: num_procs, jend, iup, jsta, idn, mpi_comm_comp, im,&
           icoords,ibcoords,bufs,ibufs,me,numx, &  
           jsta_2l, jend_2u,ileft,iright,ista_2l,iend_2u,ista,iend,jm,modelname
+      use mpi, only: mpi_sendrecv, mpi_barrier, mpi_real, mpi_integer,   &
+          mpi_proc_null, mpi_status_size
 !- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
       implicit none
 !     
-      include 'mpif.h'
-!
       real,intent(inout) :: a ( ista_2l:iend_2u,jsta_2l:jend_2u )
       real, allocatable :: coll(:), colr(:)
       integer, allocatable :: icoll(:), icolr(:)
@@ -436,10 +436,9 @@
  
       use ctlblk_mod, only: num_procs, jend, iup, jsta, idn,    &
      &                      mpi_comm_comp, im, jsta_2l, jend_2u
+      use mpi, only: mpi_sendrecv, mpi_real, mpi_status_size
 !- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
       implicit none
-!
-      include 'mpif.h'
 !
       real,intent(inout) :: a ( im,jsta_2l:jend_2u )
       integer status(MPI_STATUS_SIZE)

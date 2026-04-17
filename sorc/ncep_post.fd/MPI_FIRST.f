@@ -99,13 +99,13 @@
               ileft,iright,ileftb,irightb,ibsize,ibsum, isxa,iexa,jsxa,jexa,           &
               icoords,ibcoords,bufs,ibufs, rbufs, rcoords,rbcoords,                    &  
               ISTA_2L, IEND_2U,IVEND_2U,numx,MODELNAME   
+      use mpi, only: mpi_abort, mpi_scatterv, mpi_gatherv, mpi_integer, mpi_real, &
+          mpi_comm_world, mpi_proc_null
 
 !
 !     use params_mod
 !- - - - - - - - - - - - - - - - - - -  - - - - - - - - - - - - - - - - 
       implicit none
-     
-      include 'mpif.h'
 !
       integer ierr,i,jsx,jex,isx,iex,j
       integer size,ubound,lbound
@@ -391,10 +391,9 @@
       use ctlblk_mod, only: num_procs, jend, iup, jsta, idn, mpi_comm_comp, im,MODELNAME,numx,&
           icoords,ibcoords,rbcoords,bufs,ibufs,me, &  
               jsta_2l,jend_2u,ileft,iright,ista_2l,iend_2u,ista,iend,jm,icnt2,idsp2
+      use mpi, only: mpi_allgatherv, mpi_barrier, mpi_real, mpi_status_size
 !- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
       implicit none
-!
-      include 'mpif.h'
 !
       real,intent(inout) :: a ( ista_2l:iend_2u,jsta_2l:jend_2u ),rpoles(im,2)
       real, allocatable ::  rpole(:)

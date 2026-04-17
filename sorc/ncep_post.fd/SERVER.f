@@ -37,10 +37,10 @@
 
 !
       use CTLBLK_mod, only: mpi_comm_inter
+      use mpi, only: mpi_recv, mpi_probe, mpi_get_count, mpi_logical,   &
+          mpi_integer, mpi_character, mpi_status_size
 !- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -     
       implicit none
-!
-      INCLUDE 'mpif.h'
 !
       LOGICAL :: DONE, NEWFILE
       INTEGER :: STATUS(MPI_STATUS_SIZE)
