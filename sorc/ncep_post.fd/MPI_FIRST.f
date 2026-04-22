@@ -18,7 +18,9 @@
 !> 2021-07-07 | JESSE MENG | 2D DECOMPOSITION
 !> 2022-09-22 | Li(Kate) Zhang | Add new aerosols fields for UFS-Aerosols
 !> 2023-03-22 | WM LEWIS | ADDED EFFRI, EFFRS, EFFRL
-!!
+!> 2026-04-22 | Alyson Stahl  | Fix type mismatch warnings for gcc compiler
+!>                            | by swapping 'INCLUDE mpif.h' with 'use mpi'.
+!>
 !! USAGE:    CALL MPI_FIRST
 !!   INPUT ARGUMENT LIST:
 !!

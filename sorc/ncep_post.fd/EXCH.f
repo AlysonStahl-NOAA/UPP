@@ -11,6 +11,8 @@
 !> -----------|---------------------|----------
 !> 2000-01-06 | Jim Tuccillo        | Initial
 !> 2021-06-01 | George Vandenberghe | 2D decomposition             
+!> 2026-04-22 | Alyson Stahl        | Fix type mismatch warnings for gcc compiler
+!>                                  | by swapping 'INCLUDE mpif.h' with 'use mpi'.
 !>
 !> @note The 1st line is an inlined compiler directive that turns off -qcheck
 !> during compilation, even if it's specified as a compiler option in the

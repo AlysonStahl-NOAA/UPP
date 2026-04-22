@@ -15,6 +15,8 @@
 !> -----|------------|---------
 !> 2007-03-01 | Hui-Ya Chuang | Initial
 !> 2021-03-11 | Bo Cui        | Change local arrays to dimension (im,jsta:jend)
+!> 2026-04-22 | Alyson Stahl  | Fix type mismatch warnings for gcc compiler
+!>                            | by swapping 'INCLUDE mpif.h' with 'use mpi'.
 !>
 !> @author Hui-Ya Chuang @date 2007-03-26
 !----------------------------------------------------------------------
