@@ -121,6 +121,7 @@
 !
 !===========================================================================================
 !
+      use mpi
       use netcdf
 #if defined(BUILD_WITH_NEMSIO)
       use nemsio_module, only: nemsio_getheadvar, nemsio_gfile, nemsio_init, nemsio_open, &
@@ -152,7 +153,6 @@
 #if defined(BUILD_WITH_NEMSIO)
       type(nemsio_gfile) :: nfile,ffile,rfile
 #endif
-      use mpi
 !
 !     DECLARE VARIABLES.
 !     
