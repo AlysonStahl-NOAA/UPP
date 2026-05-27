@@ -79,6 +79,9 @@ create_test(test_calgustconv)
 create_test(test_paramr)
 create_test(test_upp_physics)
 create_test(test_calrh)
+create_test(test_lfmfld)
+create_test(test_lfmfld_gfs)
+create_test(test_calrh_pw)
 
 configure_file(${CMAKE_SOURCE_DIR}/fix/hires_micro_lookup.dat
                ${CMAKE_CURRENT_BINARY_DIR}/eta_micro_lookup.dat COPYONLY)
