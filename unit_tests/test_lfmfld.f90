@@ -170,7 +170,7 @@ program test_lfmfld
         print '(A, I0, A, ES16.9)', "PW3310(", i, ") = ", PW3310(1, i)
     end do
 
-    if (res .ne. 0) then stop 20
+    if (res .ne. 0) stop 20
 
     deallocate(pint, alpint, zint, t, q, cwm, lmh)
     print *, "SUCCESS!"
