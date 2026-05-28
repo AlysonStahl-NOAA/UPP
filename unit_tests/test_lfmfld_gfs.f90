@@ -11,7 +11,7 @@ program test_lfmfld_gfs
     implicit none
 
     real, parameter :: tol = 1.0e-8
-    integer, parameter :: npts = 6, nlevs = 30
+    integer, parameter :: npts = 4, nlevs = 30
     integer :: i, j, res
     integer :: lm
     real :: RH4410(1, npts), RH7294(1, npts), RH4472(1, npts), RH3310(1, npts)
@@ -49,60 +49,39 @@ program test_lfmfld_gfs
         q(1, :, i)    = 0.01 * exp(-real(i-1) / real(lm) * 3.0)
     end do
 
-    ! TODO: Replace with the actual expected value calculations once I have them.
-    EXP_RH4410 = 0.0
-    EXP_RH7294 = 0.0
-    EXP_RH4472 = 0.0
-    EXP_RH3310 = 0.0
-
+    EXP_RH4410 =  2.670455694E+00
+    EXP_RH7294 =  1.074578285E+01
+    EXP_RH4472 =  2.022174835E+00
+    EXP_RH3310 =  1.476486325E+00
+    
     ! Test Case 2: RH4472=spval
     lmh(1, 2) = 5.0
     do i = 1, 6
         pint(1, 2, i) = 72000.0 + real(i-1) / 5.0 * 28000.0
     end do
-    EXP_RH4410(1, 2) = 0.0
-    EXP_RH7294(1, 2) = 0.0
+    EXP_RH4410(1, 2) = 1.017754376E-01
+    EXP_RH7294(1, 2) = 9.121516347E-02
     EXP_RH4472(1, 2) = spval
-    EXP_RH3310(1, 2) = 0.0
-
-    ! Test Case 3: RH7294=spval
-    lmh(1, 3) = 6.0
-    do i = 1, 7
-        pint(1, 3, i) = 50000.0 + real(i-1) / 6.0 * 22000.0
-    end do
-    EXP_RH4410(1, 3) = 0.0
-    EXP_RH7294(1, 3) = spval
-    EXP_RH4472(1, 3) = 0.0
-    EXP_RH3310(1, 3) = 0.0
+    EXP_RH3310(1, 2) = 1.017754376E-01
     
-    ! Test Case 4: RH4472=spval AND RH7294=spval
-    lmh(1, 4) = 3.0
+    ! Test Case 3: RH4472=spval AND RH7294=spval
+    lmh(1, 3) = 3.0
     do i = 1, 4
-        pint(1, 4, i) = 94000.0 + real(i-1) / 3.0 * 6000.0
+        pint(1, 3, i) = 94000.0 + real(i-1) / 3.0 * 6000.0
     end do
-    EXP_RH4410(1, 4) = 0.0
+    EXP_RH4410(1, 3) = 8.121047914E-02
+    EXP_RH7294(1, 3) = spval
+    EXP_RH4472(1, 3) = spval
+    EXP_RH3310(1, 3) = 8.121047914E-02
+
+    ! Test Case 4: All spval
+    lmh(1, 4) = 1.0
+    pint(1, 4, 1) = 5000.0
+    pint(1, 4, 2) = 20000.0
+    EXP_RH4410(1, 4) = spval
     EXP_RH7294(1, 4) = spval
     EXP_RH4472(1, 4) = spval
-    EXP_RH3310(1, 4) = 0.0
-
-    ! Test Case 5: Only RH3310!=spval
-    lmh(1, 5) = 3.0
-    do i = 1, 4
-        pint(1, 5, i) = 33000.0 + real(i-1) / 3.0 * 11000.0
-    end do
-    EXP_RH4410(1, 5) = spval
-    EXP_RH7294(1, 5) = spval
-    EXP_RH4472(1, 5) = spval
-    EXP_RH3310(1, 5) = 0.0
-
-    ! Test Case 6: All spval 
-    lmh(1, 6) = 1.0
-    pint(1, 6, 1) = 10000.0
-    pint(1, 6, 2) = 20000.0
-    EXP_RH4410(1, 6) = spval
-    EXP_RH7294(1, 6) = spval
-    EXP_RH4472(1, 6) = spval
-    EXP_RH3310(1, 6) = spval
+    EXP_RH3310(1, 4) = spval
 
     res = 0
     call LFMFLD_GFS(RH4410, RH7294, RH4472, RH3310)

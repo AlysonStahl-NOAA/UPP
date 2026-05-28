@@ -55,7 +55,6 @@ program test_lfmfld
         cwm(1, :, i) = 1.0e-4
     end do
 
-    ! TODO: Replace with the actual expected value calculations once I have them.
     EXP_RH3310 = 7.553577423E-01
     EXP_RH6610 = 7.212698460E-01
     EXP_RH3366 = 7.943152785E-01
@@ -129,19 +128,26 @@ program test_lfmfld
     call LFMFLD(RH3310, RH6610, RH3366, PW3310)
 
     do i = 1, npts
-        print '(A, I0, A, ES16.9)', "RH3310(", i, ") = ", RH3310(1, i)
-    end do
-
-    do i = 1, npts
-        print '(A, I0, A, ES16.9)', "RH6610(", i, ") = ", RH6610(1, i)
-    end do
-
-    do i = 1, npts
-        print '(A, I0, A, ES16.9)', "RH3366(", i, ") = ", RH3366(1, i)
-    end do
-
-    do i = 1, npts
-        print '(A, I0, A, ES16.9)', "PW3310(", i, ") = ", PW3310(1, i)
+        if (abs(RH3310(1, i) - EXP_RH3310(1, i)) > tol) then
+            print *, "Test Case ", i, " FAILED: Expected RH3310 = ", EXP_RH3310(1, i), &
+                     " but got RH3310 = ", RH3310(1, i)
+            res = 1
+        end if
+        if (abs(RH6610(1, i) - EXP_RH6610(1, i)) > tol) then
+            print *, "Test Case ", i, " FAILED: Expected RH6610 = ", EXP_RH6610(1, i), &
+                     " but got RH6610 = ", RH6610(1, i)
+            res = 1
+        end if
+        if (abs(RH3366(1, i) - EXP_RH3366(1, i)) > tol) then
+            print *, "Test Case ", i, " FAILED: Expected RH3366 = ", EXP_RH3366(1, i), &
+                     " but got RH3366 = ", RH3366(1, i)
+            res = 1
+        end if
+        if (abs(PW3310(1, i) - EXP_PW3310(1, i)) > tol) then
+            print *, "Test Case ", i, " FAILED: Expected PW3310 = ", EXP_PW3310(1, i), &
+                     " but got PW3310 = ", PW3310(1, i)
+            res = 1
+        end if
     end do
 
     if (res .ne. 0) then
@@ -155,19 +161,26 @@ program test_lfmfld
     call LFMFLD(RH3310, RH6610, RH3366, PW3310)
 
     do i = 1, npts
-        print '(A, I0, A, ES16.9)', "RH3310(", i, ") = ", RH3310(1, i)
-    end do
-
-    do i = 1, npts
-        print '(A, I0, A, ES16.9)', "RH6610(", i, ") = ", RH6610(1, i)
-    end do
-
-    do i = 1, npts
-        print '(A, I0, A, ES16.9)', "RH3366(", i, ") = ", RH3366(1, i)
-    end do
-
-    do i = 1, npts
-        print '(A, I0, A, ES16.9)', "PW3310(", i, ") = ", PW3310(1, i)
+        if (abs(RH3310(1, i) - EXP_RH3310_GFS(1, i)) > tol) then
+            print *, "Test Case ", i, " FAILED: Expected RH3310 = ", EXP_RH3310_GFS(1, i), &
+                     " but got RH3310 = ", RH3310(1, i)
+            res = 1
+        end if
+        if (abs(RH6610(1, i) - EXP_RH6610_GFS(1, i)) > tol) then
+            print *, "Test Case ", i, " FAILED: Expected RH6610 = ", EXP_RH6610_GFS(1, i), &
+                     " but got RH6610 = ", RH6610(1, i)
+            res = 1
+        end if
+        if (abs(RH3366(1, i) - EXP_RH3366_GFS(1, i)) > tol) then
+            print *, "Test Case ", i, " FAILED: Expected RH3366 = ", EXP_RH3366_GFS(1, i), &
+                     " but got RH3366 = ", RH3366(1, i)
+            res = 1
+        end if
+        if (abs(PW3310(1, i) - EXP_PW3310_GFS(1, i)) > tol) then
+            print *, "Test Case ", i, " FAILED: Expected PW3310 = ", EXP_PW3310_GFS(1, i), &
+                     " but got PW3310 = ", PW3310(1, i)
+            res = 1
+        end if
     end do
 
     if (res .ne. 0) stop 20

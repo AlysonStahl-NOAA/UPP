@@ -57,7 +57,11 @@ program test_calrh_pw
     call CALRH_PW(RHPW)
 
     do i = 1, npts
-        print '(A, I0, A, ES16.9)', "RHPW(", i, ") = ", RHPW(1, i)
+        if (abs(RHPW(1, i) - EXP_RHPW(1, i)) > tol) then
+            print *, "Test Case ", i, " FAILED: Expected RHPW = ", EXP_RHPW(1, i), &
+                     " but got RHPW = ", RHPW(1, i)
+            res = 1
+        end if
     end do
 
     deallocate(q, pmid, t)
