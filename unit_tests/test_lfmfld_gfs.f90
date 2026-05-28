@@ -53,7 +53,7 @@ program test_lfmfld_gfs
     EXP_RH7294 =  1.074578285E+01
     EXP_RH4472 =  2.022174835E+00
     EXP_RH3310 =  1.476486325E+00
-    
+
     ! Test Case 2: RH4472=spval
     lmh(1, 2) = 5.0
     do i = 1, 6
@@ -87,10 +87,26 @@ program test_lfmfld_gfs
     call LFMFLD_GFS(RH4410, RH7294, RH4472, RH3310)
 
     do i = 1, npts
-        print '(A, I0, A, ES16.9)', "RH4410(", i, ") = ", RH4410(1, i)
-        print '(A, I0, A, ES16.9)', "RH7294(", i, ") = ", RH7294(1, i)
-        print '(A, I0, A, ES16.9)', "RH4472(", i, ") = ", RH4472(1, i)
-        print '(A, I0, A, ES16.9)', "RH3310(", i, ") = ", RH3310(1, i)
+        if (abs(RH4410(1, i) - EXP_RH4410(1, i)) > tol) then
+            print *, "Test Case ", i, " FAILED: Expected RH4410 = ", EXP_RH4410(1, i), &
+                     " but got RH4410 = ", RH4410(1, i)
+            res = 1
+        end if
+        if (abs(RH7294(1, i) - EXP_RH7294(1, i)) > tol) then
+            print *, "Test Case ", i, " FAILED: Expected RH7294 = ", EXP_RH7294(1, i), &
+                     " but got RH7294 = ", RH7294(1, i)
+            res = 1
+        end if
+        if (abs(RH4472(1, i) - EXP_RH4472(1, i)) > tol) then
+            print *, "Test Case ", i, " FAILED: Expected RH4472 = ", EXP_RH4472(1, i), &
+                     " but got RH4472 = ", RH4472(1, i)
+            res = 1
+        end if
+        if (abs(RH3310(1, i) - EXP_RH3310(1, i)) > tol) then
+            print *, "Test Case ", i, " FAILED: Expected RH3310 = ", EXP_RH3310(1, i), &
+                     " but got RH3310 = ", RH3310(1, i)
+            res = 1
+        end if
     end do
 
     deallocate(pint, t, q, pmid, lmh)
