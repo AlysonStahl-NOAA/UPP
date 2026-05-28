@@ -109,17 +109,8 @@ program test_lfmfld_gfs
 
     do i = 1, npts
         print '(A, I0, A, ES16.9)', "RH4410(", i, ") = ", RH4410(1, i)
-    end do
-
-    do i = 1, npts
         print '(A, I0, A, ES16.9)', "RH7294(", i, ") = ", RH7294(1, i)
-    end do
-
-    do i = 1, npts
         print '(A, I0, A, ES16.9)', "RH4472(", i, ") = ", RH4472(1, i)
-    end do
-
-    do i = 1, npts
         print '(A, I0, A, ES16.9)', "RH3310(", i, ") = ", RH3310(1, i)
     end do
 

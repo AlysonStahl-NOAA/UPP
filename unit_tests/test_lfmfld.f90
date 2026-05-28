@@ -56,27 +56,27 @@ program test_lfmfld
     end do
 
     ! TODO: Replace with the actual expected value calculations once I have them.
-    EXP_RH3310 = 0.0
-    EXP_RH6610 = 0.0
-    EXP_RH3366 = 0.0
-    EXP_PW3310 = 0.0
+    EXP_RH3310 = 7.553577423E-01
+    EXP_RH6610 = 7.212698460E-01
+    EXP_RH3366 = 7.943152785E-01
+    EXP_PW3310 = 7.344522476E+00
 
-    EXP_RH3310_GFS = 0.0
-    EXP_RH6610_GFS = 0.0
-    EXP_RH3366_GFS = 0.0
-    EXP_PW3310_GFS = 0.0
+    EXP_RH3310_GFS = 8.572704792E-01
+    EXP_RH6610_GFS = 7.627038360E-01
+    EXP_RH3366_GFS = 9.653466344E-01
+    EXP_PW3310_GFS = 7.344522476E+00
 
     ! Test Case 2: RH6610 != spval, RH3310 != spval, RH3366 == spval
     lmh(1, 2) = 2.0
-    EXP_RH3310(1, 2) = 0.0
-    EXP_RH6610(1, 2) = 0.0
+    EXP_RH3310(1, 2) = 1.0
+    EXP_RH6610(1, 2) = 1.0
     EXP_RH3366(1, 2) = spval
-    EXP_PW3310(1, 2) = 0.0
+    EXP_PW3310(1, 2) = 3.245311603E-02
 
-    EXP_RH3310_GFS(1, 2) = 0.0
-    EXP_RH6610_GFS(1, 2) = 0.0
+    EXP_RH3310_GFS(1, 2) = 1.0
+    EXP_RH6610_GFS(1, 2) = 1.0
     EXP_RH3366_GFS(1, 2) = spval
-    EXP_PW3310_GFS(1, 2) = 0.0
+    EXP_PW3310_GFS(1, 2) = 3.245311603E-02
 
     ! Test Case 3: RH6610 == spval, RH3310 != spval, RH3366 != spval
     lmh(1, 3)       = 3.0
@@ -87,15 +87,15 @@ program test_lfmfld
     alpint(1, 3, 3) = log(80000.0)
     alpint(1, 3, 4) = log(100000.0)
 
-    EXP_RH3310(1, 3) = 0.0
+    EXP_RH3310(1, 3) = 1.0
     EXP_RH6610(1, 3) = spval
-    EXP_RH3366(1, 3) = 0.0
-    EXP_PW3310(1, 3) = 0.0
+    EXP_RH3366(1, 3) = 1.0
+    EXP_PW3310(1, 3) = 4.107992351E-01
 
-    EXP_RH3310_GFS(1, 3) = 0.0
+    EXP_RH3310_GFS(1, 3) = 1.0
     EXP_RH6610_GFS(1, 3) = spval
-    EXP_RH3366_GFS(1, 3) = 0.0
-    EXP_PW3310_GFS(1, 3) = 0.0
+    EXP_RH3366_GFS(1, 3) = 1.0
+    EXP_PW3310_GFS(1, 3) = 4.107992351E-01
 
     ! Test Case 4: RH6610 == spval, RH3310 == spval, RH3366 == spval
     lmh(1, 4) = 1.0
@@ -113,15 +113,15 @@ program test_lfmfld
     ! Test Case 5: Executes the ``` if (RH < D01) ``` branch.
     q(1, 5, :) = 0.0
 
-    EXP_RH3310(1, 5) = 0.0
-    EXP_RH6610(1, 5) = 0.0
-    EXP_RH3366(1, 5) = 0.0
-    EXP_PW3310(1, 5) = 0.0
+    EXP_RH3310(1, 5) = 9.999999776E-03
+    EXP_RH6610(1, 5) = 9.999998845E-03
+    EXP_RH3366(1, 5) = 1.000000071E-02
+    EXP_PW3310(1, 5) = 4.841997027E-01
 
-    EXP_RH3310_GFS(1, 5) = 0.0
-    EXP_RH6610_GFS(1, 5) = 0.0
-    EXP_RH3366_GFS(1, 5) = 0.0
-    EXP_PW3310_GFS(1, 5) = 0.0
+    EXP_RH3310_GFS(1, 5) = 9.999999776E-03
+    EXP_RH6610_GFS(1, 5) = 9.999998845E-03
+    EXP_RH3366_GFS(1, 5) = 1.000000071E-02
+    EXP_PW3310_GFS(1, 5) = 4.841997027E-01
 
     print *, "Testing LFMFLD() with modelname != 'GFS'..."
 

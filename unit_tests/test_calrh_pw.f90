@@ -34,14 +34,11 @@ program test_calrh_pw
         q(1, :, i)    = 0.005
     end do
 
-    ! TODO: Replace with the actual expected value calculations once I have them.
-    EXP_RHPW = 0.0 
+    EXP_RHPW = 9.110954285E+01
 
     ! Test Case 2: Result of max(sh, Qs) evaluates to sh in the calculation of pw_sat.
     t(1, 2, :) = 220.0
-
-    ! TODO: Replace with the actual expected value calculations once I have them.
-    EXP_RHPW(1, 2) = 0.0
+    EXP_RHPW(1, 2) = 100.0
 
     ! Test Case 3: t == spval & q != spval
     t(1, 3, :) = spval
