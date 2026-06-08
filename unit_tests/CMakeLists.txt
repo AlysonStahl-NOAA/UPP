@@ -82,6 +82,8 @@ create_test(test_calrh)
 create_test(test_frzlvl)
 create_test(test_frzlvl2)
 create_test(test_ngmslp)
+create_test(test_table)
+create_test(test_tableq)
 
 configure_file(${CMAKE_SOURCE_DIR}/fix/hires_micro_lookup.dat
                ${CMAKE_CURRENT_BINARY_DIR}/eta_micro_lookup.dat COPYONLY)
