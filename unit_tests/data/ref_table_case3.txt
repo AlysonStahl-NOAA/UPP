@@ -1,3 +1,6 @@
+# Reference data for TABLE() subroutine test
+# Test case with PT=100.0, THL=210.0
+# Format: PTBL(10184 values), TTBL(10184), QS0(134), SQS(134), STHE(76), THE0(76)
 1.0000000000000000e+02
 6.0829355468750000e+04
 6.5815625000000000e+04

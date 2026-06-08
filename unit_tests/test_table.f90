@@ -77,20 +77,25 @@ program test_table
                 print *, 'Test Case 1 Failed: PTBL(', i, ',', j, ') = ', PTBL(i,j), &
                          ' Expected: ', EXP_PTBL(i,j,1)
                 res = 1
+                exit
             end if
             if (abs(TTBL(j,i) - EXP_TTBL(j,i,1)) > tol) then
                 print *, 'Test Case 1 Failed: TTBL(', j, ',', i, ') = ', TTBL(j,i), &
                          ' Expected: ', EXP_TTBL(j,i,1)
                 res = 1
+                exit
             end if
         end do
+        if (res == 1) exit
         if (abs(STHE(i) - EXP_STHE(i,1)) > tol) then
             print *, 'Test Case 1 Failed: STHE(', i, ') = ', STHE(i), ' Expected: ', EXP_STHE(i,1)
             res = 1
+            exit
         end if
         if (abs(THE0(i) - EXP_THE0(i,1)) > tol) then
             print *, 'Test Case 1 Failed: THE0(', i, ') = ', THE0(i), ' Expected: ', EXP_THE0(i,1)
             res = 1
+            exit
         end if
     end do
 
@@ -98,10 +103,12 @@ program test_table
         if (abs(QS0(j) - EXP_QS0(j,1)) > tol) then
             print *, 'Test Case 1 Failed: QS0(', j, ') = ', QS0(j), ' Expected: ', EXP_QS0(j,1)
             res = 1
+            exit
         end if
         if (abs(SQS(j) - EXP_SQS(j,1)) > tol) then
             print *, 'Test Case 1 Failed: SQS(', j, ') = ', SQS(j), ' Expected: ', EXP_SQS(j,1)
             res = 1
+            exit
         end if
     end do
 
@@ -139,11 +146,16 @@ contains
         real, intent(out) :: ptbl_out(ITB,JTB), ttbl_out(JTB,ITB)
         real, intent(out) :: qs0_out(JTB), sqs_out(JTB), sthe_out(ITB), the0_out(ITB)
         real :: temp_2d(ITB*JTB)
-        character(len=100) :: filename
+        character(len=100) :: filename, header_line
         integer :: unit_num, j
         
         write(filename, '(a,i1,a)') ref_file_prefix, case_num, ref_file_suffix
         open(newunit=unit_num, file=filename, status='old', action='read')
+        
+        ! Skip 3 header lines
+        read(unit_num, '(a)') header_line
+        read(unit_num, '(a)') header_line
+        read(unit_num, '(a)') header_line
         
         do j = 1, ITB*JTB
             read(unit_num, *) temp_2d(j)
