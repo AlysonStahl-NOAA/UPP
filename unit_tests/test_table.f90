@@ -24,12 +24,15 @@ program test_table
     ! RDP = 1./DP -> DP = (PH - PL) / REAL(KPM - 1) = (PH - PL) / REAL(ITB - 1) = (105000.- PL) / 75
     ! RDTHE = 1./DTHE -> DTHE = 1 / REAL(KTHM - 1) = 1 / (JTB - 1) = 1 / 133
 
-    ! Same values used in INITPOST_GFS_NEMS_MPIIO()
+    ! Test Case 1: Standard case. Same input values used in INITPOST_GFS_NEMS_MPIIO().
     PT = 10000.0
     THL = 210.0
 
     call TABLE(PTBL, TTBL, PT, RDQ, RDTH, RDP, RDTHE, PL, THL, QS0, SQS, STHE, THE0)
 
+    ! Test Case 2: PT = 0.0 (reaches the p <= 0.0 branch)
+    PT = 0.0
+    call TABLE(PTBL, TTBL, PT, RDQ, RDTH, RDP, RDTHE, PL, THL, QS0, SQS, STHE, THE0)
 
     print *, 'SUCCESS!'
 end program test_table
