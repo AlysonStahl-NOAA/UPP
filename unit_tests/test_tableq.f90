@@ -19,6 +19,7 @@ program test_tableq
 
     interface
         subroutine TABLEQ(TTBLQ, RDP, RDTHE, PL, THL, STHE, THE0)
+            integer, parameter :: ITB=152, JTB=440
             real, intent(in) :: PL, THL
             real, dimension(JTB,ITB), intent(out) :: TTBLQ
             real, dimension(ITB), intent(out) :: THE0, STHE

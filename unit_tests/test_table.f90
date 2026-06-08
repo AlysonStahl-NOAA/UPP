@@ -20,6 +20,7 @@ program test_table
     interface
         subroutine TABLE(PTBL, TTBL, PT, RDQ, RDTH, RDP, RDTHE,     &
                         PL, THL, QS0, SQS, STHE, THE0)
+            integer, parameter :: ITB=076, JTB=134
             real, intent(in)    :: PT, THL
             real, dimension(ITB,JTB), intent(out)   :: PTBL
             real, dimension(JTB,ITB), intent(out)   :: TTBL
