@@ -105,6 +105,8 @@ program test_table
         end if
     end do
 
+    if (res .ne. 0) stop 10
+
     ! Test Case 2: PT = 0.0 (reaches the p <= 0.0 branch)
     PT = 0.0
     THL = 210.0
@@ -117,6 +119,65 @@ program test_table
 
     print *, 'Running Test Case 2: PT = 0.0, THL = 210.0'
     call TABLE(PTBL, TTBL, PT, RDQ, RDTH, RDP, RDTHE, PL, THL, QS0, SQS, STHE, THE0)
+
+    res = 0
+
+    if (abs(RDQ - EXP_RDQ(2)) > tol) then
+        print *, 'Test Case 2 Failed: RDQ = ', RDQ, ' Expected: ', EXP_RDQ(2)
+        res = 1
+    end if
+    if (abs(RDTH - EXP_RDTH(2)) > tol) then
+        print *, 'Test Case 2 Failed: RDTH = ', RDTH, ' Expected: ', EXP_RDTH(2)
+        res = 1
+    end if
+    if (abs(RDP - EXP_RDP(2)) > tol) then
+        print *, 'Test Case 2 Failed: RDP = ', RDP, ' Expected: ', EXP_RDP(2)
+        res = 1
+    end if
+    if (abs(RDTHE - EXP_RDTHE(2)) > tol) then
+        print *, 'Test Case 2 Failed: RDTHE = ', RDTHE, ' Expected: ', EXP_RDTHE(2)
+        res = 1
+    end if
+    if (abs(PL - EXP_PL(2)) > tol) then
+        print *, 'Test Case 2 Failed: PL = ', PL, ' Expected: ', EXP_PL(2)
+        res = 1
+    end if
+
+    do i = 1, ITB
+        do j = 1, JTB
+            if (abs(PTBL(i,j) - EXP_PTBL(i,j,2)) > tol) then
+                print *, 'Test Case 2 Failed: PTBL(', i, ',', j, ') = ', PTBL(i,j), &
+                         ' Expected: ', EXP_PTBL(i,j,2)
+                res = 1
+            end if
+            if (abs(TTBL(j,i) - EXP_TTBL(j,i,2)) > tol) then
+                print *, 'Test Case 2 Failed: TTBL(', j, ',', i, ') = ', TTBL(j,i), &
+                         ' Expected: ', EXP_TTBL(j,i,2)
+                res = 1
+            end if
+        end do
+        if (abs(STHE(i) - EXP_STHE(i,2)) > tol) then
+            print *, 'Test Case 2 Failed: STHE(', i, ') = ', STHE(i), ' Expected: ', EXP_STHE(i,2)
+            res = 1
+        end if
+        if (abs(THE0(i) - EXP_THE0(i,2)) > tol) then
+            print *, 'Test Case 2 Failed: THE0(', i, ') = ', THE0(i), ' Expected: ', EXP_THE0(i,2)
+            res = 1
+        end if
+    end do
+
+    do j = 1, JTB
+        if (abs(QS0(j) - EXP_QS0(j,2)) > tol) then
+            print *, 'Test Case 2 Failed: QS0(', j, ') = ', QS0(j), ' Expected: ', EXP_QS0(j,2)
+            res = 1
+        end if
+        if (abs(SQS(j) - EXP_SQS(j,2)) > tol) then
+            print *, 'Test Case 2 Failed: SQS(', j, ') = ', SQS(j), ' Expected: ', EXP_SQS(j,2)
+            res = 1
+        end if
+    end do
+
+    if (res .ne. 0) stop 20
 
     ! Test Case 3: Low Pressure (reaches DENOM <= EPS branch)
     PT = 100.0
@@ -131,6 +192,65 @@ program test_table
     print *, 'Running Test Case 3: PT = 100.0, THL = 210.0'
     call TABLE(PTBL, TTBL, PT, RDQ, RDTH, RDP, RDTHE, PL, THL, QS0, SQS, STHE, THE0)
 
+    res = 0
+
+    if (abs(RDQ - EXP_RDQ(3)) > tol) then
+        print *, 'Test Case 3 Failed: RDQ = ', RDQ, ' Expected: ', EXP_RDQ(3)
+        res = 1
+    end if
+    if (abs(RDTH - EXP_RDTH(3)) > tol) then
+        print *, 'Test Case 3 Failed: RDTH = ', RDTH, ' Expected: ', EXP_RDTH(3)
+        res = 1
+    end if
+    if (abs(RDP - EXP_RDP(3)) > tol) then
+        print *, 'Test Case 3 Failed: RDP = ', RDP, ' Expected: ', EXP_RDP(3)
+        res = 1
+    end if
+    if (abs(RDTHE - EXP_RDTHE(3)) > tol) then
+        print *, 'Test Case 3 Failed: RDTHE = ', RDTHE, ' Expected: ', EXP_RDTHE(3)
+        res = 1
+    end if
+    if (abs(PL - EXP_PL(3)) > tol) then
+        print *, 'Test Case 3 Failed: PL = ', PL, ' Expected: ', EXP_PL(3)
+        res = 1
+    end if
+
+    do i = 1, ITB
+        do j = 1, JTB
+            if (abs(PTBL(i,j) - EXP_PTBL(i,j,3)) > tol) then
+                print *, 'Test Case 3 Failed: PTBL(', i, ',', j, ') = ', PTBL(i,j), &
+                         ' Expected: ', EXP_PTBL(i,j,3)
+                res = 1
+            end if
+            if (abs(TTBL(j,i) - EXP_TTBL(j,i,3)) > tol) then
+                print *, 'Test Case 3 Failed: TTBL(', j, ',', i, ') = ', TTBL(j,i), &
+                         ' Expected: ', EXP_TTBL(j,i,3)
+                res = 1
+            end if
+        end do
+        if (abs(STHE(i) - EXP_STHE(i,3)) > tol) then
+            print *, 'Test Case 3 Failed: STHE(', i, ') = ', STHE(i), ' Expected: ', EXP_STHE(i,3)
+            res = 1
+        end if
+        if (abs(THE0(i) - EXP_THE0(i,3)) > tol) then
+            print *, 'Test Case 3 Failed: THE0(', i, ') = ', THE0(i), ' Expected: ', EXP_THE0(i,3)
+            res = 1
+        end if
+    end do
+
+    do j = 1, JTB
+        if (abs(QS0(j) - EXP_QS0(j,3)) > tol) then
+            print *, 'Test Case 3 Failed: QS0(', j, ') = ', QS0(j), ' Expected: ', EXP_QS0(j,3)
+            res = 1
+        end if
+        if (abs(SQS(j) - EXP_SQS(j,3)) > tol) then
+            print *, 'Test Case 3 Failed: SQS(', j, ') = ', SQS(j), ' Expected: ', EXP_SQS(j,3)
+            res = 1
+        end if
+    end do
+
+    if (res .ne. 0) stop 30
+    
     print *, 'SUCCESS!'
 
 contains
