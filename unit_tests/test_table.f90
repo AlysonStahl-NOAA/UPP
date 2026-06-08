@@ -34,5 +34,10 @@ program test_table
     PT = 0.0
     call TABLE(PTBL, TTBL, PT, RDQ, RDTH, RDP, RDTHE, PL, THL, QS0, SQS, STHE, THE0)
 
+
+    ! Test Case 3: Low Pressure (reaches DENOM <= EPS branch)
+    PT = 100.0
+    call TABLE(PTBL, TTBL, PT, RDQ, RDTH, RDP, RDTHE, PL, THL, QS0, SQS, STHE, THE0)
+    
     print *, 'SUCCESS!'
 end program test_table
