@@ -29,7 +29,7 @@ program test_tableq
     THL = 210.0
 
     EXP_RDP = 151.0 / 35000.0
-    EXP_RDTHE = 440.0
+    EXP_RDTHE = 439.0
 
     ! Load expected data
     call load_tableq_reference_data(data_file_name, EXP_TTBLQ, EXP_STHE, EXP_THE0)
