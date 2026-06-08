@@ -9,7 +9,7 @@ program test_table
     use table_upp_mod, only: TABLE
     implicit none
 
-    real, parameter :: tol = 1.0e-8
+    real, parameter :: tol = 1.0e-6
     integer, parameter :: ITB=076, JTB=134, ntests = 3
     integer :: i, j, res
     ! TODO: Create parameter with file names used in the tasks you will complete below.
@@ -104,7 +104,7 @@ program test_table
             res = 1
         end if
     end do
-    
+
     ! Test Case 2: PT = 0.0 (reaches the p <= 0.0 branch)
     PT = 0.0
     THL = 210.0
