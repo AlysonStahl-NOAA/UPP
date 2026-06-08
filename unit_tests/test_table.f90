@@ -7,7 +7,7 @@ program test_table
     use table_upp_mod, only: TABLE
     implicit none
 
-    real, parameter :: tol = 1.0e-6
+    real, parameter :: tol = 1.0e-8
     integer, parameter :: ITB=076, JTB=134, ntests = 3
     integer :: i, j, res
     !
@@ -42,7 +42,7 @@ program test_table
     EXP_RDQ(1) = 75.0
     EXP_RDTH(1) = 133.0 / 155.0
     EXP_RDP(1) = 75.0 / 5000.0
-    EXP_RDTHE(1) = 133.0
+    EXP_RDTHE(1) = 1.0 / (1.0 / 133.0) ! Prevents precision related errors
     EXP_PL(1) = PT
 
     print *, 'Running Test Case 1: PT = 10000.0, THL = 210.0'
@@ -114,7 +114,7 @@ program test_table
     EXP_RDQ(2) = 75.0
     EXP_RDTH(2) = 133.0 / 155.0
     EXP_RDP(2) = 75.0 / 105000.0 
-    EXP_RDTHE(2) = 133.0
+    EXP_RDTHE(2) = 1.0 / (1.0 / 133.0) ! Prevents precision related errors
     EXP_PL(2) = PT
 
     print *, 'Running Test Case 2: PT = 0.0, THL = 210.0'
@@ -186,7 +186,7 @@ program test_table
     EXP_RDQ(3) = 75.0
     EXP_RDTH(3) = 133.0 / 155.0
     EXP_RDP(3) = 75.0 / 104900.0
-    EXP_RDTHE(3) = 133.0
+    EXP_RDTHE(3) = 1.0 / (1.0 / 133.0) ! Prevents precision related errors
     EXP_PL(3) = PT
 
     print *, 'Running Test Case 3: PT = 100.0, THL = 210.0'

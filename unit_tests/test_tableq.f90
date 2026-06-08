@@ -7,7 +7,7 @@ program test_tableq
     use tableq_upp_mod, only: TABLEQ
     implicit none
 
-    real, parameter :: tol = 1.0e-6
+    real, parameter :: tol = 1.0e-8
     integer, parameter :: ITB=152, JTB=440
     integer :: i, j, res
     !
@@ -29,7 +29,7 @@ program test_tableq
     THL = 210.0
 
     EXP_RDP = 151.0 / 35000.0
-    EXP_RDTHE = 439.0
+    EXP_RDTHE = 1.0 / (1.0 / 439.0) ! Prevents precision related errors
 
     ! Load expected data
     call load_tableq_reference_data(data_file_name, EXP_TTBLQ, EXP_STHE, EXP_THE0)
