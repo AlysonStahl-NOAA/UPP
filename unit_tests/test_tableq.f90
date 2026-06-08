@@ -28,12 +28,69 @@ program test_tableq
     PL = 70000.0
     THL = 210.0
 
+    EXP_RDP = 75.0 / (105000.0 - PL)  
+    EXP_RDTHE = 133.0
+
+    ! Load expected data
+    call load_tableq_reference_data(data_file_name, EXP_TTBLQ, EXP_STHE, EXP_THE0)
+
     call TABLEQ(TTBLQ, RDP, RDTHE, PL, THL, STHE, THE0)
 
-    call write_tableq_reference_data(data_file_name, PL, THL, TTBLQ, STHE, THE0)
+    res = 0
+
+    if (abs(RDP - EXP_RDP) > tol) then
+        print *, 'Test Failed: RDP = ', RDP, ' Expected: ', EXP_RDP
+        res = 1
+    end if
+    if (abs(RDTHE - EXP_RDTHE) > tol) then
+        print *, 'Test Failed: RDTHE = ', RDTHE, ' Expected: ', EXP_RDTHE
+        res = 1
+    end if
+    do i = 1, JTB
+        do j = 1, ITB
+            if (abs(TTBLQ(i,j) - EXP_TTBLQ(i,j)) > tol) then
+                print *, 'Test Failed: TTBLQ(', i, ',', j, ') = ', TTBLQ(i,j), &
+                         ' Expected: ', EXP_TTBLQ(i,j)
+                res = 1
+            end if
+        end do
+    end do
+
+    if (res .ne. 0) stop 10
+    
     print *, 'SUCCESS!'
 
 contains
+
+    subroutine load_tableq_reference_data(filename, ttblq_out, sthe_out, the0_out)
+        character(len=*), intent(in) :: filename
+        real, intent(out) :: ttblq_out(JTB,ITB), sthe_out(ITB), the0_out(ITB)
+        real :: temp_2d(JTB*ITB)
+        character(len=100) :: header_line
+        integer :: unit_num, i, j
+        
+        open(newunit=unit_num, file=filename, status='old', action='read')
+        
+        ! Skip 3 header lines
+        read(unit_num, '(a)') header_line
+        read(unit_num, '(a)') header_line
+        read(unit_num, '(a)') header_line
+        
+        do i = 1, JTB*ITB
+            read(unit_num, *) temp_2d(i)
+        end do
+        ttblq_out = reshape(temp_2d, [JTB, ITB])
+        
+        do i = 1, ITB
+            read(unit_num, *) sthe_out(i)
+        end do
+        
+        do i = 1, ITB
+            read(unit_num, *) the0_out(i)
+        end do
+        
+        close(unit_num)
+    end subroutine load_tableq_reference_data
 
     subroutine write_tableq_reference_data(filename, pl_in, thl_in, ttblq_in, sthe_in, the0_in)
         character(len=*), intent(in) :: filename
