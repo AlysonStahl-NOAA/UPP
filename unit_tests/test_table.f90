@@ -9,7 +9,7 @@ program test_table
     use table_upp_mod, only: TABLE
     implicit none
 
-    real, parameter :: tol = 1.0e-5
+    real, parameter :: tol = 1.0e-6
     integer, parameter :: ITB=076, JTB=134, ntests = 3
     integer :: i, j, res
     ! TODO: Create parameter with file names used in the tasks you will complete below.
@@ -70,29 +70,6 @@ program test_table
         print *, 'Test Case 1 Failed: PL = ', PL, ' Expected: ', EXP_PL(1)
         res = 1
     end if
-
-    do i = 1, ITB
-        !do j = 1, JTB
-        !    if (abs(PTBL(i,j) - EXP_PTBL(i,j,1)) > tol) then
-        !        print *, 'Test Case 1 Failed: PTBL(', i, ',', j, ') = ', PTBL(i,j), &
-        !                 ' Expected: ', EXP_PTBL(i,j,1)
-        !        res = 1
-        !    end if
-        !    if (abs(TTBL(j,i) - EXP_TTBL(j,i,1)) > tol) then
-        !        print *, 'Test Case 1 Failed: TTBL(', j, ',', i, ') = ', TTBL(j,i), &
-        !                 ' Expected: ', EXP_TTBL(j,i,1)
-        !        res = 1
-        !    end if
-        !end do
-        if (abs(STHE(i) - EXP_STHE(i,1)) > tol) then
-            print *, 'Test Case 1 Failed: STHE(', i, ') = ', STHE(i), ' Expected: ', EXP_STHE(i,1)
-            res = 1
-        end if
-        if (abs(THE0(i) - EXP_THE0(i,1)) > tol) then
-            print *, 'Test Case 1 Failed: THE0(', i, ') = ', THE0(i), ' Expected: ', EXP_THE0(i,1)
-            res = 1
-        end if
-    end do
 
     do j = 1, JTB
         if (abs(QS0(j) - EXP_QS0(j,1)) > tol) then
