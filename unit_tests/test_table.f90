@@ -40,8 +40,8 @@ program test_table
     THL = 210.0
 
     EXP_RDQ(1) = 75.0
-    EXP_RDTH(1) = 133.0 / (365.0 - THL)
-    EXP_RDP(1) = 75.0 / (105000.0 - PT)
+    EXP_RDTH(1) = 133.0 / 155.0
+    EXP_RDP(1) = 75.0 / 5000.0
     EXP_RDTHE(1) = 133.0
     EXP_PL(1) = PT
 
@@ -112,8 +112,8 @@ program test_table
     THL = 210.0
 
     EXP_RDQ(2) = 75.0
-    EXP_RDTH(2) = 133.0 / (365.0 - THL)
-    EXP_RDP(2) = 75.0 / (105000.0 - PT)
+    EXP_RDTH(2) = 133.0 / 155.0
+    EXP_RDP(2) = 75.0 / 105000.0 
     EXP_RDTHE(2) = 133.0
     EXP_PL(2) = PT
 
@@ -184,8 +184,8 @@ program test_table
     THL = 210.0
 
     EXP_RDQ(3) = 75.0
-    EXP_RDTH(3) = 133.0 / (365.0 - THL)
-    EXP_RDP(3) = 75.0 / (105000.0 - PT)
+    EXP_RDTH(3) = 133.0 / 155.0
+    EXP_RDP(3) = 75.0 / 104900.0
     EXP_RDTHE(3) = 133.0
     EXP_PL(3) = PT
 

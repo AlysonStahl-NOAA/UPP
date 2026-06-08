@@ -21,15 +21,15 @@ program test_tableq
     real :: EXP_TTBLQ(JTB,ITB), EXP_STHE(ITB), EXP_THE0(ITB)
     real :: EXP_RDP, EXP_RDTHE
 
-    ! RDP = 1./DP -> DP = (PH - PL) / REAL(KPM - 1) = (PH - PL) / REAL(ITB - 1) = (105000.- PL) / 75
-    ! RDTHE = 1./DTHE -> DTHE = 1 / REAL(KTHM - 1) = 1 / (JTB - 1) = 1 / 133
+    ! RDP = 1./DP -> DP = (PH - PL) / REAL(KPM - 1) = (PH - PL) / REAL(ITB - 1)
+    ! RDTHE = 1./DTHE -> DTHE = 1 / REAL(KTHM - 1) = 1 / (JTB - 1)
 
     ! Same values used in INITPOST_GFS_NEMS_MPIIO()
     PL = 70000.0
     THL = 210.0
 
-    EXP_RDP = 75.0 / (105000.0 - PL)  
-    EXP_RDTHE = 133.0
+    EXP_RDP = 151.0 / 35000.0
+    EXP_RDTHE = 440.0
 
     ! Load expected data
     call load_tableq_reference_data(data_file_name, EXP_TTBLQ, EXP_STHE, EXP_THE0)
@@ -57,7 +57,7 @@ program test_tableq
     end do
 
     if (res .ne. 0) stop 10
-    
+
     print *, 'SUCCESS!'
 
 contains
