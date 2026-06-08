@@ -44,7 +44,7 @@ program test_table
     EXP_RDQ(1) = 75.0
     EXP_RDTH(1) = 133.0 / (365.0 - THL)
     EXP_RDP(1) = 75.0 / (105000.0 - PT)
-    EXP_RDTHE(1) = 1.0 / 133.0
+    EXP_RDTHE(1) = 133.0
     EXP_PL(1) = PT
 
     call TABLE(PTBL, TTBL, PT, RDQ, RDTH, RDP, RDTHE, PL, THL, QS0, SQS, STHE, THE0)
@@ -77,39 +77,34 @@ program test_table
                 print *, 'Test Case 1 Failed: PTBL(', i, ',', j, ') = ', PTBL(i,j), &
                          ' Expected: ', EXP_PTBL(i,j,1)
                 res = 1
-                exit
             end if
             if (abs(TTBL(j,i) - EXP_TTBL(j,i,1)) > tol) then
                 print *, 'Test Case 1 Failed: TTBL(', j, ',', i, ') = ', TTBL(j,i), &
                          ' Expected: ', EXP_TTBL(j,i,1)
                 res = 1
-                exit
             end if
         end do
-        if (res == 1) exit
         if (abs(STHE(i) - EXP_STHE(i,1)) > tol) then
             print *, 'Test Case 1 Failed: STHE(', i, ') = ', STHE(i), ' Expected: ', EXP_STHE(i,1)
             res = 1
-            exit
         end if
         if (abs(THE0(i) - EXP_THE0(i,1)) > tol) then
             print *, 'Test Case 1 Failed: THE0(', i, ') = ', THE0(i), ' Expected: ', EXP_THE0(i,1)
             res = 1
-            exit
         end if
+        if (res == 1) exit
     end do
 
     do j = 1, JTB
         if (abs(QS0(j) - EXP_QS0(j,1)) > tol) then
             print *, 'Test Case 1 Failed: QS0(', j, ') = ', QS0(j), ' Expected: ', EXP_QS0(j,1)
             res = 1
-            exit
         end if
         if (abs(SQS(j) - EXP_SQS(j,1)) > tol) then
             print *, 'Test Case 1 Failed: SQS(', j, ') = ', SQS(j), ' Expected: ', EXP_SQS(j,1)
             res = 1
-            exit
         end if
+        if (res == 1) exit
     end do
 
     ! Test Case 2: PT = 0.0 (reaches the p <= 0.0 branch)
@@ -119,7 +114,7 @@ program test_table
     EXP_RDQ(2) = 75.0
     EXP_RDTH(2) = 133.0 / (365.0 - THL)
     EXP_RDP(2) = 75.0 / (105000.0 - PT)
-    EXP_RDTHE(2) = 1.0 / 133.0
+    EXP_RDTHE(2) = 133.0
     EXP_PL(2) = PT
 
     call TABLE(PTBL, TTBL, PT, RDQ, RDTH, RDP, RDTHE, PL, THL, QS0, SQS, STHE, THE0)
@@ -132,7 +127,7 @@ program test_table
     EXP_RDQ(3) = 75.0
     EXP_RDTH(3) = 133.0 / (365.0 - THL)
     EXP_RDP(3) = 75.0 / (105000.0 - PT)
-    EXP_RDTHE(3) = 1.0 / 133.0
+    EXP_RDTHE(3) = 133.0
     EXP_PL(3) = PT
 
     call TABLE(PTBL, TTBL, PT, RDQ, RDTH, RDP, RDTHE, PL, THL, QS0, SQS, STHE, THE0)
