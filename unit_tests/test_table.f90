@@ -11,7 +11,7 @@ program test_table
     integer, parameter :: ITB=076, JTB=134, ntests = 3
     integer :: i, j, res
     !
-    character(len=*), parameter :: data_file_prefix = 'data/ref_table_case'
+    character(len=*), parameter :: data_file_prefix = 'data/data_table_case'
     character(len=*), parameter :: data_file_suffix = '.txt'
     !
     real :: PT, THL
@@ -263,7 +263,7 @@ contains
         character(len=100) :: filename, header_line
         integer :: unit_num, j
         
-        write(filename, '(a,i1,a)') ref_file_prefix, case_num, ref_file_suffix
+        write(filename, '(a,i1,a)') data_file_prefix, case_num, data_file_suffix
         open(newunit=unit_num, file=filename, status='old', action='read')
         
         ! Skip 3 header lines
