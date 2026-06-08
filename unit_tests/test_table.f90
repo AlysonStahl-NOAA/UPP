@@ -45,11 +45,11 @@ program test_table
     EXP_RDTHE(1) = 133.0
     EXP_PL(1) = PT
 
+    print *, 'Running Test Case 1: PT = 10000.0, THL = 210.0'
     call TABLE(PTBL, TTBL, PT, RDQ, RDTH, RDP, RDTHE, PL, THL, QS0, SQS, STHE, THE0)
 
     res = 0
 
-    ! TODO: Comment out all of the value checks below.
     if (abs(RDQ - EXP_RDQ(1)) > tol) then
         print *, 'Test Case 1 Failed: RDQ = ', RDQ, ' Expected: ', EXP_RDQ(1)
         res = 1
@@ -77,25 +77,20 @@ program test_table
                 print *, 'Test Case 1 Failed: PTBL(', i, ',', j, ') = ', PTBL(i,j), &
                          ' Expected: ', EXP_PTBL(i,j,1)
                 res = 1
-                exit
             end if
             if (abs(TTBL(j,i) - EXP_TTBL(j,i,1)) > tol) then
                 print *, 'Test Case 1 Failed: TTBL(', j, ',', i, ') = ', TTBL(j,i), &
                          ' Expected: ', EXP_TTBL(j,i,1)
                 res = 1
-                exit
             end if
         end do
-        if (res == 1) exit
         if (abs(STHE(i) - EXP_STHE(i,1)) > tol) then
             print *, 'Test Case 1 Failed: STHE(', i, ') = ', STHE(i), ' Expected: ', EXP_STHE(i,1)
             res = 1
-            exit
         end if
         if (abs(THE0(i) - EXP_THE0(i,1)) > tol) then
             print *, 'Test Case 1 Failed: THE0(', i, ') = ', THE0(i), ' Expected: ', EXP_THE0(i,1)
             res = 1
-            exit
         end if
     end do
 
@@ -103,12 +98,10 @@ program test_table
         if (abs(QS0(j) - EXP_QS0(j,1)) > tol) then
             print *, 'Test Case 1 Failed: QS0(', j, ') = ', QS0(j), ' Expected: ', EXP_QS0(j,1)
             res = 1
-            exit
         end if
         if (abs(SQS(j) - EXP_SQS(j,1)) > tol) then
             print *, 'Test Case 1 Failed: SQS(', j, ') = ', SQS(j), ' Expected: ', EXP_SQS(j,1)
             res = 1
-            exit
         end if
     end do
 
@@ -122,6 +115,7 @@ program test_table
     EXP_RDTHE(2) = 133.0
     EXP_PL(2) = PT
 
+    print *, 'Running Test Case 2: PT = 0.0, THL = 210.0'
     call TABLE(PTBL, TTBL, PT, RDQ, RDTH, RDP, RDTHE, PL, THL, QS0, SQS, STHE, THE0)
 
     ! Test Case 3: Low Pressure (reaches DENOM <= EPS branch)
@@ -134,6 +128,7 @@ program test_table
     EXP_RDTHE(3) = 133.0
     EXP_PL(3) = PT
 
+    print *, 'Running Test Case 3: PT = 100.0, THL = 210.0'
     call TABLE(PTBL, TTBL, PT, RDQ, RDTH, RDP, RDTHE, PL, THL, QS0, SQS, STHE, THE0)
 
     print *, 'SUCCESS!'
