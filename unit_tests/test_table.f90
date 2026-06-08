@@ -11,7 +11,7 @@ program test_table
     integer, parameter :: ITB=076, JTB=134, ntests = 3
     integer :: i, j, res
     !
-    character(len=*), parameter :: data_file_prefix = 'data/data_table_case'
+    character(len=*), parameter :: data_file_prefix = 'data/ref_table_case'
     character(len=*), parameter :: data_file_suffix = '.txt'
     !
     real :: PT, THL
