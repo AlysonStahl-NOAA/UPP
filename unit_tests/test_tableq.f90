@@ -4,6 +4,7 @@
 !
 ! Alyson Stahl, 6/2026
 program test_tableq
+    use tableq_upp_mod, only: TABLEQ
     implicit none
 
     real, parameter :: tol = 1.0e-8
@@ -16,16 +17,6 @@ program test_tableq
     real :: RDP, RDTHE
     !
     real :: EXP_RDP, EXP_RDTHE
-
-    interface
-        subroutine TABLEQ(TTBLQ, RDP, RDTHE, PL, THL, STHE, THE0)
-            integer, parameter :: ITB=152, JTB=440
-            real, intent(in) :: PL, THL
-            real, dimension(JTB,ITB), intent(out) :: TTBLQ
-            real, dimension(ITB), intent(out) :: THE0, STHE
-            real, intent(out) :: RDP, RDTHE
-        end subroutine TABLEQ
-    end interface
 
     ! RDP = 1./DP -> DP = (PH - PL) / REAL(KPM - 1) = (PH - PL) / REAL(ITB - 1) = (105000.- PL) / 75
     ! RDTHE = 1./DTHE -> DTHE = 1 / REAL(KTHM - 1) = 1 / (JTB - 1) = 1 / 133

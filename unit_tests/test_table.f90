@@ -4,6 +4,7 @@
 !
 ! Alyson Stahl, 6/2026
 program test_table
+    use table_upp_mod, only: TABLE
     implicit none
 
     real, parameter :: tol = 1.0e-8
@@ -16,19 +17,6 @@ program test_table
     real :: RDQ, RDTH, RDP, RDTHE, PL
     !
     real :: EXP_RDQ, EXP_RDTH, EXP_RDP, EXP_RDTHE, EXP_PL
-
-    interface
-        subroutine TABLE(PTBL, TTBL, PT, RDQ, RDTH, RDP, RDTHE,     &
-                        PL, THL, QS0, SQS, STHE, THE0)
-            integer, parameter :: ITB=076, JTB=134
-            real, intent(in)    :: PT, THL
-            real, dimension(ITB,JTB), intent(out)   :: PTBL
-            real, dimension(JTB,ITB), intent(out)   :: TTBL
-            real, dimension(JTB), intent(out)   :: QS0, SQS
-            real, dimension(ITB), intent(out)   :: STHE, THE0
-            real, intent(out)   :: RDQ, RDTH, RDP, RDTHE, PL
-        end subroutine TABLE
-    end interface
 
     ! PL = PT
     ! RDQ = KPM - 1 = ITB - 1 = 75
