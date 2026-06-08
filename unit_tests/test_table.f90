@@ -4,19 +4,32 @@
 !
 ! Alyson Stahl, 6/2026
 program test_table
+    ! TODO: Add any necessary set up code here for the other TODOs. You should only add 
+    ! needed set up and necessary code. Do not do more than asked.
     use table_upp_mod, only: TABLE
     implicit none
 
     real, parameter :: tol = 1.0e-8
-    integer, parameter :: ITB=076, JTB=134
+    integer, parameter :: ITB=076, JTB=134, ntests = 3
     integer :: i, j, res
+    ! TODO: Create parameter with file names used in the tasks you will complete below.
+    character(len=*), parameter :: ref_file_prefix = 'data/ref_table_case'
+    character(len=*), parameter :: ref_file_suffix = '.txt'
     !
     real :: PT, THL
     real :: PTBL(ITB,JTB), TTBL(JTB,ITB)
     real :: QS0(JTB), SQS(JTB), STHE(ITB), THE0(ITB)
     real :: RDQ, RDTH, RDP, RDTHE, PL
     !
-    real :: EXP_RDQ, EXP_RDTH, EXP_RDP, EXP_RDTHE, EXP_PL
+    real :: EXP_PTBL(ITB,JTB,ntests), EXP_TTBL(JTB,ITB,ntests)
+    real :: EXP_QS0(JTB,ntests), EXP_SQS(JTB,ntests), EXP_STHE(ITB,ntests), EXP_THE0(ITB,ntests)
+    real :: EXP_RDQ(ntests), EXP_RDTH(ntests), EXP_RDP(ntests), EXP_RDTHE(ntests), EXP_PL(ntests)
+
+    ! Load expected data.
+    do i = 1, ntests
+        call load_reference_data(i, EXP_PTBL(:,:,i), EXP_TTBL(:,:,i), EXP_QS0(:,i), &
+                                  EXP_SQS(:,i), EXP_STHE(:,i), EXP_THE0(:,i))
+    end do
 
     ! PL = PT
     ! RDQ = KPM - 1 = ITB - 1 = 75
@@ -28,16 +41,81 @@ program test_table
     PT = 10000.0
     THL = 210.0
 
+    EXP_RDQ(1) = 75.0
+    EXP_RDTH(1) = 133.0 / (365.0 - THL)
+    EXP_RDP(1) = 75.0 / (105000.0 - PT)
+    EXP_RDTHE(1) = 1.0 / 133.0
+    EXP_PL(1) = PT
+
     call TABLE(PTBL, TTBL, PT, RDQ, RDTH, RDP, RDTHE, PL, THL, QS0, SQS, STHE, THE0)
 
     ! Test Case 2: PT = 0.0 (reaches the p <= 0.0 branch)
     PT = 0.0
+    THL = 210.0
+
+    EXP_RDQ(2) = 75.0
+    EXP_RDTH(2) = 133.0 / (365.0 - THL)
+    EXP_RDP(2) = 75.0 / (105000.0 - PT)
+    EXP_RDTHE(2) = 1.0 / 133.0
+    EXP_PL(2) = PT
+
     call TABLE(PTBL, TTBL, PT, RDQ, RDTH, RDP, RDTHE, PL, THL, QS0, SQS, STHE, THE0)
 
 
     ! Test Case 3: Low Pressure (reaches DENOM <= EPS branch)
     PT = 100.0
+    THL = 210.0
+
+    EXP_RDQ(3) = 75.0
+    EXP_RDTH(3) = 133.0 / (365.0 - THL)
+    EXP_RDP(3) = 75.0 / (105000.0 - PT)
+    EXP_RDTHE(3) = 1.0 / 133.0
+    EXP_PL(3) = PT
+
     call TABLE(PTBL, TTBL, PT, RDQ, RDTH, RDP, RDTHE, PL, THL, QS0, SQS, STHE, THE0)
-    
+
     print *, 'SUCCESS!'
+
+contains
+
+    subroutine load_reference_data(case_num, ptbl_out, ttbl_out, qs0_out, sqs_out, sthe_out, the0_out)
+        integer, intent(in) :: case_num
+        real, intent(out) :: ptbl_out(ITB,JTB), ttbl_out(JTB,ITB)
+        real, intent(out) :: qs0_out(JTB), sqs_out(JTB), sthe_out(ITB), the0_out(ITB)
+        real :: temp_2d(ITB*JTB)
+        character(len=100) :: filename
+        integer :: unit_num, j
+        
+        write(filename, '(a,i1,a)') ref_file_prefix, case_num, ref_file_suffix
+        open(newunit=unit_num, file=filename, status='old', action='read')
+        
+        do j = 1, ITB*JTB
+            read(unit_num, *) temp_2d(j)
+        end do
+        ptbl_out = reshape(temp_2d, [ITB, JTB])
+        
+        do j = 1, JTB*ITB
+            read(unit_num, *) temp_2d(j)
+        end do
+        ttbl_out = reshape(temp_2d, [JTB, ITB])
+        
+        do j = 1, JTB
+            read(unit_num, *) qs0_out(j)
+        end do
+        
+        do j = 1, JTB
+            read(unit_num, *) sqs_out(j)
+        end do
+        
+        do j = 1, ITB
+            read(unit_num, *) sthe_out(j)
+        end do
+        
+        do j = 1, ITB
+            read(unit_num, *) the0_out(j)
+        end do
+        
+        close(unit_num)
+    end subroutine load_reference_data
+
 end program test_table
