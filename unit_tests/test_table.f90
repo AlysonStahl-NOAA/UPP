@@ -10,9 +10,9 @@ program test_table
     real, parameter :: tol = 1.0e-8
     integer, parameter :: ITB=076, JTB=134, ntests = 3
     integer :: i, j, res
-    ! TODO: Create parameter with file names used in the tasks you will complete below.
-    character(len=*), parameter :: ref_file_prefix = 'data/ref_table_case'
-    character(len=*), parameter :: ref_file_suffix = '.txt'
+    !
+    character(len=*), parameter :: data_file_prefix = 'data/ref_table_case'
+    character(len=*), parameter :: data_file_suffix = '.txt'
     !
     real :: PT, THL
     real :: PTBL(ITB,JTB), TTBL(JTB,ITB)
