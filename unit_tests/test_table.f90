@@ -41,7 +41,7 @@ program test_table
 
     EXP_RDQ(1) = 75.0
     EXP_RDTH(1) = 133.0 / 155.0
-    EXP_RDP(1) = 75.0 / 5000.0
+    EXP_RDP(1) = 75.0 / 95000.0
     EXP_RDTHE(1) = 1.0 / (1.0 / 133.0) ! Prevents precision related errors
     EXP_PL(1) = PT
 
