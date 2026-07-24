@@ -25,7 +25,7 @@ program test_xml_perl_data
     inpchar = "?"
     call filter_char_inp(inpchar)
 
-    if (inpchar .ne. 0) then
+    if (inpchar .ne. " ") then
         print *, "Test Case 1 Failed: Input is '?', Result: ", inpchar
         stop 10
     end if
