@@ -204,13 +204,13 @@ program test_xml_perl_data
         res = 1
     end if
 
-    if (paramset_count .ne. EXP_PARAMSET_COUNT) then
+    if (size(paramset) .ne. EXP_PARAMSET_COUNT) then
         print *, "Test Failed for paramset_count: Expected ", EXP_PARAMSET_COUNT, &
-            " but got ", paramset_count
+            " but got ", size(paramset)
         res = 1
     end if
 
     if (res .ne. 0) stop 30
-    
+
     print *, "SUCCESS!"
 end program test_xml_perl_data
