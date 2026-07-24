@@ -51,5 +51,12 @@ program test_xml_perl_data
 
     call read_postxconfig()
     
+    if (tprec .ne EXP_TPREC .OR. tclod .ne. EXP_TPREC .OR. trdlw .ne. EXP_TPREC &
+            .OR. trdsw .ne. EXP_TPREC .OR. tsrfc .ne. EXP_TPREC .OR. tmaxmin .ne. EXP_TPREC &
+            .OR. td3d .ne. EXP_TPREC) then
+        print *, "Test Failed: One or more parameters did not match expected values."
+        stop 30
+    end if
+
     print *, "SUCCESS!"
 end program test_xml_perl_data
