@@ -94,7 +94,9 @@ program test_xml_perl_data
         res = 1
     end if
 
-    call compare_paramset(paramset, EXP_PARAMSET(1), res)
+    ! We expect the paramset to only have one element for all cases. The index of EXP_PARAMSET corresponds 
+    ! to the test case number.
+    call compare_paramset(paramset(1), EXP_PARAMSET(1), res)
 
     if (res .ne. 0) stop 30
 
@@ -120,7 +122,7 @@ program test_xml_perl_data
         res = 1
     end if
 
-    call compare_paramset(paramset, EXP_PARAMSET(2), res)
+    call compare_paramset(paramset(1), EXP_PARAMSET(2), res)
 
     if (res .ne. 0) stop 40
     
@@ -145,7 +147,7 @@ program test_xml_perl_data
         res = 1
     end if
 
-    call compare_paramset(paramset, EXP_PARAMSET(3), res)
+    call compare_paramset(paramset(1), EXP_PARAMSET(3), res)
 
     if (res .ne. 0) stop 50
 
@@ -155,7 +157,6 @@ contains
 
     subroutine compare_paramset(paramset, expected_paramset, res)
         implicit none
-        ! Compare paramset at single index.
         type(paramset_t), intent(in) :: paramset
         type(paramset_t), intent(in) :: expected_paramset
         integer, intent(inout) :: res
