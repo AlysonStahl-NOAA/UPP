@@ -7,7 +7,7 @@ program test_esat
     implicit none
 
     real, parameter :: tol = 1.0e-6
-    integer, parameter :: ntests = 9
+    integer, parameter :: ntests = 10
     ! Value from the ESAT function to avoid floating underflow
     real, parameter :: DEFAULT_ESAT = 3.777647E-05
     !
@@ -62,10 +62,14 @@ program test_esat
     k = T(8) + 273.15
     EXP_ESAT(8) = exp(26.660820-0.0091379024*k-6106.3960/k)
 
-    ! Test Case 9: T = 100. => T + 273.15 = 373.15 (Boundary Case)
+    ! Test Case 9: T = 100. (Boundary Case)
     T(9) = 100.0
-    k = T(9) + 273.15
-    EXP_ESAT(9) = exp(26.660820-0.0091379024*k-6106.3960/k)
+    EXP_ESAT(9) = DEFAULT_ESAT
+
+    ! Test Case 10: T = 373.15 (Boundary Case)
+    T(10) = 373.15
+    k = T(10)
+    EXP_ESAT(10) = exp(26.660820-0.0091379024*k-6106.3960/k)
 
     res = 0
     do i = 1, ntests
