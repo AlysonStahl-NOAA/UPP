@@ -19,8 +19,8 @@ program test_xmytw_post
         end function XMYTW_POST
     end interface
 
-    ! Set P to a default because its only used in some test cases
-    P = 1.0 
+    ! Use same value of P for most test cases
+    P = 0.0 
 
     ! Test Case 1: td > t (returns average of t and td)
     T(1) = 20.0
