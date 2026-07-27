@@ -87,5 +87,8 @@ jobs:
 
       - name: run-tests
         run: |
+          export FI_PROVIDER=tcp
+          export I_MPI_FABRICS=shm:ofi
+          export I_MPI_OFI_PROVIDER=tcp
           cd UPP/build
           ctest --verbose --output-on-failure --rerun-failed
