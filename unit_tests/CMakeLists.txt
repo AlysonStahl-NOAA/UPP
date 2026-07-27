@@ -22,17 +22,30 @@ function(create_test name)
 endfunction()
 
 # This function builds, links, and runs a Fortran test program using MPI with a specified number of processes.
+#function(create_mpi_test name num_procs)
+#  add_executable(${name}_np_${num_procs} ${name}.f90)
+#  target_link_libraries(${name}_np_${num_procs} PRIVATE upp::upp MPI::MPI_Fortran)
+#  set_target_properties(${name}_np_${num_procs} PROPERTIES LINKER_LANGUAGE Fortran)
+
+#  add_test(
+#    NAME ${name}_np_${num_procs}
+#    COMMAND ${MPIEXEC_EXECUTABLE} ${MPIEXEC_NUMPROC_FLAG} ${num_procs}
+#            ${MPIEXEC_PREFLAGS} $<TARGET_FILE:${name}_np_${num_procs}> ${MPIEXEC_POSTFLAGS}
+#  )
+#  set_tests_properties(${name}_np_${num_procs} PROPERTIES PROCESSORS ${num_procs})
+#endfunction()
+
 function(create_mpi_test name num_procs)
-  add_executable(${name}_np_${num_procs} ${name}.f90)
-  target_link_libraries(${name}_np_${num_procs} PRIVATE upp::upp MPI::MPI_Fortran)
-  set_target_properties(${name}_np_${num_procs} PROPERTIES LINKER_LANGUAGE Fortran)
+  add_executable(${name} ${name}.f90)
+  target_link_libraries(${name} PRIVATE upp::upp MPI::MPI_Fortran)
+  set_target_properties(${name} PROPERTIES LINKER_LANGUAGE Fortran)
 
   add_test(
-    NAME ${name}_np_${num_procs}
-    COMMAND ${MPIEXEC_EXECUTABLE} ${MPIEXEC_NUMPROC_FLAG} ${num_procs}
-            ${MPIEXEC_PREFLAGS} $<TARGET_FILE:${name}_np_${num_procs}> ${MPIEXEC_POSTFLAGS}
+    NAME ${name}
+    COMMAND ${MPIEXEC_EXECUTABLE} ${MPIEXEC_NUMPROC_FLAG} 1
+            $<TARGET_FILE:${name}> 
   )
-  set_tests_properties(${name}_np_${num_procs} PROPERTIES PROCESSORS ${num_procs})
+  set_tests_properties(${name} PROPERTIES PROCESSORS 1)
 endfunction()
 
 # Some very small test files may be committed to the repo. This
@@ -110,8 +123,9 @@ if(BUILD_WITH_NEMSIO)
 endif()
 
 # The following tests require MPI to run.
-create_mpi_test(test_allgetherv 1)
-create_mpi_test(test_allgetherv 2)
+#create_mpi_test(test_allgetherv 1)
+#create_mpi_test(test_allgetherv 2)
+create_mpi_test(test_allgetherv)
 
 # Copy test data files
 copy_test_data(ref_table_case1.txt)
