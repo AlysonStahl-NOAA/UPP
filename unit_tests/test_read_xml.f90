@@ -17,10 +17,22 @@ program test_read_xml
     ! Also used in test_xml_perl_data.f90
     filenameflat = "data/ref_test_xml_perl_data_case2.txt"
 
+    EXP_NUM_PSET = 1
+    EXP_NUM_POST_AFLD = 2
+
     call READ_xml()
 
-    print *, num_pset
-    print *, num_post_afld
+    if (num_pset .ne. EXP_NUM_PSET) then
+        print *, "Test Failed: num_pset = ", num_pset, " Expected = ", EXP_NUM_PSET
+        res = 1
+    end if
 
+    if (num_post_afld .ne. EXP_NUM_POST_AFLD) then
+        print *, "Test Failed: num_post_afld = ", num_post_afld, " Expected = ", EXP_NUM_POST_AFLD
+        res = 1
+    end if
+
+    if (res .ne. 0) stop 10
+    
     print *, "SUCCESS!"
 end program test_read_xml
