@@ -35,7 +35,7 @@ endfunction()
 #  set_tests_properties(${name}_np_${num_procs} PROPERTIES PROCESSORS ${num_procs})
 #endfunction()
 
-function(create_mpi_test name num_procs)
+function(create_mpi_test name)
   add_executable(${name} ${name}.f90)
   target_link_libraries(${name} PRIVATE upp::upp MPI::MPI_Fortran)
   set_target_properties(${name} PROPERTIES LINKER_LANGUAGE Fortran)
