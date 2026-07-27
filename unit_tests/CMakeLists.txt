@@ -97,12 +97,14 @@ create_test(test_ngmslp)
 create_test(test_table)
 create_test(test_tableq)
 create_test(test_xml_perl_data)
+create_test(test_read_xml)
 
 configure_file(${PROJECT_SOURCE_DIR}/fix/hires_micro_lookup.dat
                ${CMAKE_CURRENT_BINARY_DIR}/eta_micro_lookup.dat COPYONLY)
 create_test(test_microinit)
 set_tests_properties(test_microinit PROPERTIES WORKING_DIRECTORY ${CMAKE_CURRENT_BINARY_DIR})
 set_tests_properties(test_xml_perl_data PROPERTIES WORKING_DIRECTORY ${CMAKE_CURRENT_BINARY_DIR})
+set_tests_properties(test_read_xml PROPERTIES WORKING_DIRECTORY ${CMAKE_CURRENT_BINARY_DIR})
 
 if(BUILD_WITH_NEMSIO)
   create_test(test_assignnemsiovar SRC_FILES ${PROJECT_SOURCE_DIR}/sorc/ncep_post.fd/ASSIGNNEMSIOVAR.f)

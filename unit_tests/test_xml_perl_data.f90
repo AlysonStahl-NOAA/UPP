@@ -19,9 +19,6 @@ program test_xml_perl_data
     real :: EXP_TPREC, EXP_DEFAULT
     type(paramset_t) :: EXP_PARAMSET(ntests)
 
-    ! XML file name
-    filenameflat = "data/ref_test_xml_perl_data.txt"
-
     print *, "Testing filter_char_inp() subroutine..."
 
     ! Test Case 1: Input is "?", should return empty string.
