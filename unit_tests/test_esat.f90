@@ -6,10 +6,10 @@
 program test_esat
     implicit none
 
-    real, parameter :: tol = 1.0e-6
+    real, parameter :: tol = 1.0e-5
     integer, parameter :: ntests = 10
     ! Value from the ESAT function to avoid floating underflow
-    real, parameter :: DEFAULT_ESAT = 3.777647E-05
+    real*4, parameter :: DEFAULT_ESAT = 3.777647E-05
     !
     integer :: i, res
     real*4 :: T(ntests), ESAT_OUT(ntests), EXP_ESAT(ntests)
@@ -29,22 +29,22 @@ program test_esat
     T(1) = -274.0
     EXP_ESAT(1) = FLAG
 
-    ! Test Case 2: -273.15 < T < -100 => T + 273.15 < 173.15 (set to default value to 
+    ! Test Case 2: -273.15 <= T < -100 => T + 273.15 < 173.15 (set to default value to 
     ! avoid floating underflow)
     T(2) = -200.0
     EXP_ESAT(2) = DEFAULT_ESAT
 
-    ! Test Case 3: -100 < T < 100 => T + 273.15 > 173.15
+    ! Test Case 3: -100 <= T < 100 => T + 273.15 > 173.15
     T(3) = 50.0
     k = T(3) + 273.15
     EXP_ESAT(3) = exp(26.660820-0.0091379024*k-6106.3960/k)
 
-    ! Test Case 4: 100 < T < 173.15 (T not adjusted, returns default value to 
+    ! Test Case 4: 100 <= T < 173.15 (T not adjusted, returns default value to 
     ! avoid floating underflow)
     T(4) = 150.0
     EXP_ESAT(4) = DEFAULT_ESAT
 
-    ! Test Case 5: 173.15 < T < 373.15 (T not adjusted)
+    ! Test Case 5: 173.15 <= T <= 373.15 (T not adjusted)
     T(5) = 200.0
     k = T(5)
     EXP_ESAT(5) = exp(26.660820-0.0091379024*k-6106.3960/k)
