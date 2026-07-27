@@ -96,6 +96,9 @@ create_test(test_frzlvl2)
 create_test(test_ngmslp)
 create_test(test_table)
 create_test(test_tableq)
+create_test(test_esat)
+create_test(test_tdofesat)
+create_test(test_xmytw_post)
 
 configure_file(${PROJECT_SOURCE_DIR}/fix/hires_micro_lookup.dat
                ${CMAKE_CURRENT_BINARY_DIR}/eta_micro_lookup.dat COPYONLY)
