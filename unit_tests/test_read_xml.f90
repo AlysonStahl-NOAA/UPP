@@ -6,7 +6,6 @@
 
 program test_read_xml
     use READ_XML_UPP_MOD
-    use xml_perl_data, only: READ_xml
     use grib2_module, only: num_pset
     use rqstfld_mod, only: num_post_afld
     use CTLBLK_mod, only: filenameflat
