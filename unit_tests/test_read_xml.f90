@@ -19,7 +19,8 @@ program test_read_xml
 
     EXP_NUM_PSET = 1
     EXP_NUM_POST_AFLD = 2
-
+    res = 0
+    
     call READ_xml()
 
     if (num_pset .ne. EXP_NUM_PSET) then
@@ -33,6 +34,6 @@ program test_read_xml
     end if
 
     if (res .ne. 0) stop 10
-    
+
     print *, "SUCCESS!"
 end program test_read_xml
