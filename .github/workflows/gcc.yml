@@ -90,7 +90,6 @@ jobs:
 
       - name: build-upp
         run: |
-          cd ${SPACK_STACK_DIR}
           source spack/share/spack/setup-env.sh
           spack env activate upp-env
           export CC=mpicc
