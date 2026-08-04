@@ -13,6 +13,7 @@ env:
   CC: gcc-10
   FC: gfortran-10
   CXX: g++-10
+  SPACK_STACK_DIR: ${{ github.workspace }}/spack
 
 # A note on flushing Action cache and relevance to "cache_key" above.
 # There is no way to flush the Action cache, and hence a number (#) is appended
@@ -54,7 +55,6 @@ jobs:
         if: steps.cache-env.outputs.cache-hit != 'true'
         run: |
           git clone -c feature.manyFiles=true https://github.com/NOAA-EMC/spack.git
-          export SPACK_STACK_DIR="(pwd)/spack"
           source spack/share/spack/setup-env.sh
           spack env create upp-env UPP/ci/spack.yaml
           spack env activate upp-env
