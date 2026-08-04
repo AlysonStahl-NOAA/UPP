@@ -57,8 +57,7 @@ jobs:
           git clone https://github.com/JCSDA/spack-stack.git
           git clone -c feature.manyFiles=true https://github.com/JCSDA/spack.git ${SPACK_STACK_DIR}/spack
           git clone https://github.com/JCSDA/spack-packages.git ${SPACK_STACK_DIR}/repos/builtin
-          cd ${SPACK_STACK_DIR}
-          source spack/share/spack/setup-env.sh
+          source ${SPACK_STACK_DIR}/spack/share/spack/setup-env.sh
           spack env create upp-env ${{ github.workspace }}/UPP/ci/spack.yaml
           spack env activate upp-env
           sudo apt install cmake
@@ -90,7 +89,7 @@ jobs:
 
       - name: build-upp
         run: |
-          source spack/share/spack/setup-env.sh
+          source ${SPACK_STACK_DIR}/spack/share/spack/setup-env.sh
           spack env activate upp-env
           export CC=mpicc
           export FC=mpif90
