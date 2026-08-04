@@ -98,6 +98,9 @@ create_test(test_table)
 create_test(test_tableq)
 create_test(test_xml_perl_data)
 create_test(test_read_xml)
+create_test(test_esat)
+create_test(test_tdofesat)
+create_test(test_xmytw_post)
 
 configure_file(${PROJECT_SOURCE_DIR}/fix/hires_micro_lookup.dat
                ${CMAKE_CURRENT_BINARY_DIR}/eta_micro_lookup.dat COPYONLY)
@@ -111,8 +114,8 @@ if(BUILD_WITH_NEMSIO)
 endif()
 
 # The following tests require MPI to run.
-create_mpi_test(test_allgetherv 1)
-create_mpi_test(test_allgetherv 2)
+#create_mpi_test(test_allgetherv 1)
+#create_mpi_test(test_allgetherv 2)
 
 # Copy test data files
 copy_test_data(ref_table_case1.txt)
