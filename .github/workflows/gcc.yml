@@ -48,8 +48,6 @@ jobs:
             spack
             ~/.spack
           key: spack-${{ runner.os }}-${{ env.cache_key }}-${{ hashFiles('UPP/ci/spack.yaml') }}
-          restore-keys: |
-            spack-${{ runner.os }}-${{ env.cache_key }}-
 
       # Install dependencies using Spack
       - name: install-dependencies-with-spack
