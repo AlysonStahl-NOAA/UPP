@@ -9,11 +9,10 @@ defaults:
     shell: bash -leo pipefail {0}
 
 env:
-  cache_key: gcc4  # The number (#) following the cache_key "gcc" is to flush Action cache.
+  cache_key: gcc3  # The number (#) following the cache_key "gcc" is to flush Action cache.
   CC: gcc-10
   FC: gfortran-10
-  CXX: g++-10  
-  SPACK_STACK_DIR: ${{ github.workspace }}/spack-stack
+  CXX: g++-10
 
 # A note on flushing Action cache and relevance to "cache_key" above.
 # There is no way to flush the Action cache, and hence a number (#) is appended
@@ -54,11 +53,9 @@ jobs:
       - name: install-dependencies-with-spack
         if: steps.cache-env.outputs.cache-hit != 'true'
         run: |
-          git clone https://github.com/JCSDA/spack-stack.git
-          git clone -c feature.manyFiles=true https://github.com/JCSDA/spack.git ${SPACK_STACK_DIR}/spack
-          git clone https://github.com/JCSDA/spack-packages.git ${SPACK_STACK_DIR}/repos/builtin
-          source ${SPACK_STACK_DIR}/spack/share/spack/setup-env.sh
-          spack env create upp-env ${{ github.workspace }}/UPP/ci/spack.yaml
+          git clone -c feature.manyFiles=true https://github.com/NOAA-EMC/spack.git
+          source spack/share/spack/setup-env.sh
+          spack env create upp-env UPP/ci/spack.yaml
           spack env activate upp-env
           sudo apt install cmake
           spack external find
@@ -89,7 +86,7 @@ jobs:
 
       - name: build-upp
         run: |
-          source $(pwd)/spack-stack/spack/share/spack/setup-env.sh
+          source spack/share/spack/setup-env.sh
           spack env activate upp-env
           export CC=mpicc
           export FC=mpif90
