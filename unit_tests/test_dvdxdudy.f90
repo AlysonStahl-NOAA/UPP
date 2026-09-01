@@ -42,9 +42,9 @@ program test_dvdxdudy
     gridtype = 'A'
     dx = 1000.00
     dy = 2000.00
-    EXP_DDVDX = spval
-    EXP_DDUDY = spval
-    EXP_UUAVG = spval
+    EXP_DDVDX = 0.0
+    EXP_DDUDY = 0.0
+    EXP_UUAVG = 0.0
 
     do i = 1, NX
         do j = 1, NY
