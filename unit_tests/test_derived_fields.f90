@@ -234,7 +234,7 @@ program test_derived_fields
                                exp_pc, exp_kx, exp_lx, exp_tott, exp_prcpType, &
                                 exp_ept, exp_wbt, exp_twp, 7, res)
 
-    !if (res .ne. 0) stop 70
+    if (res .ne. 0) stop 70
 
     ! Test Case 8: Other with coldTemp <= 265.15 & tColdArea >= 350.0 & wetBuldArea <= -250.0
     rh(5) = 95.0
@@ -270,18 +270,14 @@ program test_derived_fields
                                exp_pc, exp_kx, exp_lx, exp_tott, exp_prcpType, &
                                 exp_ept, exp_wbt, exp_twp, 8, res)
 
-    !if (res .ne. 0) stop 80
+    if (res .ne. 0) stop 80
 
-    ! Test Case 9: Other with coldTemp <= 265.15 & tColdArea >= 350.0 & wetBuldArea > -250.0 & t(k) > 273.15
-    t(9) = 292.0
-    t(10) = 301.0
-    rh(10) = 94.0
-
-    exp_pc = 1.20000001E-02
-    exp_kx = 34.2969360
-    exp_lx = -43.6572571
-    exp_tott = 60.0737305
-    exp_prcpType = PRECIPS%OTHER
+    ! Test Case 9: Other with coldTemp <= 265.15 & tColdArea >= 350.0 & wetBuldArea > -250.0 & t(k) <= 273.15
+    ! TODO: Replace the ??? with code that results in the case where precipitation type is OTHER with
+    !  coldTemp <= 265.15, tColdArea >= 350.0, wetBuldArea > -250.0, and t(k) <= 273.15
+    ! Where possible, reuse values from previous test cases to minimize changes. 
+    t(10) = 273.1
+    rh(10) = 100.0
 
     res = 0
     call derive_fields(imp_physics,t, rh, pres, hgt, totalWater, totalCond,&
