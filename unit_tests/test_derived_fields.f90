@@ -9,7 +9,7 @@ program test_derived_fields
 
     real, parameter :: tol = 1.0e-6
     integer, parameter :: nz = 10
-    integer :: k, res
+    integer :: i, j, k, res
     integer :: imp_physics, topoK
     real, dimension(nz) :: t, rh, pres, hgt, totalWater, totalCond
     real :: hprcp, hcprcp, cin, cape
