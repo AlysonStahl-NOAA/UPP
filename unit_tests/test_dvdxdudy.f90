@@ -108,24 +108,24 @@ program test_dvdxdudy
             EXP_UUAVG(i,j) = spval
         end do
     end do
-    
+
     call dvdxdudy(UWND, VWND)
 
     res = 0
     do i = 1, NX
         do j = 1, NY
-            if (abs(DDVDX(i,j) - spval) > tol) then
-                print *, "Expected DDVDX(", i, ",", j, ") = ", spval, &
+            if (abs(EXP_DDVDX(i,j) - DDVDX(i,j)) > tol) then
+                print *, "Expected DDVDX(", i, ",", j, ") = ", EXP_DDVDX(i,j), &
                          ", but got ", DDVDX(i,j)
                 res = 1
             end if
-            if (abs(DDUDY(i,j) - spval) > tol) then
-                print *, "Expected DDUDY(", i, ",", j, ") = ", spval, &
+            if (abs(EXP_DDUDY(i,j) - DDUDY(i,j)) > tol) then
+                print *, "Expected DDUDY(", i, ",", j, ") = ", EXP_DDUDY(i,j), &
                          ", but got ", DDUDY(i,j)
                 res = 1
             end if
-            if (abs(UUAVG(i,j) - spval) > tol) then
-                print *, "Expected UUAVG(", i, ",", j, ") = ", spval, &
+            if (abs(EXP_UUAVG(i,j) - UUAVG(i,j)) > tol) then
+                print *, "Expected UUAVG(", i, ",", j, ") = ", EXP_UUAVG(i,j), &
                          ", but got ", UUAVG(i,j)
                 res = 1
             end if
@@ -189,24 +189,31 @@ program test_dvdxdudy
     VWND = spval
     dx = 1000.0
     dy = 2000.0
+    do i = 2, NX-1
+        do j = 2, NY-1
+            EXP_DDVDX(i,j) = spval
+            EXP_DDUDY(i,j) = spval
+            EXP_UUAVG(i,j) = spval
+        end do
+    end do
 
     call dvdxdudy(UWND, VWND)
 
     res = 0
     do i = 1, NX
         do j = 1, NY
-            if (abs(DDVDX(i,j) - spval) > tol) then
-                print *, "Expected DDVDX(", i, ",", j, ") = ", spval, &
+            if (abs(EXP_DDVDX(i,j) - DDVDX(i,j)) > tol) then
+                print *, "Expected DDVDX(", i, ",", j, ") = ", EXP_DDVDX(i,j), &
                          ", but got ", DDVDX(i,j)
                 res = 1
             end if
-            if (abs(DDUDY(i,j) - spval) > tol) then
-                print *, "Expected DDUDY(", i, ",", j, ") = ", spval, &
+            if (abs(EXP_DDUDY(i,j) - DDUDY(i,j)) > tol) then
+                print *, "Expected DDUDY(", i, ",", j, ") = ", EXP_DDUDY(i,j), &
                          ", but got ", DDUDY(i,j)
                 res = 1
             end if
-            if (abs(UUAVG(i,j) - spval) > tol) then
-                print *, "Expected UUAVG(", i, ",", j, ") = ", spval, &
+            if (abs(EXP_UUAVG(i,j) - UUAVG(i,j)) > tol) then
+                print *, "Expected UUAVG(", i, ",", j, ") = ", EXP_UUAVG(i,j), &
                          ", but got ", UUAVG(i,j)
                 res = 1
             end if
@@ -267,24 +274,31 @@ program test_dvdxdudy
     VWND = spval
     dx = 1000.0
     dy = 2000.0
+    do i = 2, NX-1
+        do j = 2, NY-1
+            EXP_DDVDX(i,j) = spval
+            EXP_DDUDY(i,j) = spval
+            EXP_UUAVG(i,j) = spval
+        end do
+    end do
 
     call dvdxdudy(UWND, VWND)
 
     res = 0
     do i = 1, NX
         do j = 1, NY
-            if (abs(DDVDX(i,j) - spval) > tol) then
-                print *, "Expected DDVDX(", i, ",", j, ") = ", spval, &
+            if (abs(EXP_DDVDX(i,j) - DDVDX(i,j)) > tol) then
+                print *, "Expected DDVDX(", i, ",", j, ") = ", EXP_DDVDX(i,j), &
                          ", but got ", DDVDX(i,j)
                 res = 1
             end if
-            if (abs(DDUDY(i,j) - spval) > tol) then
-                print *, "Expected DDUDY(", i, ",", j, ") = ", spval, &
+            if (abs(EXP_DDUDY(i,j) - DDUDY(i,j)) > tol) then
+                print *, "Expected DDUDY(", i, ",", j, ") = ", EXP_DDUDY(i,j), &
                          ", but got ", DDUDY(i,j)
                 res = 1
             end if
-            if (abs(UUAVG(i,j) - spval) > tol) then
-                print *, "Expected UUAVG(", i, ",", j, ") = ", spval, &
+            if (abs(EXP_UUAVG(i,j) - UUAVG(i,j)) > tol) then
+                print *, "Expected UUAVG(", i, ",", j, ") = ", EXP_UUAVG(i,j), &
                          ", but got ", UUAVG(i,j)
                 res = 1
             end if
