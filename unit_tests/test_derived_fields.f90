@@ -249,6 +249,18 @@ program test_derived_fields
     exp_tott = 60.0737305
     exp_prcpType = PRECIPS%OTHER
 
+    exp_ept(5) =     309.33511353
+    exp_wbt(5) =     255.84771729
+    exp_ept(7) =     310.03903198
+    exp_wbt(7) =     272.30084229
+    exp_twp(8) =       9.32630539
+    exp_ept(9) =     281.87905884
+    exp_wbt(9) =     269.36096191
+    exp_twp(9) =       9.32630539
+    exp_ept(10) =     267.13070679
+    exp_wbt(10) =     265.39135742
+    exp_twp(10) =       9.32630539
+    
     res = 0
     call derive_fields(imp_physics,t, rh, pres, hgt, totalWater, totalCond,&
                            nz, topoK, hprcp, hcprcp, cin, cape, &
