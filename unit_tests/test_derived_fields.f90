@@ -102,19 +102,16 @@ program test_derived_fields
     if (res .ne. 0) stop 20
 
     ! Test Case 3: Eligible cloud not found (Precipitation type is None)
-    ! TODO: Replace the ??? with code that sets up the input values for the case where 
-    ! the precipitation type should be None due to lack of eligible clouds. Where possible,
-    ! reuse values from Test Case 2. if values are being reused, do not add redundant assignments.
     totalCond = 0.0
     totalCond(8:10) = 0.004
+
+    exp_pc = 1.20000001E-02
+    exp_prcpType = PRECIPS%NONE
 
     res = 0
     call derive_fields(imp_physics,t, rh, pres, hgt, totalWater, totalCond,&
                            nz, topoK, hprcp, hcprcp, cin, cape, &
                            ept, wbt, twp, pc, kx, lx, tott, prcpType)
-
-    exp_pc = 1.20000001E-02
-    exp_prcpType = PRECIPS%NONE
 
     print *, "pc = ", pc
     print *, "kx = ", kx
@@ -122,13 +119,239 @@ program test_derived_fields
     print *, "tott = ", tott
     print *, "prcpType = ", prcpType
     do i = 1, nz
-        print *, 'ept(', i, ') = ', ept(i)
+        if (abs(ept(i)-exp_ept(i)) > tol) then
+            print *, 'ept(', i, ') = ', ept(i)
+        end if
     end do
     do i = 1, nz
-        print *, 'wbt(', i, ') = ', wbt(i)
+        if (abs(wbt(i)-exp_wbt(i)) > tol) then
+            print *, 'wbt(', i, ') = ', wbt(i)
+        end if
     end do
     do i = 1, nz
-        print *, 'twp(', i, ') = ', twp(i)
+        if (abs(twp(i)-exp_twp(i)) > tol) then
+            print *, 'twp(', i, ') = ', twp(i)
+        end if
+    end do
+
+    ! Test Case 4: Snow 
+    ! TODO: Replace the ??? with code that sets up the input values for the case where 
+    ! the precipitation type should be Snow. Where possible,
+    ! reuse values from Test Case 3. if values are being reused, do not add redundant assignments.
+    rh(9) = 95.0
+    t(9) = 260.0
+    t(10) = 271.0
+
+    exp_prcpType = PRECIPS%SNOW
+
+    res = 0
+    call derive_fields(imp_physics,t, rh, pres, hgt, totalWater, totalCond,&
+                           nz, topoK, hprcp, hcprcp, cin, cape, &
+                           ept, wbt, twp, pc, kx, lx, tott, prcpType)
+
+
+    print *, "pc = ", pc
+    print *, "kx = ", kx
+    print *, "lx = ", lx
+    print *, "tott = ", tott
+    print *, "prcpType = ", prcpType
+    do i = 1, nz
+        if (abs(ept(i)-exp_ept(i)) > tol) then
+            print *, 'ept(', i, ') = ', ept(i)
+        end if
+    end do
+    do i = 1, nz
+        if (abs(wbt(i)-exp_wbt(i)) > tol) then
+            print *, 'wbt(', i, ') = ', wbt(i)
+        end if
+    end do
+    do i = 1, nz
+        if (abs(twp(i)-exp_twp(i)) > tol) then
+            print *, 'twp(', i, ') = ', twp(i)
+        end if
+    end do
+
+    ! Test Case 5: Rain with tColdArea < 350.0
+    ! TODO: Replace the ??? with code that sets up the input values for the case where 
+    ! the precipitation type should be Rain with tColdArea < 350.0. Where possible,
+    ! reuse values from previous tests. if values are being reused, do not add redundant assignments.
+    rh(10) = 40.0
+    t(10) = 274.0
+
+    exp_prcpType = PRECIPS%RAIN
+
+    res = 0
+    call derive_fields(imp_physics,t, rh, pres, hgt, totalWater, totalCond,&
+                           nz, topoK, hprcp, hcprcp, cin, cape, &
+                           ept, wbt, twp, pc, kx, lx, tott, prcpType)
+
+
+    print *, "pc = ", pc
+    print *, "kx = ", kx
+    print *, "lx = ", lx
+    print *, "tott = ", tott
+    print *, "prcpType = ", prcpType
+    do i = 1, nz
+        if (abs(ept(i)-exp_ept(i)) > tol) then
+            print *, 'ept(', i, ') = ', ept(i)
+        end if
+    end do
+    do i = 1, nz
+        if (abs(wbt(i)-exp_wbt(i)) > tol) then
+            print *, 'wbt(', i, ') = ', wbt(i)
+        end if
+    end do
+    do i = 1, nz
+        if (abs(twp(i)-exp_twp(i)) > tol) then
+            print *, 'twp(', i, ') = ', twp(i)
+        end if
+    end do
+
+    ! Test Case 6: Rain with tColdArea >= 350.0
+    ! TODO: Replace the ??? with code that sets up the input values for the case where 
+    ! the precipitation type should be Rain with tColdArea >= 350.0. Where possible,
+    ! reuse values from previous tests. if values are being reused, do not add redundant assignments.
+    rh(5) = 95.0
+    rh(9) = 88.0
+    rh(10) = 94.0
+    t(9) = 292.0
+    t(10) = 301.0
+    
+    exp_prcpType = PRECIPS%RAIN
+
+    res = 0
+    call derive_fields(imp_physics,t, rh, pres, hgt, totalWater, totalCond,&
+                           nz, topoK, hprcp, hcprcp, cin, cape, &
+                           ept, wbt, twp, pc, kx, lx, tott, prcpType)
+
+    print *, "pc = ", pc
+    print *, "kx = ", kx
+    print *, "lx = ", lx
+    print *, "tott = ", tott
+    print *, "prcpType = ", prcpType
+    do i = 1, nz
+        if (abs(ept(i)-exp_ept(i)) > tol) then
+            print *, 'ept(', i, ') = ', ept(i)
+        end if
+    end do
+    do i = 1, nz
+        if (abs(wbt(i)-exp_wbt(i)) > tol) then
+            print *, 'wbt(', i, ') = ', wbt(i)
+        end if
+    end do
+    do i = 1, nz
+        if (abs(twp(i)-exp_twp(i)) > tol) then
+            print *, 'twp(', i, ') = ', twp(i)
+        end if
+    end do
+
+    ! Test Case 7: Other with coldTemp > 265.15
+    ! TODO: Replace the ??? with code that sets up the input values for the case where 
+    ! the precipitation type should be Other with coldTemp > 265.15. Where possible,
+    ! reuse values from previous tests. if values are being reused, do not add redundant assignments.
+    rh(5) = 64.0
+    rh(7) = 95.0
+
+    exp_prcpType = PRECIPS%OTHER
+
+    res = 0
+    call derive_fields(imp_physics,t, rh, pres, hgt, totalWater, totalCond,&
+                           nz, topoK, hprcp, hcprcp, cin, cape, &
+                           ept, wbt, twp, pc, kx, lx, tott, prcpType)
+
+    print *, "pc = ", pc
+    print *, "kx = ", kx
+    print *, "lx = ", lx
+    print *, "tott = ", tott
+    print *, "prcpType = ", prcpType
+    do i = 1, nz
+        if (abs(ept(i)-exp_ept(i)) > tol) then
+            print *, 'ept(', i, ') = ', ept(i)
+        end if
+    end do
+    do i = 1, nz
+        if (abs(wbt(i)-exp_wbt(i)) > tol) then
+            print *, 'wbt(', i, ') = ', wbt(i)
+        end if
+    end do
+    do i = 1, nz
+        if (abs(twp(i)-exp_twp(i)) > tol) then
+            print *, 'twp(', i, ') = ', twp(i)
+        end if
+    end do
+
+    ! Test Case 8: Other with coldTemp <= 265.15 & tColdArea >= 350.0 & wetBuldArea <= -250.0
+    ! TODO: Replace the ??? with code that sets up the input values for the case where 
+    ! the precipitation type should be Other with tColdArea <= 265.15 & tColdArea >= 350.0 & wetBuldArea <= -250.0. Where possible,
+    ! reuse values from previous tests. if values are being reused, do not add redundant assignments.
+    rh(5) = 95.0
+    rh(7) = 76.0
+    rh(10) = 40.0
+    t(9) = 270.0
+    t(10) = 268.0
+
+    exp_prcpType = PRECIPS%OTHER
+
+    res = 0
+    call derive_fields(imp_physics,t, rh, pres, hgt, totalWater, totalCond,&
+                           nz, topoK, hprcp, hcprcp, cin, cape, &
+                           ept, wbt, twp, pc, kx, lx, tott, prcpType)
+
+    print *, "pc = ", pc
+    print *, "kx = ", kx
+    print *, "lx = ", lx
+    print *, "tott = ", tott
+    print *, "prcpType = ", prcpType
+    do i = 1, nz
+        if (abs(ept(i)-exp_ept(i)) > tol) then
+            print *, 'ept(', i, ') = ', ept(i)
+        end if
+    end do
+    do i = 1, nz
+        if (abs(wbt(i)-exp_wbt(i)) > tol) then
+            print *, 'wbt(', i, ') = ', wbt(i)
+        end if
+    end do
+    do i = 1, nz
+        if (abs(twp(i)-exp_twp(i)) > tol) then
+            print *, 'twp(', i, ') = ', twp(i)
+        end if
+    end do
+
+    ! Test Case 9: Other with coldTemp <= 265.15 & tColdArea >= 350.0 & wetBuldArea > -250.0 & t(k) > 273.15
+    ! TODO: Replace the ??? with code that sets up the input values for the case where 
+    ! the precipitation type should be Other with tColdArea <= 265.15 & tColdArea >= 350.0 & wetBuldArea > -250.0 & t(k) > 273.15. Where possible,
+    ! reuse values from previous tests. if values are being reused, do not add redundant assignments.
+    t(9) = 292.0
+    t(10) = 301.0
+    rh(10) = 94.0
+
+    exp_prcpType = PRECIPS%OTHER
+
+    res = 0
+    call derive_fields(imp_physics,t, rh, pres, hgt, totalWater, totalCond,&
+                           nz, topoK, hprcp, hcprcp, cin, cape, &
+                           ept, wbt, twp, pc, kx, lx, tott, prcpType)
+
+    print *, "pc = ", pc
+    print *, "kx = ", kx
+    print *, "lx = ", lx
+    print *, "tott = ", tott
+    print *, "prcpType = ", prcpType
+    do i = 1, nz
+        if (abs(ept(i)-exp_ept(i)) > tol) then
+            print *, 'ept(', i, ') = ', ept(i)
+        end if
+    end do
+    do i = 1, nz
+        if (abs(wbt(i)-exp_wbt(i)) > tol) then
+            print *, 'wbt(', i, ') = ', wbt(i)
+        end if
+    end do
+    do i = 1, nz
+        if (abs(twp(i)-exp_twp(i)) > tol) then
+            print *, 'twp(', i, ') = ', twp(i)
+        end if
     end do
 
     print *, "SUCCESS!"
@@ -174,7 +397,7 @@ program test_derived_fields
     !       b) tColdArea >= 350.0 & wetBuldArea > -250.0
     !   v) Other: Not convection or None and one of the following conditions is met:
     !       a) coldTemp > 265.15
-    !       b) tcoldTemp <= 265.15 & tColdArea >= 350.0 & wetBuldArea <= -250.0
+    !       b) tColdArea <= 265.15 & tColdArea >= 350.0 & wetBuldArea <= -250.0
     !       c) coldTemp <= 265.15 & tColdArea >= 350.0 & wetBuldArea > -250.0 & t(k) > 273.15
 
     contains
