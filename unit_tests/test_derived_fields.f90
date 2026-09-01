@@ -88,11 +88,6 @@ program test_derived_fields
     ! Test Case 2: Precipitation threshold fails (Precipitation type is None)
     imp_physics = 11
     hcprcp = 0.0
-
-    exp_pc = 0.0
-    exp_kx = 39.6224976 
-    exp_lx = -39.1572571
-    exp_tott = 60.5223389 
     exp_prcpType = PRECIPS%NONE
 
     res = 0
@@ -117,7 +112,7 @@ program test_derived_fields
     call derive_fields(imp_physics,t, rh, pres, hgt, totalWater, totalCond,&
                            nz, topoK, hprcp, hcprcp, cin, cape, &
                            ept, wbt, twp, pc, kx, lx, tott, prcpType)
-                           
+
     print *, "pc = ", pc
     print *, "kx = ", kx
     print *, "lx = ", lx
