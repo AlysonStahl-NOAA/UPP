@@ -104,11 +104,13 @@ program test_derived_fields
     exp_tott = 60.5223389 
     exp_prcpType = PRECIPS%NONE
 
+    exp_ept(5) = 3.16468628E+02
     exp_ept(7) = 3.17146759E+02
     exp_ept(8) = 3.25269409E+02
     exp_ept(9) = 3.41011871E+02
     exp_ept(10) = 3.59922333E+02
 
+    exp_wbt(5) = 2.54701920E+02
     exp_wbt(6) = 2.63451843E+02
     exp_wbt(7) = 2.72242249E+02
     exp_wbt(8) = 2.81262512E+02
