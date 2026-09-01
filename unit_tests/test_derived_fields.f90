@@ -113,6 +113,9 @@ program test_derived_fields
                            nz, topoK, hprcp, hcprcp, cin, cape, &
                            ept, wbt, twp, pc, kx, lx, tott, prcpType)
 
+    exp_pc = 1.20000001E-02
+    exp_prcpType = PRECIPS%NONE
+
     print *, "pc = ", pc
     print *, "kx = ", kx
     print *, "lx = ", lx
