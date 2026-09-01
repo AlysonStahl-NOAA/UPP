@@ -273,9 +273,6 @@ program test_derived_fields
     if (res .ne. 0) stop 80
 
     ! Test Case 9: Other with coldTemp <= 265.15 & tColdArea >= 350.0 & wetBuldArea > -250.0 & t(k) <= 273.15
-    ! TODO: Replace the ??? with code that results in the case where precipitation type is OTHER with
-    !  coldTemp <= 265.15, tColdArea >= 350.0, wetBuldArea > -250.0, and t(k) <= 273.15
-    ! Where possible, reuse values from previous test cases to minimize changes. 
     t(10) = 273.1
     rh(10) = 100.0
 
@@ -311,6 +308,32 @@ program test_derived_fields
     pres(5) = 50000.0
     pres(7) = 70000.0
 
+    res = 0
+    call derive_fields(imp_physics,t, rh, pres, hgt, totalWater, totalCond,&
+                           nz, topoK, hprcp, hcprcp, cin, cape, &
+                           ept, wbt, twp, pc, kx, lx, tott, prcpType)
+    print '(A,F16.8)', "pc = ", pc
+    print '(A,F16.8)', "kx = ", kx
+    print '(A,F16.8)', "lx = ", lx
+    print '(A,F16.8)', "tott = ", tott
+    print '(A,I0)', "prcpType = ", prcpType
+
+    do k = 1, nz
+        print '(A,I0,A,F16.8)', "ept(", k, ") = ", ept(k)
+    end do
+    do k = 1, nz
+        print '(A,I0,A,F16.8)', "wbt(", k, ") = ", wbt(k)
+    end do
+    do k = 1, nz
+        print '(A,I0,A,F16.8)', "twp(", k, ") = ", twp(k)
+    end do
+
+    !call check_expected_values(pc, kx, lx, tott, prcpType, ept, wbt, twp, &
+    !                           exp_pc, exp_kx, exp_lx, exp_tott, exp_prcpType, &
+    !                            exp_ept, exp_wbt, exp_twp, 10, res)
+
+    !if (res .ne. 0) stop 100
+
     ! Test Case 11: abs(pres(k-1)- 50000.0) <= 0.1) & abs(pres(k-1)- 70000.0) <= 0.1) branches 
     ! in calc_indice()
     do k = 1, nz
@@ -321,6 +344,34 @@ program test_derived_fields
     pres(5) = 55000.0
     pres(6) = 69999.95
     pres(7) = 75000.0
+
+    res = 0
+    call derive_fields(imp_physics,t, rh, pres, hgt, totalWater, totalCond,&
+                           nz, topoK, hprcp, hcprcp, cin, cape, &
+                           ept, wbt, twp, pc, kx, lx, tott, prcpType)
+
+    print '(A,F16.8)', "pc = ", pc
+    print '(A,F16.8)', "kx = ", kx
+    print '(A,F16.8)', "lx = ", lx
+    print '(A,F16.8)', "tott = ", tott
+    print '(A,I0)', "prcpType = ", prcpType
+
+    do k = 1, nz
+        print '(A,I0,A,F16.8)', "ept(", k, ") = ", ept(k)
+    end do
+    do k = 1, nz
+        print '(A,I0,A,F16.8)', "wbt(", k, ") = ", wbt(k)
+    end do
+    do k = 1, nz
+        print '(A,I0,A,F16.8)', "twp(", k, ") = ", twp(k)
+    end do
+    
+    !call check_expected_values(pc, kx, lx, tott, prcpType, ept, wbt, twp, &
+    !                           exp_pc, exp_kx, exp_lx, exp_tott, exp_prcpType, &
+    !                            exp_ept, exp_wbt, exp_twp, 11, res)
+                                
+    !if (res .ne. 0) stop 110
+
     print *, "SUCCESS!"
 
     contains
