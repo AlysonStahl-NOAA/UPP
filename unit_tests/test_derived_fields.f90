@@ -113,26 +113,11 @@ program test_derived_fields
                            nz, topoK, hprcp, hcprcp, cin, cape, &
                            ept, wbt, twp, pc, kx, lx, tott, prcpType)
 
-    print *, "pc = ", pc
-    print *, "kx = ", kx
-    print *, "lx = ", lx
-    print *, "tott = ", tott
-    print *, "prcpType = ", prcpType
-    do i = 1, nz
-        if (abs(ept(i)-exp_ept(i)) > tol) then
-            print *, 'ept(', i, ') = ', ept(i)
-        end if
-    end do
-    do i = 1, nz
-        if (abs(wbt(i)-exp_wbt(i)) > tol) then
-            print *, 'wbt(', i, ') = ', wbt(i)
-        end if
-    end do
-    do i = 1, nz
-        if (abs(twp(i)-exp_twp(i)) > tol) then
-            print *, 'twp(', i, ') = ', twp(i)
-        end if
-    end do
+    call check_expected_values(pc, kx, lx, tott, prcpType, ept, wbt, twp, &
+                               exp_pc, exp_kx, exp_lx, exp_tott, exp_prcpType, &
+                                exp_ept, exp_wbt, exp_twp, 1, res)
+
+    if (res .ne. 0) stop 30
 
     ! Test Case 4: Snow 
     ! TODO: Replace the ??? with code that sets up the input values for the case where 
@@ -161,7 +146,7 @@ program test_derived_fields
                            nz, topoK, hprcp, hcprcp, cin, cape, &
                            ept, wbt, twp, pc, kx, lx, tott, prcpType)
 
-
+    print *, "Test Case 4: Snow"
     print *, "pc = ", pc
     print *, "kx = ", kx
     print *, "lx = ", lx
@@ -196,7 +181,7 @@ program test_derived_fields
                            nz, topoK, hprcp, hcprcp, cin, cape, &
                            ept, wbt, twp, pc, kx, lx, tott, prcpType)
 
-
+    print *, "Test Case 5: Rain with tColdArea < 350.0"
     print *, "pc = ", pc
     print *, "kx = ", kx
     print *, "lx = ", lx
@@ -234,6 +219,7 @@ program test_derived_fields
                            nz, topoK, hprcp, hcprcp, cin, cape, &
                            ept, wbt, twp, pc, kx, lx, tott, prcpType)
 
+    print *, "Test Case 6: Rain with tColdArea >= 350.0"
     print *, "pc = ", pc
     print *, "kx = ", kx
     print *, "lx = ", lx
@@ -268,6 +254,7 @@ program test_derived_fields
                            nz, topoK, hprcp, hcprcp, cin, cape, &
                            ept, wbt, twp, pc, kx, lx, tott, prcpType)
 
+    print *, "Test Case 7: Other with coldTemp > 265.15"
     print *, "pc = ", pc
     print *, "kx = ", kx
     print *, "lx = ", lx
@@ -305,6 +292,7 @@ program test_derived_fields
                            nz, topoK, hprcp, hcprcp, cin, cape, &
                            ept, wbt, twp, pc, kx, lx, tott, prcpType)
 
+    print *, "Test Case 8: Other with coldTemp <= 265.15 & tColdArea >= 350.0 & wetBuldArea <= -250.0"
     print *, "pc = ", pc
     print *, "kx = ", kx
     print *, "lx = ", lx
@@ -340,6 +328,7 @@ program test_derived_fields
                            nz, topoK, hprcp, hcprcp, cin, cape, &
                            ept, wbt, twp, pc, kx, lx, tott, prcpType)
 
+    print *, "Test Case 9: Other with coldTemp <= 265.15 & tColdArea >= 350.0 & wetBuldArea > -250.0 & t(k) > 273.15"
     print *, "pc = ", pc
     print *, "kx = ", kx
     print *, "lx = ", lx
