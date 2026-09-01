@@ -105,8 +105,35 @@ program test_derived_fields
                                 exp_ept, exp_wbt, exp_twp, 1, res)
 
     if (res .ne. 0) stop 20
-    
-    ! Test Case 3:
+
+    ! Test Case 3: Eligible cloud not found (Precipitation type is None)
+    ! TODO: Replace the ??? with code that sets up the input values for the case where 
+    ! the precipitation type should be None due to lack of eligible clouds. Where possible,
+    ! reuse values from Test Case 2. if values are being reused, do not add redundant assignments.
+    totalCond = 0.0
+    totalCond(8:10) = 0.004
+
+    res = 0
+    call derive_fields(imp_physics,t, rh, pres, hgt, totalWater, totalCond,&
+                           nz, topoK, hprcp, hcprcp, cin, cape, &
+                           ept, wbt, twp, pc, kx, lx, tott, prcpType)
+                           
+    print *, "pc = ", pc
+    print *, "kx = ", kx
+    print *, "lx = ", lx
+    print *, "tott = ", tott
+    print *, "prcpType = ", prcpType
+    do i = 1, nz
+        print *, 'ept(', i, ') = ', ept(i)
+    end do
+    do i = 1, nz
+        print *, 'wbt(', i, ') = ', wbt(i)
+    end do
+    do i = 1, nz
+        print *, 'twp(', i, ') = ', twp(i)
+    end do
+
+    print *, "SUCCESS!"
     ! getThetaw => gives  wbt
     !   i) dry air: td << t, rh << 100%, lower pres
     !   ii) moist air: td ~ t, rh ~ 100%, higher pres
