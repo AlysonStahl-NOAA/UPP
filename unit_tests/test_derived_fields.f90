@@ -97,7 +97,7 @@ program test_derived_fields
 
     call check_expected_values(pc, kx, lx, tott, prcpType, ept, wbt, twp, &
                                exp_pc, exp_kx, exp_lx, exp_tott, exp_prcpType, &
-                                exp_ept, exp_wbt, exp_twp, 1, res)
+                                exp_ept, exp_wbt, exp_twp, 2, res)
 
     if (res .ne. 0) stop 20
 
@@ -115,7 +115,7 @@ program test_derived_fields
 
     call check_expected_values(pc, kx, lx, tott, prcpType, ept, wbt, twp, &
                                exp_pc, exp_kx, exp_lx, exp_tott, exp_prcpType, &
-                                exp_ept, exp_wbt, exp_twp, 1, res)
+                                exp_ept, exp_wbt, exp_twp, 3, res)
 
     if (res .ne. 0) stop 30
 
@@ -145,7 +145,7 @@ program test_derived_fields
 
     call check_expected_values(pc, kx, lx, tott, prcpType, ept, wbt, twp, &
                                exp_pc, exp_kx, exp_lx, exp_tott, exp_prcpType, &
-                                exp_ept, exp_wbt, exp_twp, 1, res)
+                                exp_ept, exp_wbt, exp_twp, 4, res)
 
     if (res .ne. 0) stop 40
 
@@ -172,7 +172,7 @@ program test_derived_fields
 
     call check_expected_values(pc, kx, lx, tott, prcpType, ept, wbt, twp, &
                                exp_pc, exp_kx, exp_lx, exp_tott, exp_prcpType, &
-                                exp_ept, exp_wbt, exp_twp, 1, res)
+                                exp_ept, exp_wbt, exp_twp, 5, res)
 
     if (res .ne. 0) stop 50
 
@@ -206,7 +206,7 @@ program test_derived_fields
 
     call check_expected_values(pc, kx, lx, tott, prcpType, ept, wbt, twp, &
                                exp_pc, exp_kx, exp_lx, exp_tott, exp_prcpType, &
-                                exp_ept, exp_wbt, exp_twp, 1, res)
+                                exp_ept, exp_wbt, exp_twp, 6, res)
 
     if (res .ne. 0) stop 60
 
@@ -227,7 +227,7 @@ program test_derived_fields
 
     call check_expected_values(pc, kx, lx, tott, prcpType, ept, wbt, twp, &
                                exp_pc, exp_kx, exp_lx, exp_tott, exp_prcpType, &
-                                exp_ept, exp_wbt, exp_twp, 1, res)
+                                exp_ept, exp_wbt, exp_twp, 7, res)
 
     if (res .ne. 0) stop 70
 
@@ -251,14 +251,11 @@ program test_derived_fields
 
     call check_expected_values(pc, kx, lx, tott, prcpType, ept, wbt, twp, &
                                exp_pc, exp_kx, exp_lx, exp_tott, exp_prcpType, &
-                                exp_ept, exp_wbt, exp_twp, 1, res)
+                                exp_ept, exp_wbt, exp_twp, 8, res)
 
     if (res .ne. 0) stop 80
 
     ! Test Case 9: Other with coldTemp <= 265.15 & tColdArea >= 350.0 & wetBuldArea > -250.0 & t(k) > 273.15
-    ! TODO: Replace the ??? with code that sets up the input values for the case where 
-    ! the precipitation type should be Other with tColdArea <= 265.15 & tColdArea >= 350.0 & wetBuldArea > -250.0 & t(k) > 273.15. Where possible,
-    ! reuse values from previous tests. if values are being reused, do not add redundant assignments.
     t(9) = 292.0
     t(10) = 301.0
     rh(10) = 94.0
@@ -276,7 +273,7 @@ program test_derived_fields
 
     call check_expected_values(pc, kx, lx, tott, prcpType, ept, wbt, twp, &
                                exp_pc, exp_kx, exp_lx, exp_tott, exp_prcpType, &
-                                exp_ept, exp_wbt, exp_twp, 1, res)
+                                exp_ept, exp_wbt, exp_twp, 9, res)
 
     if (res .ne. 0) stop 90
 
