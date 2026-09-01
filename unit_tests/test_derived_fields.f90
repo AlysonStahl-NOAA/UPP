@@ -279,6 +279,18 @@ program test_derived_fields
     t(10) = 273.1
     rh(10) = 100.0
 
+    exp_pc = 1.20000001E-02
+    exp_kx = 34.2969360
+    exp_lx = 22.4877319
+    exp_tott = 60.0737305
+    exp_prcpType = PRECIPS%OTHER
+
+    exp_ept(10) = 279.16961670
+    exp_wbt(10) = 273.10000610
+    exp_twp(8) = 9.23454666
+    exp_twp(9) = 9.23454666
+    exp_twp(10) = 9.23454666
+
     res = 0
     call derive_fields(imp_physics,t, rh, pres, hgt, totalWater, totalCond,&
                            nz, topoK, hprcp, hcprcp, cin, cape, &
@@ -288,7 +300,7 @@ program test_derived_fields
                                exp_pc, exp_kx, exp_lx, exp_tott, exp_prcpType, &
                                 exp_ept, exp_wbt, exp_twp, 9, res)
 
-    !if (res .ne. 0) stop 90
+    if (res .ne. 0) stop 90
 
     print *, "SUCCESS!"
     ! getThetaw => gives  wbt
