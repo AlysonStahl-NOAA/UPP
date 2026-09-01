@@ -142,7 +142,19 @@ program test_derived_fields
     t(9) = 260.0
     t(10) = 271.0
 
+    exp_pc = 1.20000001E-02
+    exp_kx = 34.2969360
+    exp_lx = 25.7447357
+    exp_tott = 60.0737305
     exp_prcpType = PRECIPS%SNOW
+
+    exp_ept(9) =    267.728638    
+    exp_ept(10) =    275.201019    
+    exp_wbt(9) =    259.842285    
+    exp_wbt(10) =    270.686951    
+    exp_twp(8) =    9.44163132    
+    exp_twp(9) =    9.44163132    
+    exp_twp(10) =    9.44163132 
 
     res = 0
     call derive_fields(imp_physics,t, rh, pres, hgt, totalWater, totalCond,&
@@ -154,20 +166,19 @@ program test_derived_fields
     print *, "kx = ", kx
     print *, "lx = ", lx
     print *, "tott = ", tott
-    print *, "prcpType = ", prcpType
     do i = 1, nz
         if (abs(ept(i)-exp_ept(i)) > tol) then
-            print *, 'ept(', i, ') = ', ept(i)
+            print '(A,I0,A,F16.8)', 'exp_ept(', i, ') = ', ept(i)
         end if
     end do
     do i = 1, nz
         if (abs(wbt(i)-exp_wbt(i)) > tol) then
-            print *, 'wbt(', i, ') = ', wbt(i)
+            print '(A,I0,A,F16.8)', 'exp_wbt(', i, ') = ', wbt(i)
         end if
     end do
     do i = 1, nz
         if (abs(twp(i)-exp_twp(i)) > tol) then
-            print *, 'twp(', i, ') = ', twp(i)
+            print '(A,I0,A,F16.8)', 'exp_twp(', i, ') = ', twp(i)
         end if
     end do
 
@@ -190,20 +201,19 @@ program test_derived_fields
     print *, "kx = ", kx
     print *, "lx = ", lx
     print *, "tott = ", tott
-    print *, "prcpType = ", prcpType
     do i = 1, nz
         if (abs(ept(i)-exp_ept(i)) > tol) then
-            print *, 'ept(', i, ') = ', ept(i)
+            print '(A,I0,A,F16.8)', 'exp_ept(', i, ') = ', ept(i)
         end if
     end do
     do i = 1, nz
         if (abs(wbt(i)-exp_wbt(i)) > tol) then
-            print *, 'wbt(', i, ') = ', wbt(i)
+            print '(A,I0,A,F16.8)', 'exp_wbt(', i, ') = ', wbt(i)
         end if
     end do
     do i = 1, nz
         if (abs(twp(i)-exp_twp(i)) > tol) then
-            print *, 'twp(', i, ') = ', twp(i)
+            print '(A,I0,A,F16.8)', 'exp_twp(', i, ') = ', twp(i)
         end if
     end do
 
@@ -228,20 +238,19 @@ program test_derived_fields
     print *, "kx = ", kx
     print *, "lx = ", lx
     print *, "tott = ", tott
-    print *, "prcpType = ", prcpType
     do i = 1, nz
         if (abs(ept(i)-exp_ept(i)) > tol) then
-            print *, 'ept(', i, ') = ', ept(i)
+            print '(A,I0,A,F16.8)', 'exp_ept(', i, ') = ', ept(i)
         end if
     end do
     do i = 1, nz
         if (abs(wbt(i)-exp_wbt(i)) > tol) then
-            print *, 'wbt(', i, ') = ', wbt(i)
+            print '(A,I0,A,F16.8)', 'exp_wbt(', i, ') = ', wbt(i)
         end if
     end do
     do i = 1, nz
         if (abs(twp(i)-exp_twp(i)) > tol) then
-            print *, 'twp(', i, ') = ', twp(i)
+            print '(A,I0,A,F16.8)', 'exp_twp(', i, ') = ', twp(i)
         end if
     end do
 
@@ -263,20 +272,19 @@ program test_derived_fields
     print *, "kx = ", kx
     print *, "lx = ", lx
     print *, "tott = ", tott
-    print *, "prcpType = ", prcpType
     do i = 1, nz
         if (abs(ept(i)-exp_ept(i)) > tol) then
-            print *, 'ept(', i, ') = ', ept(i)
+            print '(A,I0,A,F16.8)', 'exp_ept(', i, ') = ', ept(i)
         end if
     end do
     do i = 1, nz
         if (abs(wbt(i)-exp_wbt(i)) > tol) then
-            print *, 'wbt(', i, ') = ', wbt(i)
+            print '(A,I0,A,F16.8)', 'exp_wbt(', i, ') = ', wbt(i)
         end if
     end do
     do i = 1, nz
         if (abs(twp(i)-exp_twp(i)) > tol) then
-            print *, 'twp(', i, ') = ', twp(i)
+            print '(A,I0,A,F16.8)', 'exp_twp(', i, ') = ', twp(i)
         end if
     end do
 
@@ -301,20 +309,19 @@ program test_derived_fields
     print *, "kx = ", kx
     print *, "lx = ", lx
     print *, "tott = ", tott
-    print *, "prcpType = ", prcpType
     do i = 1, nz
         if (abs(ept(i)-exp_ept(i)) > tol) then
-            print *, 'ept(', i, ') = ', ept(i)
+            print '(A,I0,A,F16.8)', 'exp_ept(', i, ') = ', ept(i)
         end if
     end do
     do i = 1, nz
         if (abs(wbt(i)-exp_wbt(i)) > tol) then
-            print *, 'wbt(', i, ') = ', wbt(i)
+            print '(A,I0,A,F16.8)', 'exp_wbt(', i, ') = ', wbt(i)
         end if
     end do
     do i = 1, nz
         if (abs(twp(i)-exp_twp(i)) > tol) then
-            print *, 'twp(', i, ') = ', twp(i)
+            print '(A,I0,A,F16.8)', 'exp_twp(', i, ') = ', twp(i)
         end if
     end do
 
@@ -337,20 +344,19 @@ program test_derived_fields
     print *, "kx = ", kx
     print *, "lx = ", lx
     print *, "tott = ", tott
-    print *, "prcpType = ", prcpType
     do i = 1, nz
         if (abs(ept(i)-exp_ept(i)) > tol) then
-            print *, 'ept(', i, ') = ', ept(i)
+            print '(A,I0,A,F16.8)', 'exp_ept(', i, ') = ', ept(i)
         end if
     end do
     do i = 1, nz
         if (abs(wbt(i)-exp_wbt(i)) > tol) then
-            print *, 'wbt(', i, ') = ', wbt(i)
+            print '(A,I0,A,F16.8)', 'exp_wbt(', i, ') = ', wbt(i)
         end if
     end do
     do i = 1, nz
         if (abs(twp(i)-exp_twp(i)) > tol) then
-            print *, 'twp(', i, ') = ', twp(i)
+            print '(A,I0,A,F16.8)', 'exp_twp(', i, ') = ', twp(i)
         end if
     end do
 
