@@ -120,9 +120,6 @@ program test_derived_fields
     if (res .ne. 0) stop 30
 
     ! Test Case 4: Snow 
-    ! TODO: Replace the ??? with code that sets up the input values for the case where 
-    ! the precipitation type should be Snow. Where possible,
-    ! reuse values from Test Case 3. if values are being reused, do not add redundant assignments.
     rh(9) = 95.0
     t(9) = 260.0
     t(10) = 271.0
@@ -146,107 +143,81 @@ program test_derived_fields
                            nz, topoK, hprcp, hcprcp, cin, cape, &
                            ept, wbt, twp, pc, kx, lx, tott, prcpType)
 
-    print *, "Test Case 4: Snow"
-    print *, "pc = ", pc
-    print *, "kx = ", kx
-    print *, "lx = ", lx
-    print *, "tott = ", tott
-    do i = 1, nz
-        if (abs(ept(i)-exp_ept(i)) > tol) then
-            print '(A,I0,A,F16.8)', 'exp_ept(', i, ') = ', ept(i)
-        end if
-    end do
-    do i = 1, nz
-        if (abs(wbt(i)-exp_wbt(i)) > tol) then
-            print '(A,I0,A,F16.8)', 'exp_wbt(', i, ') = ', wbt(i)
-        end if
-    end do
-    do i = 1, nz
-        if (abs(twp(i)-exp_twp(i)) > tol) then
-            print '(A,I0,A,F16.8)', 'exp_twp(', i, ') = ', twp(i)
-        end if
-    end do
+    call check_expected_values(pc, kx, lx, tott, prcpType, ept, wbt, twp, &
+                               exp_pc, exp_kx, exp_lx, exp_tott, exp_prcpType, &
+                                exp_ept, exp_wbt, exp_twp, 1, res)
+
+    if (res .ne. 0) stop 40
 
     ! Test Case 5: Rain with tColdArea < 350.0
-    ! TODO: Replace the ??? with code that sets up the input values for the case where 
-    ! the precipitation type should be Rain with tColdArea < 350.0. Where possible,
-    ! reuse values from previous tests. if values are being reused, do not add redundant assignments.
     rh(10) = 40.0
     t(10) = 274.0
 
+    exp_pc = 1.20000001E-02
+    exp_kx = 34.2969360
+    exp_lx = 26.2238159
+    exp_tott = 60.0737305
     exp_prcpType = PRECIPS%RAIN
+
+    exp_ept(10) =     274.63641357
+    exp_wbt(10) =     270.41192627
+    exp_twp(8) =       4.58242607
+    exp_twp(9) =       4.58242607
+    exp_twp(10) =       4.58242607
 
     res = 0
     call derive_fields(imp_physics,t, rh, pres, hgt, totalWater, totalCond,&
                            nz, topoK, hprcp, hcprcp, cin, cape, &
                            ept, wbt, twp, pc, kx, lx, tott, prcpType)
 
-    print *, "Test Case 5: Rain with tColdArea < 350.0"
-    print *, "pc = ", pc
-    print *, "kx = ", kx
-    print *, "lx = ", lx
-    print *, "tott = ", tott
-    do i = 1, nz
-        if (abs(ept(i)-exp_ept(i)) > tol) then
-            print '(A,I0,A,F16.8)', 'exp_ept(', i, ') = ', ept(i)
-        end if
-    end do
-    do i = 1, nz
-        if (abs(wbt(i)-exp_wbt(i)) > tol) then
-            print '(A,I0,A,F16.8)', 'exp_wbt(', i, ') = ', wbt(i)
-        end if
-    end do
-    do i = 1, nz
-        if (abs(twp(i)-exp_twp(i)) > tol) then
-            print '(A,I0,A,F16.8)', 'exp_twp(', i, ') = ', twp(i)
-        end if
-    end do
+    call check_expected_values(pc, kx, lx, tott, prcpType, ept, wbt, twp, &
+                               exp_pc, exp_kx, exp_lx, exp_tott, exp_prcpType, &
+                                exp_ept, exp_wbt, exp_twp, 1, res)
+
+    if (res .ne. 0) stop 50
 
     ! Test Case 6: Rain with tColdArea >= 350.0
-    ! TODO: Replace the ??? with code that sets up the input values for the case where 
-    ! the precipitation type should be Rain with tColdArea >= 350.0. Where possible,
-    ! reuse values from previous tests. if values are being reused, do not add redundant assignments.
     rh(5) = 95.0
     rh(9) = 88.0
     rh(10) = 94.0
     t(9) = 292.0
     t(10) = 301.0
     
+    exp_pc = 1.20000001E-02
+    exp_kx = 34.2969360
+    exp_lx = -43.6572571 
+    exp_tott = 60.0737305
     exp_prcpType = PRECIPS%RAIN
+
+    exp_ept(5) =     309.33511353
+    exp_ept(9) =     333.53933716
+    exp_ept(10) =     359.92233276
+    exp_wbt(5) =     255.84771729
+    exp_wbt(9) =     290.60504150
+    exp_wbt(10) =     300.20892334
+    exp_twp(8) =       0.00000000
+    exp_twp(9) =       0.00000000
+    exp_twp(10) =       0.00000000
 
     res = 0
     call derive_fields(imp_physics,t, rh, pres, hgt, totalWater, totalCond,&
                            nz, topoK, hprcp, hcprcp, cin, cape, &
                            ept, wbt, twp, pc, kx, lx, tott, prcpType)
 
-    print *, "Test Case 6: Rain with tColdArea >= 350.0"
-    print *, "pc = ", pc
-    print *, "kx = ", kx
-    print *, "lx = ", lx
-    print *, "tott = ", tott
-    do i = 1, nz
-        if (abs(ept(i)-exp_ept(i)) > tol) then
-            print '(A,I0,A,F16.8)', 'exp_ept(', i, ') = ', ept(i)
-        end if
-    end do
-    do i = 1, nz
-        if (abs(wbt(i)-exp_wbt(i)) > tol) then
-            print '(A,I0,A,F16.8)', 'exp_wbt(', i, ') = ', wbt(i)
-        end if
-    end do
-    do i = 1, nz
-        if (abs(twp(i)-exp_twp(i)) > tol) then
-            print '(A,I0,A,F16.8)', 'exp_twp(', i, ') = ', twp(i)
-        end if
-    end do
+    call check_expected_values(pc, kx, lx, tott, prcpType, ept, wbt, twp, &
+                               exp_pc, exp_kx, exp_lx, exp_tott, exp_prcpType, &
+                                exp_ept, exp_wbt, exp_twp, 1, res)
+
+    if (res .ne. 0) stop 60
 
     ! Test Case 7: Other with coldTemp > 265.15
-    ! TODO: Replace the ??? with code that sets up the input values for the case where 
-    ! the precipitation type should be Other with coldTemp > 265.15. Where possible,
-    ! reuse values from previous tests. if values are being reused, do not add redundant assignments.
     rh(5) = 64.0
     rh(7) = 95.0
 
+    exp_pc = 1.20000001E-02
+    exp_kx = 35.8169861
+    exp_lx = -43.6572571 
+    exp_tott = 60.0737305
     exp_prcpType = PRECIPS%OTHER
 
     res = 0
@@ -254,37 +225,23 @@ program test_derived_fields
                            nz, topoK, hprcp, hcprcp, cin, cape, &
                            ept, wbt, twp, pc, kx, lx, tott, prcpType)
 
-    print *, "Test Case 7: Other with coldTemp > 265.15"
-    print *, "pc = ", pc
-    print *, "kx = ", kx
-    print *, "lx = ", lx
-    print *, "tott = ", tott
-    do i = 1, nz
-        if (abs(ept(i)-exp_ept(i)) > tol) then
-            print '(A,I0,A,F16.8)', 'exp_ept(', i, ') = ', ept(i)
-        end if
-    end do
-    do i = 1, nz
-        if (abs(wbt(i)-exp_wbt(i)) > tol) then
-            print '(A,I0,A,F16.8)', 'exp_wbt(', i, ') = ', wbt(i)
-        end if
-    end do
-    do i = 1, nz
-        if (abs(twp(i)-exp_twp(i)) > tol) then
-            print '(A,I0,A,F16.8)', 'exp_twp(', i, ') = ', twp(i)
-        end if
-    end do
+    call check_expected_values(pc, kx, lx, tott, prcpType, ept, wbt, twp, &
+                               exp_pc, exp_kx, exp_lx, exp_tott, exp_prcpType, &
+                                exp_ept, exp_wbt, exp_twp, 1, res)
+
+    if (res .ne. 0) stop 70
 
     ! Test Case 8: Other with coldTemp <= 265.15 & tColdArea >= 350.0 & wetBuldArea <= -250.0
-    ! TODO: Replace the ??? with code that sets up the input values for the case where 
-    ! the precipitation type should be Other with tColdArea <= 265.15 & tColdArea >= 350.0 & wetBuldArea <= -250.0. Where possible,
-    ! reuse values from previous tests. if values are being reused, do not add redundant assignments.
     rh(5) = 95.0
     rh(7) = 76.0
     rh(10) = 40.0
     t(9) = 270.0
     t(10) = 268.0
 
+    exp_pc = 1.20000001E-02
+    exp_kx = 34.2969360
+    exp_lx = 32.3780365 
+    exp_tott = 60.0737305
     exp_prcpType = PRECIPS%OTHER
 
     res = 0
@@ -292,26 +249,11 @@ program test_derived_fields
                            nz, topoK, hprcp, hcprcp, cin, cape, &
                            ept, wbt, twp, pc, kx, lx, tott, prcpType)
 
-    print *, "Test Case 8: Other with coldTemp <= 265.15 & tColdArea >= 350.0 & wetBuldArea <= -250.0"
-    print *, "pc = ", pc
-    print *, "kx = ", kx
-    print *, "lx = ", lx
-    print *, "tott = ", tott
-    do i = 1, nz
-        if (abs(ept(i)-exp_ept(i)) > tol) then
-            print '(A,I0,A,F16.8)', 'exp_ept(', i, ') = ', ept(i)
-        end if
-    end do
-    do i = 1, nz
-        if (abs(wbt(i)-exp_wbt(i)) > tol) then
-            print '(A,I0,A,F16.8)', 'exp_wbt(', i, ') = ', wbt(i)
-        end if
-    end do
-    do i = 1, nz
-        if (abs(twp(i)-exp_twp(i)) > tol) then
-            print '(A,I0,A,F16.8)', 'exp_twp(', i, ') = ', twp(i)
-        end if
-    end do
+    call check_expected_values(pc, kx, lx, tott, prcpType, ept, wbt, twp, &
+                               exp_pc, exp_kx, exp_lx, exp_tott, exp_prcpType, &
+                                exp_ept, exp_wbt, exp_twp, 1, res)
+
+    if (res .ne. 0) stop 80
 
     ! Test Case 9: Other with coldTemp <= 265.15 & tColdArea >= 350.0 & wetBuldArea > -250.0 & t(k) > 273.15
     ! TODO: Replace the ??? with code that sets up the input values for the case where 
@@ -321,6 +263,10 @@ program test_derived_fields
     t(10) = 301.0
     rh(10) = 94.0
 
+    exp_pc = 1.20000001E-02
+    exp_kx = 34.2969360
+    exp_lx = -43.6572571
+    exp_tott = 60.0737305
     exp_prcpType = PRECIPS%OTHER
 
     res = 0
@@ -328,26 +274,11 @@ program test_derived_fields
                            nz, topoK, hprcp, hcprcp, cin, cape, &
                            ept, wbt, twp, pc, kx, lx, tott, prcpType)
 
-    print *, "Test Case 9: Other with coldTemp <= 265.15 & tColdArea >= 350.0 & wetBuldArea > -250.0 & t(k) > 273.15"
-    print *, "pc = ", pc
-    print *, "kx = ", kx
-    print *, "lx = ", lx
-    print *, "tott = ", tott
-    do i = 1, nz
-        if (abs(ept(i)-exp_ept(i)) > tol) then
-            print '(A,I0,A,F16.8)', 'exp_ept(', i, ') = ', ept(i)
-        end if
-    end do
-    do i = 1, nz
-        if (abs(wbt(i)-exp_wbt(i)) > tol) then
-            print '(A,I0,A,F16.8)', 'exp_wbt(', i, ') = ', wbt(i)
-        end if
-    end do
-    do i = 1, nz
-        if (abs(twp(i)-exp_twp(i)) > tol) then
-            print '(A,I0,A,F16.8)', 'exp_twp(', i, ') = ', twp(i)
-        end if
-    end do
+    call check_expected_values(pc, kx, lx, tott, prcpType, ept, wbt, twp, &
+                               exp_pc, exp_kx, exp_lx, exp_tott, exp_prcpType, &
+                                exp_ept, exp_wbt, exp_twp, 1, res)
+
+    if (res .ne. 0) stop 90
 
     print *, "SUCCESS!"
     ! getThetaw => gives  wbt
@@ -435,15 +366,15 @@ program test_derived_fields
 
     do i = 1, nz
         if (abs(ept(i) - exp_ept(i)) > tol) then
-            print *, "Test Case ", test_case, " expected ept(", i, ") = ", exp_ept(i), ", but got ", ept(i)
+            print '(A,I0,A,I0,A,F16.8,A,F16.8)', "Test Case ", test_case, " expected ept(", i, ") = ", exp_ept(i), ", but got ", ept(i)
             res = 1
         end if
         if (abs(wbt(i) - exp_wbt(i)) > tol) then
-            print *, "Test Case ", test_case, " expected wbt(", i, ") = ", exp_wbt(i), ", but got ", wbt(i)
+            print '(A,I0,A,I0,A,F16.8,A,F16.8)', "Test Case ", test_case, " expected wbt(", i, ") = ", exp_wbt(i), ", but got ", wbt(i)
             res = 1
         end if
         if (abs(twp(i) - exp_twp(i)) > tol) then
-            print *, "Test Case ", test_case, " expected twp(", i, ") = ", exp_twp(i), ", but got ", twp(i)
+            print '(A,I0,A,I0,A,F16.8,A,F16.8)', "Test Case ", test_case, " expected twp(", i, ") = ", exp_twp(i), ", but got ", twp(i)
             res = 1
         end if
     end do
