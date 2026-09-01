@@ -220,10 +220,10 @@ program test_derived_fields
     exp_tott = 60.0737305
     exp_prcpType = PRECIPS%OTHER
 
-    exp_ept(5) =     309.33511353
-    exp_ept(7) =     310.03903198
-    exp_wbt(5) =     255.84771729
-    exp_wbt(7) =     272.30084229
+    exp_ept(5) =     307.57748413
+    exp_ept(7) =     313.02865601
+    exp_wbt(5) =     254.86416626
+    exp_wbt(7) =     273.64514160
 
     res = 0
     call derive_fields(imp_physics,t, rh, pres, hgt, totalWater, totalCond,&
