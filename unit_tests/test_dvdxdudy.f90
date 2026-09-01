@@ -31,6 +31,9 @@ program test_dvdxdudy
 
     allocate(dx(ista_2l:iend_2u,jsta_2l:jend_2u))
     allocate(dy(ista_2l:iend_2u,jsta_2l:jend_2u))
+    allocate(DDVDX(ista_2l:iend_2u,jsta_2l:jend_2u))
+    allocate(DDUDY(ista_2l:iend_2u,jsta_2l:jend_2u))
+    allocate(UUAVG(ista_2l:iend_2u,jsta_2l:jend_2u))
 
     ! Test Case 1: Typical case for grid type A without SPVAL in UWND or VWND. 
     ! Expect calculated values for DDVDX, DDUDY, & UUAVG except where dx < 1e-5 or
