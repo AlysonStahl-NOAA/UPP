@@ -302,51 +302,26 @@ program test_derived_fields
 
     if (res .ne. 0) stop 90
 
+    ! Test Case 10: abs(pres(k)- 50000.0) <= 0.1 & abs(pres(k)- 70000.0) <= 0.1) branches 
+    ! in calc_indice()
+    do k = 1, nz
+        pres(k) = 10000.0 * real(k)
+    end do
+
+    pres(5) = 50000.0
+    pres(7) = 70000.0
+
+    ! Test Case 11: abs(pres(k-1)- 50000.0) <= 0.1) & abs(pres(k-1)- 70000.0) <= 0.1) branches 
+    ! in calc_indice()
+    do k = 1, nz
+        pres(k) = 10000.0 * real(k)
+    end do
+
+    pres(4) = 49999.95
+    pres(5) = 55000.0
+    pres(6) = 69999.95
+    pres(7) = 75000.0
     print *, "SUCCESS!"
-    ! getThetaw => gives  wbt
-    !   i) dry air: td << t, rh << 100%, lower pres
-    !   ii) moist air: td ~ t, rh ~ 100%, higher pres
-
-    ! calc_totalWaterPath => gives twp
-    !   i) totalWater(k) <= 0.001, topIdx == -1, baseIdx == -1, twp(k) = 0.0
-    !   ii) totalWater(k) > 0.001, all layer temps > 273.15, twp(k) = 0.0
-    !   iii) totalWater(k) > 0.001, at least one detected layer level has t <= 273.15, twp(k) > 0.0
-
-    ! WILL REQUIRE AT LEAST 3 CALLS
-    ! calc_indice => gives kIndex (kx), liftedIndex (lx), totalTotals (tott) 
-    !   i) pres(k) >= 50000.0 & pres(k-1) < 50000.0
-    !       a) abs(pres(k) - 50000.0) <= 0.1
-    !       b) abs(pres(k-1)- 50000.0) <= 0.1
-    !       c)  not a or b
-    !   ii) (pres(k)- 70000.0 >= 0.) .and. (pres(k-1)- 70000.0 < 0.)
-    !       a) abs(pres(k) - 70000.0) <= 0.1
-    !       b) abs(pres(k-1)- 70000.0) <= 0.1
-    !       c)  not a or b
-    !   iii) ((pres(k)- 85000.0 >= 0.) .and. (pres(k-1)- 85000.0 < 0.)
-    !       a) abs(pres(k) - 85000.0) <= 0.1
-    !       b) abs(pres(k-1)- 85000.0) <= 0.1
-    !       c)  not a or b
-
-    ! getPrecipType =>  gives prcpType
-    ! Executes as hierarchy. If one condition is met, the subsequent conditions are not evaluated.
-    !   i) Convection: all are true for hcprcp >= 1.0, cape >= 1000.0, cin > -100.0, lx < 0.0
-    !   ii) None: Convection fails and:
-    !       a) Precipitation threshold fails
-    !           aa) imp_physics = 98/99 & hprcp < 0.045
-    !           ab) imp_physics = 11/8 & pc < 0.01
-    !       b) Eligible Cloud not found 
-    !           ba) At relevant final level(s) pres(k) < 15000.0
-    !           bb) At relevant final level(s) wbt(k) < 200.0
-    !           bc) At relevant final level(s) wbt(k) > 1000.0
-    !           bd) At relevant final level(s) cloud search never changes iceIdx (so iceIdx == k)
-    !   iii) Snow: Not convection or None, coldTemp <= 265.15, tColdArea < 350.0, & t(k) <= 273.15
-    !   iv) Rain: Not convection or None, coldTemp <= 265.15 and t(k) > 273.15
-    !       a) tColdArea < 350.0
-    !       b) tColdArea >= 350.0 & wetBuldArea > -250.0
-    !   v) Other: Not convection or None and one of the following conditions is met:
-    !       a) coldTemp > 265.15
-    !       b) tColdArea <= 265.15 & tColdArea >= 350.0 & wetBuldArea <= -250.0
-    !       c) coldTemp <= 265.15 & tColdArea >= 350.0 & wetBuldArea > -250.0 & t(k) > 273.15
 
     contains
 
