@@ -101,7 +101,14 @@ program test_dvdxdudy
     VWND = spval
     dx = 1000.0
     dy = 2000.0
-
+    do i = 2, NX-1
+        do j = 2, NY-1
+            EXP_DDVDX(i,j) = spval
+            EXP_DDUDY(i,j) = spval
+            EXP_UUAVG(i,j) = spval
+        end do
+    end do
+    
     call dvdxdudy(UWND, VWND)
 
     res = 0
