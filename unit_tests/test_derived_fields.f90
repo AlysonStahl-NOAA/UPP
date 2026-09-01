@@ -89,36 +89,11 @@ program test_derived_fields
     imp_physics = 11
     hcprcp = 0.0
 
-    do k = 1, nz
-        pres(k) = 5000.0 + 10000.0 * real(k)
-    end do
-
-    pres(5) = 50000.0
-    pres(7) = 70000.0
-    pres(8) = 80000.0
-    pres(9) = 90000.0
-
     exp_pc = 0.0
     exp_kx = 39.6224976 
     exp_lx = -39.1572571
     exp_tott = 60.5223389 
     exp_prcpType = PRECIPS%NONE
-
-    exp_ept(5) = 3.16468628E+02
-    exp_ept(7) = 3.17146759E+02
-    exp_ept(8) = 3.25269409E+02
-    exp_ept(9) = 3.41011871E+02
-    exp_ept(10) = 3.59922333E+02
-
-    exp_wbt(5) = 2.54701920E+02
-    exp_wbt(6) = 2.63451843E+02
-    exp_wbt(7) = 2.72242249E+02
-    exp_wbt(8) = 2.81262512E+02
-    exp_wbt(9) = 2.90605042E+02
-    exp_wbt(10) = 3.00208923E+02
-
-    exp_twp = 0.0
-    exp_twp(3:5) = 6.57867432E+00
 
     res = 0
     call derive_fields(imp_physics,t, rh, pres, hgt, totalWater, totalCond,&
@@ -131,6 +106,7 @@ program test_derived_fields
 
     if (res .ne. 0) stop 20
     
+    ! Test Case 3:
     ! getThetaw => gives  wbt
     !   i) dry air: td << t, rh << 100%, lower pres
     !   ii) moist air: td ~ t, rh ~ 100%, higher pres
