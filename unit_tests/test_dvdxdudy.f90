@@ -238,9 +238,9 @@ program test_dvdxdudy
 
     do i = 2, NX-1
         do j = 2, NY-1
-            EXP_DDVDX(i,j) = 0.002
-            EXP_DDUDY(i,j) = 0.0015
-            EXP_UUAVG(i,j) = UWND(i,j) + 3.75
+            EXP_DDVDX(i,j) = 0.004
+            EXP_DDUDY(i,j) = 0.003
+            EXP_UUAVG(i,j) = UWND(i,j) - 3.75
         end do
     end do
 
