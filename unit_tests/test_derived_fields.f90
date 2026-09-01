@@ -366,15 +366,18 @@ program test_derived_fields
 
     do i = 1, nz
         if (abs(ept(i) - exp_ept(i)) > tol) then
-            print '(A,I0,A,I0,A,F16.8,A,F16.8)', "Test Case ", test_case, " expected ept(", i, ") = ", exp_ept(i), ", but got ", ept(i)
+            print '(A,I0,A,I0,A,F16.8,A,F16.8)', "Test Case ", test_case, " expected ept(", i, ") = ", &
+                exp_ept(i), ", but got ", ept(i)
             res = 1
         end if
         if (abs(wbt(i) - exp_wbt(i)) > tol) then
-            print '(A,I0,A,I0,A,F16.8,A,F16.8)', "Test Case ", test_case, " expected wbt(", i, ") = ", exp_wbt(i), ", but got ", wbt(i)
+            print '(A,I0,A,I0,A,F16.8,A,F16.8)', "Test Case ", test_case, " expected wbt(", i, ") = ", & 
+                exp_wbt(i), ", but got ", wbt(i)
             res = 1
         end if
         if (abs(twp(i) - exp_twp(i)) > tol) then
-            print '(A,I0,A,I0,A,F16.8,A,F16.8)', "Test Case ", test_case, " expected twp(", i, ") = ", exp_twp(i), ", but got ", twp(i)
+            print '(A,I0,A,I0,A,F16.8,A,F16.8)', "Test Case ", test_case, " expected twp(", i, ") = ", & 
+                exp_twp(i), ", but got ", twp(i)
             res = 1
         end if
     end do
