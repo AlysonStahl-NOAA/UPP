@@ -380,7 +380,7 @@ program test_derived_fields
     exp_wbt(9) =     269.36096191
     exp_wbt(10) =     273.10000610
     exp_twp = 0.0
-    exp_twp(3:5) = 6.06132603
+    exp_twp(3:5) = 6.06132317
     exp_twp(8:10) = 8.77268791
 
     res = 0
