@@ -66,16 +66,16 @@ contains
 
         call icing_pot(hgt, rh, t, liqCond, vv, nz, clouds, ice_pot)
 
-        do i = 1, nz
-            print '(A,I0,A,ES24.16)', 'ice_pot(', i, '): ', ice_pot(i)
-        end do
-
         ! do i = 1, nz
-        !     if (abs(ice_pot(i) - exp_ice_pot(i)) > tol) then
-        !         print *, "Expected ice_pot(", i, "): ", exp_ice_pot(i), & 
-        !                 " but got: ", ice_pot(i)
-        !     end if
+        !     print '(A,I0,A,ES24.16)', 'ice_pot(', i, '): ', ice_pot(i)
         ! end do
+
+        do i = 1, nz
+            if (abs(ice_pot(i) - exp_ice_pot(i)) > tol) then
+                print *, "Expected ice_pot(", i, "): ", exp_ice_pot(i), & 
+                        " but got: ", ice_pot(i)
+            end if
+        end do
     end subroutine test_mixed_phase_cloud_column
 
 
