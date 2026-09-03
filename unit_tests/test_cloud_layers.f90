@@ -8,6 +8,7 @@ program test_cloud_layers
     implicit none
 
     real, parameter :: tol = 1.0e-6
+    integer, parameter :: MaxLayers = 30 ! Private variable from module
     integer :: res
 
     res = 0
@@ -31,7 +32,27 @@ contains
         type(clouds_t) :: clouds, exp_clouds
 
         exp_region = 2
+        
+        exp_clouds%nLayers = 2
+        exp_clouds%wmnIdx = 8
+        exp_clouds%avv = -0.75
+
+        exp_clouds%topIdx = 0
+        exp_clouds%topIdx(1) =1
+        exp_clouds%topIdx(2) = 8
+
+        exp_clouds%baseIdx = 0
+        exp_clouds%baseIdx(1) = 3
+        exp_clouds%baseIdx(2) = 12
+
+        exp_clouds%ctt = 0.0
+        exp_clouds%ctt(1) = 235.0
+
         allocate(exp_clouds%layerQ(nz))
+        exp_clouds%layerQ = 0.0
+        exp_clouds%layerQ(8) = 0.18118343
+        exp_clouds%layerQ(9) = 0.03334465
+        exp_clouds%layerQ(10) = 0.44320303
 
         topoK = nz
         xlat = 70.0
@@ -60,17 +81,39 @@ contains
 
         call calc_CloudLayers(rh, t, pres, ept, vv, nz, topoK, xlat, xlon, region, clouds)
 
-        print *, "nLayers: ", clouds%nLayers
-        print *, "wmnIdx: ", clouds%wmnIdx
-        print '(A,F16.8)', "avv: ", clouds%avv
-        print *, "topIdx: ", clouds%topIdx
-        print *, "baseIdx: ", clouds%baseIdx
-        print '(A,F16.8)', "ctt: ", clouds%ctt
-        
-        do i = 1, nz
-            print '(A,I0,A,F16.8)', "layerQ(", i, "): ", clouds%layerQ(i)
-        end do
+        if (clouds%nLayers .ne. exp_clouds%nLayers) then
+            print *, "Expected nLayers: ", exp_clouds%nLayers, &
+                     " but got: ", clouds%nLayers
+        end if
 
+        if (clouds%wmnIdx .ne. exp_clouds%wmnIdx) then
+            print *, "Expected wmnIdx: ", exp_clouds%wmnIdx, &
+                     " but got: ", clouds%wmnIdx
+        end if
+
+        if (abs(clouds%avv - exp_clouds%avv) > tol) then
+            print *, "Expected avv: ", exp_clouds%avv, &
+                     " but got: ", clouds%avv
+        end if
+
+        do i = 1, MaxLayers
+            if (clouds%topIdx(i) .ne. exp_clouds%topIdx(i)) then
+                print *, "Expected topIdx(", i, "): ", exp_clouds%topIdx(i), &
+                         " but got: ", clouds%topIdx(i)
+            end if
+            if (clouds%baseIdx(i) .ne. exp_clouds%baseIdx(i)) then
+                print *, "Expected baseIdx(", i, "): ", exp_clouds%baseIdx(i), &
+                         " but got: ", clouds%baseIdx(i)
+            end if
+            if (abs(clouds%ctt(i) - exp_clouds%ctt(i)) > tol) then
+                print *, "Expected ctt(", i, "): ", exp_clouds%ctt(i), &
+                         " but got: ", clouds%ctt(i)
+            end if
+            if (abs(clouds%layerQ(i) - exp_clouds%layerQ(i)) > tol) then
+                print *, "Expected layerQ(", i, "): ", exp_clouds%layerQ(i), &
+                         " but got: ", clouds%layerQ(i)
+            end if
+        end do
     end subroutine test_multilayer_and_warmnose
 
     ! abs(xlat) < 23.5
