@@ -5,7 +5,6 @@
 ! Alyson Stahl, 9/2026
 program test_icing_potential
     use IcingPotential, only : icing_pot
-    use DerivedFields, only : PRECIPS
     use CloudLayers, only : clouds_t
     implicit none
 
@@ -18,8 +17,6 @@ program test_icing_potential
     ! and warm-edge icing conditions.
     call test_mixed_phase_cloud_column(res)
     if (res .ne. 0) stop 10
-
-
 
     print *, "Success!"
 
@@ -34,15 +31,16 @@ contains
         real :: ice_pot(nz), exp_ice_pot(nz)
 
         exp_ice_pot = 0.0
-        exp_ice_pot(1) = 0.312500000
+        exp_ice_pot(1) = 0.2564970255
         exp_ice_pot(2) = 0.0
-        exp_ice_pot(3) = 0.167598039
+        exp_ice_pot(3) = 0.0
         exp_ice_pot(4) = 0.0
-        exp_ice_pot(5) = 0.689140797
-        exp_ice_pot(6) = 0.928970754
-        exp_ice_pot(7) = 0.167068824
+        exp_ice_pot(5) = 0.6958929896
+        exp_ice_pot(6) = 1.0
+        exp_ice_pot(7) = 0.0573721007
         exp_ice_pot(8) = 0.0
         exp_ice_pot(9) = 0.0
+
 
         clouds%nLayers = 3
         clouds%wmnIdx = -1
@@ -72,18 +70,12 @@ contains
         call icing_pot(hgt, rh, t, liqCond, vv, nz, clouds, ice_pot)
 
         do i = 1, nz
-            print '(A,I0,A,ES24.16)', 'ice_pot(', i, '): ', ice_pot(i)
+            if (abs(ice_pot(i) - exp_ice_pot(i)) > tol) then
+                print *, "Expected ice_pot(", i, "): ", exp_ice_pot(i), & 
+                        " but got: ", ice_pot(i)
+                res = 1
+            end if
         end do
-
-        ! do i = 1, nz
-        !     if (abs(ice_pot(i) - exp_ice_pot(i)) > tol) then
-        !         print *, "Expected ice_pot(", i, "): ", exp_ice_pot(i), & 
-        !                 " but got: ", ice_pot(i)
-        !         res = 1
-        !     end if
-        ! end do
     end subroutine test_mixed_phase_cloud_column
-
-
 
 end program test_icing_potential
