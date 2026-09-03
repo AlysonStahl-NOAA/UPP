@@ -251,13 +251,13 @@ contains
         exp_clouds%avv = 0.0
 
         exp_clouds%topIdx = 0
-        exp_clouds%topIdx(1) = 1
+        exp_clouds%topIdx(1) = 3
 
         exp_clouds%baseIdx = 0
-        exp_clouds%baseIdx(1) = 3
+        exp_clouds%baseIdx(1) = 5
 
         exp_clouds%ctt = 0.0
-        exp_clouds%ctt(1) = 261.0
+        exp_clouds%ctt(1) = 262.0
 
         allocate(exp_clouds%layerQ(nz))
         exp_clouds%layerQ = 0.0
@@ -266,10 +266,10 @@ contains
         xlat = 40.0
         xlon = -100.0
 
-        rh = (/ 90.0, 85.0, 70.0, 65.0, 60.0, 55.0 /)
-        t = (/ 261.0, 261.0, 263.0, 266.0, 269.0, 272.0 /)
-        pres = (/ 60000.0, 80000.0, 85000.0, 90000.0, 95000.0, 100000.0 /)
-        ept = (/ 320.0, 315.0, 310.0, 308.0, 306.0, 304.0 /)
+        rh = (/ 60.0, 70.0, 78.0, 78.0, 70.0, 65.0 /)
+        t = (/ 250.0, 256.0, 262.0, 262.0, 262.0, 270.0 /)
+        pres = (/ 50000.0, 60000.0, 70000.0, 80000.0, 90000.0, 100000.0 /)
+        ept = (/ 300.0, 302.0, 305.0, 305.0, 305.0, 306.0 /)
         vv = (/ -0.05, -0.08, -0.10, -0.12, -0.14, -0.16 /)
 
         region = -1
