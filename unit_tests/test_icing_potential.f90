@@ -31,6 +31,16 @@ contains
         !
         real :: ice_pot(nz), exp_ice_pot(nz)
 
+        exp_ice_pot = 0.0
+        exp_ice_pot(1) = 0.00000000
+        exp_ice_pot(2) = 0.14969558
+        exp_ice_pot(3) = 0.60387808
+        exp_ice_pot(4) = 0.00000000
+        exp_ice_pot(5) = 0.79726201
+        exp_ice_pot(6) = 1.00000000
+        exp_ice_pot(7) = 0.05737210
+        exp_ice_pot(8) = 0.00000000
+
         clouds%nLayers = 2
         clouds%wmnIdx = -1
         clouds%avv = 0.0
@@ -57,7 +67,12 @@ contains
         call icing_pot(hgt, rh, t, liqCond, vv, nz, clouds, ice_pot)
 
         do i = 1, nz
-            print '(A,I0,A,F16.8)', 'ice_pot(', i, '): ', ice_pot(i)
+            if (abs(ice_pot(i) - exp_ice_pot(i)) > tol) then
+                print *, "Expected ice_pot(", i, "): ", exp_ice_pot(i), & 
+                        " but got: ", ice_pot(i)
+            end if
         end do
     end subroutine test_mixed_phase_cloud_column
+
+
 end program test_icing_potential
