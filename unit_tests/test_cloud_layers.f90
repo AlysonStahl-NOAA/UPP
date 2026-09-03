@@ -96,23 +96,30 @@ contains
                      " but got: ", clouds%avv
         end if
 
+        ! do i = 1, MaxLayers
+        !     if (clouds%topIdx(i) .ne. exp_clouds%topIdx(i)) then
+        !         print *, "Expected topIdx(", i, "): ", exp_clouds%topIdx(i), &
+        !                  " but got: ", clouds%topIdx(i)
+        !     end if
+        !     if (clouds%baseIdx(i) .ne. exp_clouds%baseIdx(i)) then
+        !         print *, "Expected baseIdx(", i, "): ", exp_clouds%baseIdx(i), &
+        !                  " but got: ", clouds%baseIdx(i)
+        !     end if
+        !     if (abs(clouds%ctt(i) - exp_clouds%ctt(i)) > tol) then
+        !         print *, "Expected ctt(", i, "): ", exp_clouds%ctt(i), &
+        !                  " but got: ", clouds%ctt(i)
+        !     end if
+        !     if (abs(clouds%layerQ(i) - exp_clouds%layerQ(i)) > tol) then
+        !         print *, "Expected layerQ(", i, "): ", exp_clouds%layerQ(i), &
+        !                  " but got: ", clouds%layerQ(i)
+        !     end if
+        ! end do
+
         do i = 1, MaxLayers
-            if (clouds%topIdx(i) .ne. exp_clouds%topIdx(i)) then
-                print *, "Expected topIdx(", i, "): ", exp_clouds%topIdx(i), &
-                         " but got: ", clouds%topIdx(i)
-            end if
-            if (clouds%baseIdx(i) .ne. exp_clouds%baseIdx(i)) then
-                print *, "Expected baseIdx(", i, "): ", exp_clouds%baseIdx(i), &
-                         " but got: ", clouds%baseIdx(i)
-            end if
-            if (abs(clouds%ctt(i) - exp_clouds%ctt(i)) > tol) then
-                print *, "Expected ctt(", i, "): ", exp_clouds%ctt(i), &
-                         " but got: ", clouds%ctt(i)
-            end if
-            if (abs(clouds%layerQ(i) - exp_clouds%layerQ(i)) > tol) then
-                print *, "Expected layerQ(", i, "): ", exp_clouds%layerQ(i), &
-                         " but got: ", clouds%layerQ(i)
-            end if
+            print '(A,F16.8)', "clouds%ctt(", i, "): ", clouds%ctt(i)
+        end do
+        do i = 1, MaxLayers
+            print '(A,F16.8)', "clouds%layerQ(", i, "): ", clouds%layerQ(i)
         end do
     end subroutine test_multilayer_and_warmnose
 
