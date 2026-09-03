@@ -8,60 +8,85 @@ program test_cloud_layers
     implicit none
 
     real, parameter :: tol = 1.0e-6
-    integer, parameter :: nz = 12
-    !
-    integer :: i, j, k, res
-    integer :: topoK
-    real :: xlat, xlon
-    real :: rh(nz), t(nz), pres(nz), ept(nz), vv(nz)
-    !
-    integer :: region
-    type(clouds_t) :: clouds
+    integer :: res
 
-    topoK = nz
-    xlat = 70.0
-    xlon = -150.0
+    res = 0
 
-    rh = (/ 95.0, 92.0, 68.0, 65.0, 60.0, 66.0, & 
-            68.0, 70.0, 70.0, 100.0, 102.0, 98.0 /)
-    t = (/ 235.0, 240.0, 245.0, 250.0, 254.0, 258.0, &
-            262.0, 274.0, 256.0, 259.0, 265.0, 268.0 /)
-    pres = (/ 30000.0, 35000.0, 40000.0, 45000.0, 50000.0, &
-                60000.0, 70000.0, 76000.0, 82000.0, 88000.0, 94000.0, 100000.0 /)
-    ept = (/ 320.0, 315.0, 310.0, 307.0, 305.0, 303.0, &
-            301.0, 310.0, 312.0, 309.0, 307.0, 300.0 /)
-    vv = (/ -0.05, -0.08, -0.10, -0.12, -0.15, -0.20, &
-            -0.25, -0.30, -0.40, -0.55, -0.10, -0.05 /)
+    ! Test Case 1: Valid & representative multi-layer cloud profile with warm nose. 
+    call test_multilayer_and_warmnose(res)
+    if (res .ne. 0) stop 10
 
-    region = -1
-    clouds%nLayers = 0
-    clouds%wmnIdx = -1
-    clouds%avv = 0.0
-    clouds%topIdx = 0
-    clouds%baseIdx = 0
-    clouds%ctt = 0.0
-    allocate(clouds%layerQ(nz))
-    clouds%layerQ = 0.0
+    print *, "Success!"
+contains
 
-    call calc_CloudLayers(rh, t, pres, ept, vv, nz, topoK, xlat, xlon, region, clouds)
+    subroutine test_multilayer_and_warmnose(res)
+        integer, intent(inout) :: res
+        integer, parameter :: nz = 12
+        integer :: i
+        integer :: topoK
+        real :: xlat, xlon
+        real :: rh(nz), t(nz), pres(nz), ept(nz), vv(nz)
+        !
+        integer :: region, exp_region
+        type(clouds_t) :: clouds, exp_clouds
 
-    ! calc_CloudLayers
-    ! -> getWarmnoseIdx
-    ! -> getAverageVertVel
-    ! -> calc_layerQ
-    ! --> dq_rh_map
-    ! --> dq_delta_TE_map
+        exp_region = 2
+        allocate(exp_clouds%layerQ(nz))
 
-    ! getWarmnoseIdx(t, nz)
-    !   1. t(k) <= 273.15
-    !       a) aboveFreezing = True
-    !           returns tmpIndex (k-1)
-    !       b) aboveFreezing = False
-    !   2. t(k) > 273.15
-    !       -> sets aboveFreezing = True, sets tmpIndx = k
-    !
-    ! Should enter both branches assuming index exists and != nz
-    ! Will return -1 index if not found. May be worth testing scenario?
+        topoK = nz
+        xlat = 70.0
+        xlon = -150.0
+
+        rh = (/ 95.0, 92.0, 68.0, 65.0, 60.0, 66.0, & 
+                68.0, 70.0, 70.0, 100.0, 102.0, 98.0 /)
+        t = (/ 235.0, 240.0, 245.0, 250.0, 254.0, 258.0, &
+                262.0, 274.0, 256.0, 259.0, 265.0, 268.0 /)
+        pres = (/ 30000.0, 35000.0, 40000.0, 45000.0, 50000.0, &
+                    60000.0, 70000.0, 76000.0, 82000.0, 88000.0, 94000.0, 100000.0 /)
+        ept = (/ 320.0, 315.0, 310.0, 307.0, 305.0, 303.0, &
+                301.0, 310.0, 312.0, 309.0, 307.0, 300.0 /)
+        vv = (/ -0.05, -0.08, -0.10, -0.12, -0.15, -0.20, &
+                -0.25, -0.30, -0.40, -0.55, -0.10, -0.05 /)
+
+        region = -1
+        clouds%nLayers = 0
+        clouds%wmnIdx = -1
+        clouds%avv = 0.0
+        clouds%topIdx = 0
+        clouds%baseIdx = 0
+        clouds%ctt = 0.0
+        allocate(clouds%layerQ(nz))
+        clouds%layerQ = 0.0
+
+        call calc_CloudLayers(rh, t, pres, ept, vv, nz, topoK, xlat, xlon, region, clouds)
+
+        print *, "nLayers: ", clouds%nLayers
+        print *, "wmnIdx: ", clouds%wmnIdx
+        print '(A,F16.8)', "avv: ", clouds%avv
+        print *, "topIdx: ", clouds%topIdx
+        print *, "baseIdx: ", clouds%baseIdx
+        print '(A,F16.8)', "ctt: ", clouds%ctt
+        
+        do i = 1, nz
+            print '(A,I0,A,F16.8)', "layerQ(", i, "): ", clouds%layerQ(i)
+        end do
+
+    end subroutine test_multilayer_and_warmnose
+
+    ! abs(xlat) < 23.5
+    ! 23.5 <= abs(xlat) < 66
+
+
+    ! in_cld = 0 (find cloud base?)
+
+    ! clouds%avv = 0
+
+    ! getAverageVertVel
+    !   baseIdx_lowest != nz
+    !   numVertVel == 0
+
+    ! calc_LayerQ
+    !   num_layers = 0
 
     ! getAverageVertVel(t,vv,nz, topIdx_lowest,baseIdx_lowest)
     !   Set start_base given base_idx_lowest
@@ -87,16 +112,6 @@ program test_cloud_layers
     !       2. numVertVel != 0
     !           Return sumVertVel / numVertVel
     !
-
-    ! dq_delta_TE_map(delTE)
-    !   1. delTE <= 0 ==> 1
-    !   2. 0 < delTE <= 4.0 ==> (4-delTE) / 4
-    !   3. delTE > 4 ==> 0
-
-    ! dq_rh_map(rh)
-    !   1. rh <= 70 ==> 0
-    !   2. rh >= 100 ==> 1
-    !   3. 70 < rh < 100 ==> (rh-70) / 30
 
     ! calc_layerQ(t, rh, pres, ept, nz, clouds)
     ! Loop n (cloud layers)
@@ -140,6 +155,4 @@ program test_cloud_layers
     !       2. num_lyr <= 0
     !           clouds%avv = 0
 
-
-    print *, "Success!"
 end program test_cloud_layers
