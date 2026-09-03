@@ -116,10 +116,10 @@ contains
         ! end do
 
         do i = 1, MaxLayers
-            print '(A,I,A,F16.8)', "clouds%ctt(", i, "): ", clouds%ctt(i)
+            print '(A,I0,A,F16.8)', "clouds%ctt(", i, "): ", clouds%ctt(i)
         end do
         do i = 1, MaxLayers
-            print '(A,I,A,F16.8)', "clouds%layerQ(", i, "): ", clouds%layerQ(i)
+            print '(A,I0,A,F16.8)', "clouds%layerQ(", i, "): ", clouds%layerQ(i)
         end do
     end subroutine test_multilayer_and_warmnose
 
