@@ -20,6 +20,11 @@ program test_cloud_layers
     call test_no_cloud_layers(res)
     if (res .ne. 0) stop 20
 
+    ! Test Case 3: Valid midlatitude cloud profile with a top cloud whose base is 
+    ! explicitly identified.
+    call test_top_cloud_base_detection(res)
+    if (res .ne. 0) stop 30
+
     print *, "Success!"
 
 contains
@@ -131,8 +136,6 @@ contains
 
     subroutine test_no_cloud_layers(res)
         integer, intent(inout) :: res
-        ! TODO: Replace the ??? with an actual value for nz that is appropriate for 
-        ! the test case setup below.
         integer, parameter :: nz = 8
         integer :: i
         integer :: topoK
@@ -219,13 +222,114 @@ contains
 
     end subroutine test_no_cloud_layers
 
-    ! abs(xlat) < 23.5
+    subroutine test_top_cloud_base_detection(res)
+        integer, intent(inout) :: res
+        ! TODO: Replace the ??? with an actual value for nz that is appropriate for 
+        ! the test case setup below.
+        integer, parameter :: nz = 6
+        integer :: i
+        integer :: topoK
+        real :: xlat, xlon
+        real :: rh(nz), t(nz), pres(nz), ept(nz), vv(nz)
+        !
+        integer :: region, exp_region
+        type(clouds_t) :: clouds, exp_clouds
+
+        ! TODO: Replace the ??? below with code that initializes all of the necessary input/output
+        ! variables for a test of calc_CloudLayers() subroutine.
+        ! The values you choose will be used for a unit test of the subroutine and any functions/
+        ! subroutines that it calls. The values and the array sizes should result in a call where 
+        ! in_cld is seet to 0 in the if statement if ((rh(kk+1)<t_rh).and.(in_cld==1)). Be sure to
+        ! check the full context of how that branch is executed. The desired outcome of this test
+        ! case is to execute that branch specifically.
+        ! Pay close attention to the way that any array values should vary with height and what height an
+        ! index should represent.
+        exp_region = 2
+
+        exp_clouds%nLayers = 1
+        exp_clouds%wmnIdx = -1
+        exp_clouds%avv = 0.0
+
+        exp_clouds%topIdx = 0
+        exp_clouds%topIdx(1) = 1
+
+        exp_clouds%baseIdx = 0
+        exp_clouds%baseIdx(1) = 3
+
+        exp_clouds%ctt = 0.0
+        exp_clouds%ctt(1) = 261.0
+
+        allocate(exp_clouds%layerQ(nz))
+        exp_clouds%layerQ = 0.0
+
+        topoK = nz
+        xlat = 40.0
+        xlon = -100.0
+
+        rh = (/ 90.0, 85.0, 70.0, 65.0, 60.0, 55.0 /)
+        t = (/ 261.0, 261.0, 263.0, 266.0, 269.0, 272.0 /)
+        pres = (/ 60000.0, 80000.0, 85000.0, 90000.0, 95000.0, 100000.0 /)
+        ept = (/ 320.0, 315.0, 310.0, 308.0, 306.0, 304.0 /)
+        vv = (/ -0.05, -0.08, -0.10, -0.12, -0.14, -0.16 /)
+
+        region = -1
+        clouds%nLayers = 0
+        clouds%wmnIdx = -1
+        clouds%avv = 0.0
+        clouds%topIdx = 0
+        clouds%baseIdx = 0
+        clouds%ctt = 0.0
+        allocate(clouds%layerQ(nz))
+        clouds%layerQ = 0.0
+
+        call calc_CloudLayers(rh, t, pres, ept, vv, nz, topoK, xlat, xlon, region, clouds)
+
+        if (clouds%nLayers .ne. exp_clouds%nLayers) then
+            print *, "Expected nLayers: ", exp_clouds%nLayers, &
+                     " but got: ", clouds%nLayers
+            res = 1
+        end if
+
+        if (clouds%wmnIdx .ne. exp_clouds%wmnIdx) then
+            print *, "Expected wmnIdx: ", exp_clouds%wmnIdx, &
+                     " but got: ", clouds%wmnIdx
+            res = 1
+        end if
+
+        if (abs(clouds%avv - exp_clouds%avv) > tol) then
+            print *, "Expected avv: ", exp_clouds%avv, &
+                     " but got: ", clouds%avv
+            res = 1
+        end if
+
+        do i = 1, nz
+            if (clouds%topIdx(i) .ne. exp_clouds%topIdx(i)) then
+                print *, "Expected topIdx(", i, "): ", exp_clouds%topIdx(i), &
+                         " but got: ", clouds%topIdx(i)
+                res = 1
+            end if
+            if (clouds%baseIdx(i) .ne. exp_clouds%baseIdx(i)) then
+                print *, "Expected baseIdx(", i, "): ", exp_clouds%baseIdx(i), &
+                         " but got: ", clouds%baseIdx(i)
+                res = 1
+            end if
+            if (abs(clouds%ctt(i) - exp_clouds%ctt(i)) > tol) then
+                print *, "Expected ctt(", i, "): ", exp_clouds%ctt(i), &
+                         " but got: ", clouds%ctt(i)
+                res = 1
+            end if
+            if (abs(clouds%layerQ(i) - exp_clouds%layerQ(i)) > tol) then
+                print *, "Expected layerQ(", i, "): ", exp_clouds%layerQ(i), &
+                         " but got: ", clouds%layerQ(i)
+                res = 1
+            end if
+        end do
+
+    end subroutine test_top_cloud_base_detection
+
     ! 23.5 <= abs(xlat) < 66
-
-
     ! in_cld = 0 (find cloud base?)
 
-    ! clouds%avv = 0
 
     ! getAverageVertVel
     !   baseIdx_lowest != nz
