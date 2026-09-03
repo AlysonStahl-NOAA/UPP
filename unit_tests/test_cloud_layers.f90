@@ -224,8 +224,6 @@ contains
 
     subroutine test_top_cloud_base_detection(res)
         integer, intent(inout) :: res
-        ! TODO: Replace the ??? with an actual value for nz that is appropriate for 
-        ! the test case setup below.
         integer, parameter :: nz = 6
         integer :: i
         integer :: topoK
@@ -235,15 +233,6 @@ contains
         integer :: region, exp_region
         type(clouds_t) :: clouds, exp_clouds
 
-        ! TODO: Replace the ??? below with code that initializes all of the necessary input/output
-        ! variables for a test of calc_CloudLayers() subroutine.
-        ! The values you choose will be used for a unit test of the subroutine and any functions/
-        ! subroutines that it calls. The values and the array sizes should result in a call where 
-        ! in_cld is seet to 0 in the if statement if ((rh(kk+1)<t_rh).and.(in_cld==1)). Be sure to
-        ! check the full context of how that branch is executed. The desired outcome of this test
-        ! case is to execute that branch specifically.
-        ! Pay close attention to the way that any array values should vary with height and what height an
-        ! index should represent.
         exp_region = 2
 
         exp_clouds%nLayers = 1
@@ -326,83 +315,5 @@ contains
         end do
 
     end subroutine test_top_cloud_base_detection
-
-    ! 23.5 <= abs(xlat) < 66
-    ! in_cld = 0 (find cloud base?)
-
-
-    ! getAverageVertVel
-    !   baseIdx_lowest != nz
-    !   numVertVel == 0
-
-    ! calc_LayerQ
-    !   num_layers = 0
-
-    ! getAverageVertVel(t,vv,nz, topIdx_lowest,baseIdx_lowest)
-    !   Set start_base given base_idx_lowest
-    !       1. base_idx_lowest == nz
-    !           start_base = nz - 1
-    !       2. base_idx_lowest != nz
-    !           start_base = baseIdx_lowest
-    !
-    !   Set sumVertVel & numVertVel in loop (k = start_base, topIdx_lowest, -1)
-    !       1. 257.15 <= t(k) <= 260.15
-    !           sumVertVel += vv(k)
-    !           numVertVel += 1 
-    !       2. t(k) < 257.15
-    !           sumVertVel += vv(k) + vv(k+1)
-    !           numVertVel = 2
-    !       3. t(k) > 260.15
-    !           do nothing
-    ! 
-    !   Check numVertVel to determine return value
-    !       1. numVertVel == 0
-    !           Return 0
-    !           * Can get this by having t(k) > 260.15 for all k
-    !       2. numVertVel != 0
-    !           Return sumVertVel / numVertVel
-    !
-
-    ! calc_layerQ(t, rh, pres, ept, nz, clouds)
-    ! Loop n (cloud layers)
-    !   Loop k (index in layer)
-    !       Loop m (k, nz-1)
-    !           1. ept(k) - ept(m) > 4 && clouds%baseIdx(n) <= m
-    !               base_k = m - 1 (then exit)
-    !       Loop kk (k, base_k-1)
-    !           1. num_layers == 0
-    !               mean_rh = 0
-    !           2. num_layers != 0
-    !               mean_rh = sum_rh / num_layers
-    !
-
-    ! calc_CloudLayers(rh,t,pres,ept,vv, nz, topoK, xlat, xlon, region, clouds)
-    !   Get global region & set rh threshold
-    !       1. abs(xlat) < 23.5
-    !           t_rh = 80
-    !           region = 1
-    !       2. 23.5 <= abs(xlat) < 66
-    !           t_rh = 75
-    !           region = 2
-    !       3. abs(xlat) >= 66
-    !           t_rh = 70
-    !           region = 2
-    !
-    !   Identify top layer if rh starts at high value
-    !       1. rh(1) >= t_rh && rh(2) >= t_rh
-    !           Loop kk (2,topoK-1)
-    !               All if statements SHOULD executre if cloud base exists       
-    !       2. rh(1) < t_rh || rh(2) < t_rh
-    !           No else statement, just does nothing
-    !   
-    !   Loop k = kstart, topoK-1
-    !       1. multiple nested if statements in loop, sets in_cld = 0 if all execute
-    !       2. if they don't all execute, in_cld = 1, executing another if statement outside loop
-    !
-    !   Check num_lyr
-    !       1. num_lyr > 0
-    !           clouds%avv = getAverageVertVel()
-    !       2. num_lyr <= 0
-    !           clouds%avv = 0
 
 end program test_cloud_layers

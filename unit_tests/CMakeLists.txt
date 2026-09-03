@@ -102,6 +102,8 @@ create_test(test_esat)
 create_test(test_tdofesat)
 create_test(test_xmytw_post)
 create_test(test_cloud_layers)
+create_test(test_icing_potential)
+
 
 configure_file(${PROJECT_SOURCE_DIR}/fix/hires_micro_lookup.dat
                ${CMAKE_CURRENT_BINARY_DIR}/eta_micro_lookup.dat COPYONLY)
