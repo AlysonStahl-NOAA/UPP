@@ -32,14 +32,14 @@ contains
         real :: ice_pot(nz), exp_ice_pot(nz)
 
         exp_ice_pot = 0.0
-        exp_ice_pot(1) = 0.00000000
-        exp_ice_pot(2) = 0.14969558
-        exp_ice_pot(3) = 0.60387808
-        exp_ice_pot(4) = 0.00000000
-        exp_ice_pot(5) = 0.79726201
-        exp_ice_pot(6) = 1.00000000
-        exp_ice_pot(7) = 0.05737210
-        exp_ice_pot(8) = 0.00000000
+        exp_ice_pot(1) = 0.0
+        exp_ice_pot(2) = 0.149695575
+        exp_ice_pot(3) = 0.603878081
+        exp_ice_pot(4) = 0.0
+        exp_ice_pot(5) = 0.797262013
+        exp_ice_pot(6) = 1.0
+        exp_ice_pot(7) = 0.057372101
+        exp_ice_pot(8) = 0.0
 
         clouds%nLayers = 2
         clouds%wmnIdx = -1
