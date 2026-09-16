@@ -122,23 +122,23 @@ contains
         call CALCAPE(itype, dpbnd, p1d, t1d, q1d, l1d, cape, cins, pparc, zeql, thund)
 
         do j = 1, ny
-            print * "cape(1,", j, ") = ", cape(1,j)
+            print *, "cape(1,", j, ") = ", cape(1,j)
         end do
 
         do j = 1, ny
-            print * "cins(1,", j, ") = ", cins(1,j)
+            print *, "cins(1,", j, ") = ", cins(1,j)
         end do
 
         do j = 1, ny
-            print * "pparc(1,", j, ") = ", pparc(1,j)
+            print *, "pparc(1,", j, ") = ", pparc(1,j)
         end do
 
         do j = 1, ny
-            print * "zeql(1,", j, ") = ", zeql(1,j)
+            print *, "zeql(1,", j, ") = ", zeql(1,j)
         end do
 
         do j = 1, ny
-            print * "thund(1,", j, ") = ", thund(1,j)
+            print *, "thund(1,", j, ") = ", thund(1,j)
         end do
 
         deallocate(pmid)
