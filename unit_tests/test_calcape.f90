@@ -1,0 +1,157 @@
+! This is a test program for UPP.
+!
+! This program tests the CALCAPE() subroutine.
+!
+! Alyson Stahl, 8/2026
+program test_calcape
+    use upp_physics, only: CALCAPE
+    use table_upp_mod, only: TABLE
+    use tableq_upp_mod, only: TABLEQ
+    use lookup_mod, only: thl, plq, ptbl, ttbl, rdq, rdth, rdp, rdthe, pl, qs0, sqs, sthe, &
+                                                the0, ttblq, rdpq, rdtheq, stheq, the0q
+    use vrbls3d,    only: pmid, t, q, zint
+    use vrbls2d,    only: teql,ieql,tshltr,pshltr,qshltr
+    use masks,      only: lmh
+    use ctlblk_mod, only: jsta_2l, jend_2u, lm, jsta, jend, spval, &
+                                                ista_2l, iend_2u, ista, iend, capecin_2m, pt
+    implicit none
+
+    real, parameter :: tol = 1.0e-6
+    integer :: res
+
+    ! Initalize lookup tables used by CALCAPE()
+    pt = 10000.0
+    thl = 210.0
+    plq = 70000.0
+
+    call TABLE(ptbl, ttbl, pt, rdq, rdth, rdp, rdthe, pl, thl, qs0, sqs, sthe, the0)
+    call TABLEQ(ttblq, rdpq, rdtheq, plq, thl, stheq, the0q)
+
+    res = 0
+
+    ! Test Case 1: ITYPE = 1
+    call test_itype_1(res)
+    if (res .ne. 0) stop 10
+
+    print *, "SUCCESS!"
+
+contains
+
+    subroutine test_itype_1(res)
+        integer, intent(inout) :: res
+        integer, parameter :: ny = 2, nz = 4
+        integer :: itype
+        real :: dpbnd
+        integer, dimension(1,ny) :: l1d
+        real, dimension(1,ny)  :: p1d, t1d
+        real, dimension(1,ny) :: q1d, cape, cins, pparc, zeql, thund
+        real, dimension(1,ny) :: exp_q1d, exp_cape, exp_cins, exp_pparc, exp_zeql, exp_thund
+        integer :: j, k
+
+        ista = 1
+        iend = 1
+        jsta = 1
+        jend = ny
+        ista_2l = ista
+        iend_2u = iend
+        jsta_2l = jsta
+        jend_2u = jend
+        lm = nz
+        spval = 9.9e10
+
+        allocate(pmid(ista_2l:iend_2u,jsta_2l:jend_2u,lm))
+        allocate(t(ista_2l:iend_2u,jsta_2l:jend_2u,lm))
+        allocate(q(ista_2l:iend_2u,jsta_2l:jend_2u,lm))
+        allocate(zint(ista_2l:iend_2u,jsta_2l:jend_2u,lm+1))
+        allocate(teql(ista_2l:iend_2u,jsta_2l:jend_2u))
+        allocate(ieql(ista_2l:iend_2u,jsta_2l:jend_2u))
+        allocate(tshltr(ista_2l:iend_2u,jsta_2l:jend_2u))
+        allocate(pshltr(ista_2l:iend_2u,jsta_2l:jend_2u))
+        allocate(qshltr(ista_2l:iend_2u,jsta_2l:jend_2u))
+        allocate(lmh(ista_2l:iend_2u,jsta_2l:jend_2u))
+
+        itype = 1
+        dpbnd = 25000.0
+        capecin_2m = .true.
+
+        pmid = spval
+        t = spval
+        q = spval
+        zint = spval
+        teql = spval
+        ieql = 0
+        tshltr = spval
+        pshltr = spval
+        qshltr = spval
+        lmh = real(lm)
+
+        pmid(1,1,:) = (/ 50000.0, 65000.0, 80000.0, 95000.0 /)
+        pmid(1,2,:) = (/ 50000.0, 65000.0, 80000.0, 95000.0 /)
+
+        zint(1,1,:) = (/ 6500.0, 4500.0, 2500.0, 1000.0, 0.0 /)
+        zint(1,2,:) = (/ 6500.0, 4500.0, 2500.0, 1000.0, 0.0 /)
+
+        t(1,1,:) = (/ 250.0, 262.0, 286.0, 301.0 /)
+        t(1,2,:) = (/ 247.0, 255.0, 263.0, 271.0 /)
+
+        q(1,1,:) = (/ 3.0e-4, 1.0e-3, 8.0e-3, 1.5e-2 /)
+        q(1,2,:) = (/ 1.0e-4, 4.0e-4, 1.2e-3, 3.0e-3 /)
+
+        tshltr(1,1) = 303.0
+        tshltr(1,2) = 272.0
+        pshltr(1,1) = 96000.0
+        pshltr(1,2) = 96000.0
+        qshltr(1,1) = 1.6e-2
+        qshltr(1,2) = 3.0e-3
+
+        ! Dummy variables for ITYPE = 1
+        p1d = spval
+        t1d = spval
+        q1d = spval
+
+        l1d = lm
+        
+        cape = spval
+        cins = spval
+        pparc = spval
+        zeql = spval
+        thund = spval
+
+        exp_q1d = q1d
+
+        call CALCAPE(itype, dpbnd, p1d, t1d, q1d, l1d, cape, cins, pparc, zeql, thund)
+
+        do j = 1, ny
+            print * "cape(1,", j, ") = ", cape(1,j)
+        end do
+
+        do j = 1, ny
+            print * "cins(1,", j, ") = ", cins(1,j)
+        end do
+
+        do j = 1, ny
+            print * "pparc(1,", j, ") = ", pparc(1,j)
+        end do
+
+        do j = 1, ny
+            print * "zeql(1,", j, ") = ", zeql(1,j)
+        end do
+
+        do j = 1, ny
+            print * "thund(1,", j, ") = ", thund(1,j)
+        end do
+
+        deallocate(pmid)
+        deallocate(t)
+        deallocate(q)
+        deallocate(zint)
+        deallocate(teql)
+        deallocate(ieql)
+        deallocate(tshltr)
+        deallocate(pshltr)
+        deallocate(qshltr)
+        deallocate(lmh)
+
+    end subroutine test_itype_1
+
+end program test_calcape
