@@ -319,7 +319,7 @@ contains
 
     end subroutine test_itype_2
 
-    subroutine test_itype_gt_2()
+    subroutine test_itype_gt_2(res)
         integer, intent(inout) :: res
         integer, parameter :: ny = 1, nz = 4
         integer :: itype
