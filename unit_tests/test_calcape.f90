@@ -19,8 +19,9 @@ program test_calcape
     real, parameter :: tol = 1.0e-6
     integer :: res
 
-    ! Initalize lookup tables used by CALCAPE()
-    pt = 10000.0
+    ! Adjust the coarse pressure table so the lowest interpolated saturation
+    ! pressure can reach the TPSPK guard in this test.
+    pt = 0.0
     thl = 210.0
     plq = 70000.0
 
@@ -39,7 +40,7 @@ contains
 
     subroutine test_itype_1(res)
         integer, intent(inout) :: res
-        integer, parameter :: ny = 2, nz = 4
+        integer, parameter :: ny = 5, nz = 4
         integer :: itype
         real :: dpbnd
         integer, dimension(1,ny) :: l1d
@@ -85,24 +86,36 @@ contains
         qshltr = spval
         lmh = real(lm)
 
-        pmid(1,1,:) = (/ 50000.0, 65000.0, 80000.0, 95000.0 /)
-        pmid(1,2,:) = (/ 50000.0, 65000.0, 80000.0, 95000.0 /)
-
-        zint(1,1,:) = (/ 6500.0, 4500.0, 2500.0, 1000.0, 0.0 /)
-        zint(1,2,:) = (/ 6500.0, 4500.0, 2500.0, 1000.0, 0.0 /)
-
+        do i = 1, ny
+            pmid(1,i,:) = (/ 50000.0, 65000.0, 80000.0, 95000.0 /)
+            zint(1,i,:) = (/ 6500.0, 4500.0, 2500.0, 1000.0, 0.0 /) 
+            pshltr(1,i) = 96000.0
+        end do
+        
         t(1,1,:) = (/ 250.0, 262.0, 286.0, 301.0 /)
-        t(1,2,:) = (/ 247.0, 255.0, 263.0, 271.0 /)
-
         q(1,1,:) = (/ 3.0e-4, 1.0e-3, 8.0e-3, 1.5e-2 /)
-        q(1,2,:) = (/ 1.0e-4, 4.0e-4, 1.2e-3, 3.0e-3 /)
-
         tshltr(1,1) = 303.0
-        tshltr(1,2) = 272.0
-        pshltr(1,1) = 96000.0
-        pshltr(1,2) = 96000.0
         qshltr(1,1) = 1.6e-2
+
+        t(1,2,:) = (/ 247.0, 255.0, 263.0, 271.0 /)
+        q(1,2,:) = (/ 1.0e-4, 4.0e-4, 1.2e-3, 3.0e-3 /)
+        tshltr(1,2) = 272.0
         qshltr(1,2) = 3.0e-3
+
+        t(1,3,:) = (/ 180.0, 190.0, 200.0, 205.0 /)
+        q(1,3,:) = (/ 0.0, 0.0, 0.0, 0.0 /)
+        tshltr(1,3) = 180.0
+        qshltr(1,3) = 0.0
+
+        t(1,4,:) = (/ 360.0, 375.0, 390.0, 400.0 /)
+        q(1,4,:) = (/ 2.0e-3, 3.0e-3, 4.0e-3, 5.0e-3 /)
+        tshltr(1,4) = 400.0
+        qshltr(1,4) = 5.0e-3
+
+        t(1,5,:) = (/ 180.0, 190.0, 200.0, 205.0 /)
+        q(1,5,:) = (/ 0.0, 0.0, 0.0, 0.0 /)
+        tshltr(1,5) = 180.0
+        qshltr(1,5) = 0.0
 
         ! Dummy variables for ITYPE = 1
         p1d = spval
